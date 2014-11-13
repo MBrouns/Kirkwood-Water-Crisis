@@ -15,3 +15,13 @@ We now move on to the flows between the **connected Kirkwood residents** and the
 The second flow represents the *unconnected Kirkwood residents getting connected to the service network*, which moves them to the **connected Kirkwood residents**. This *service network connecting rate* equals 8% of the **unconnected Kirkwood residents**.
 
 There seems to be a discrepancy between various population numbers. In the first paragraph it is mentioned that the population of Kirkwood is 10.000 people. However, it's also mentioned there are 700 connected households and 1500 unconnected households. With a average household size of 3,9 this results in a total population of Kirkwood of 8,580 inhabitants. We have chosen to scale the number of connected and unconnected households (together 8,580 residents) to the 10.000 inhabitants mentioned in the first paragraph. This gives a total population in Kirkwood of 10.000 inhabitants, a population of the **surrounding LSRV area (excluding Kirkwood)** of 40.000 inhabitants, 3.182 **connected Kirkwood residents** and 6.818 **unconnected Kirkwood residents**. These numbers have been used as initial values for the stocks in the system.
+
+## Water demand
+
+![Water demand](images/sys-waterdemand.png)
+
+The water demand is different for **connected households**, **unconnected households** and **other urban users**. Using the number of *residents per household* (3.9) the number of *connected and unconnected households* has been determined. By multiplying these variables with the water demand for both groups (347 kl/year for a connected household and 180 kl/year for an unconnected household) the total water demand for both population groups is determined. The **total water demand of other urban users** is equal to 50% of the current combined water demand of all the connected and unconnected households. Adding the three water demand variables together (connected households, unconnected households, other urban users) we get the **total water demand** in Kirkwood.
+
+*Other urban users* are assumed to be urban shops or companies for example. No 'population' system has been assumed for these users, as the water demand is simply dependent on the water demand of the connected and unconnected households. A population system for other urban users is thus not necessary.
+
+
