@@ -1,0 +1,201 @@
+{UTF-8}
+Aged Infrastructure  = A FUNCTION OF( Infrastructure Aging,-Restore infrastructure)
+	~	
+	~		|
+
+Available maintenance funds  = A FUNCTION OF( )
+	~	
+	~		|
+
+Available maintenance staff  = A FUNCTION OF( )
+	~	
+	~		|
+
+Build Infrastructure  = A FUNCTION OF( Infrastructure building time)
+	~	
+	~		|
+
+hgfjhgf  = A FUNCTION OF( )
+	~	
+	~		|
+
+Infrastructure Aging  = A FUNCTION OF( Infrastructure Aging Time,Theoretical Infrastructure Capacity\
+		)
+	~	
+	~		|
+
+Infrastructure Aging Time  = A FUNCTION OF( Infrastructure Shortage,percentage infrastructure maintained annually\
+		)
+	~	
+	~		|
+
+Infrastructure building time  = A FUNCTION OF( )
+	~	
+	~		|
+
+Infrastructure Shortage  = A FUNCTION OF( Practical infrastructure capacity,Total water demand\
+		)
+	~	
+	~		|
+
+Leakage  = A FUNCTION OF( )
+	~	
+	~		|
+
+Maximum capacity exceeding  = A FUNCTION OF( )
+	~	
+	~		|
+
+Maximum infrastructure capacity  = A FUNCTION OF( Maximum capacity exceeding,Practical infrastructure capacity\
+		)
+	~	
+	~		|
+
+Newly required infrastructure  = A FUNCTION OF( Aged Infrastructure,Infrastructure Shortage\
+		)
+	~	
+	~		|
+
+percentage infrastructure maintained annually  = A FUNCTION OF( Available maintenance funds\
+		,Available maintenance staff,Theoretical Infrastructure Capacity)
+	~	
+	~		|
+
+Plan new infrastructure  = A FUNCTION OF( Newly required infrastructure)
+	~	
+	~		|
+
+Planned infrastructure  = A FUNCTION OF( -Build Infrastructure,Plan new infrastructure\
+		,Restore infrastructure)
+	~	
+	~		|
+
+Practical infrastructure capacity  = A FUNCTION OF( Leakage,Theoretical Infrastructure Capacity\
+		) ~~|
+Practical infrastructure capacity=
+	~	
+	~		|
+
+Restore infrastructure  = A FUNCTION OF( Aged Infrastructure,Infrastructure Shortage)
+	~	
+	~		|
+
+Theoretical Infrastructure Capacity= INTEG (
+	Build Infrastructure-Infrastructure Aging,
+		1825)
+	~	
+	~		|
+
+Total water demand  = A FUNCTION OF( )
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 25
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP 
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.015625
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Calibri|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,90,0
+10,1,Theoretical Infrastructure Capacity,650,586,85,50,3,131,0,0,0,0,0,0
+10,2,Aged Infrastructure,1087,589,101,59,3,131,0,0,0,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(924,586)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(793,586)|
+11,5,0,857,586,6,8,34,3,0,0,1,0,0,0
+10,6,Infrastructure Aging,857,613,47,19,40,3,0,0,-1,0,0,0
+10,7,Infrastructure Aging Time,901,458,47,19,8,3,0,0,0,0,0,0
+10,8,Practical infrastructure capacity,608,361,77,19,8,3,0,0,0,0,0,0
+10,9,Maximum capacity exceeding,358,362,65,19,8,3,0,0,0,0,0,0
+1,10,1,8,1,0,0,0,0,64,0,-1--1--1,,1|(586,427)|
+1,11,7,6,1,0,0,0,0,64,0,-1--1--1,,1|(907,526)|
+1,12,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(783,631)|
+10,13,Planned infrastructure,1446,591,89,55,3,131,0,0,0,0,0,0
+1,14,16,13,4,0,0,22,0,0,0,-1--1--1,,1|(1317,591)|
+1,15,16,2,100,0,0,22,0,0,0,-1--1--1,,1|(1227,591)|
+11,16,0,1272,591,6,8,34,3,0,0,1,0,0,0
+10,17,Restore infrastructure,1272,618,47,19,40,3,0,0,-1,0,0,0
+12,18,48,1439,386,10,8,0,3,0,0,-1,0,0,0
+1,19,21,13,4,0,0,22,0,0,0,-1--1--1,,1|(1446,504)|
+1,20,21,18,100,0,0,22,0,0,0,-1--1--1,,1|(1446,427)|
+11,21,0,1446,466,8,6,33,3,0,0,4,0,0,0
+10,22,Plan new infrastructure,1496,466,47,19,40,3,0,0,-1,0,0,0
+10,23,Infrastructure Shortage,818,302,47,19,8,3,0,0,0,0,0,0
+10,24,Newly required infrastructure,1299,413,52,19,8,3,0,0,0,0,0,0
+1,25,2,24,1,0,0,0,0,64,0,-1--1--1,,1|(1178,476)|
+1,26,23,24,1,0,0,0,0,64,0,-1--1--1,,1|(1065,315)|
+1,27,23,16,1,0,0,0,0,64,0,-1--1--1,,1|(1130,432)|
+1,28,2,16,1,0,0,0,0,64,0,-1--1--1,,1|(1169,554)|
+1,29,24,22,1,0,0,0,0,64,0,-1--1--1,,1|(1400,414)|
+1,30,32,1,4,0,0,22,0,0,0,-1--1--1,,1|(650,823)|
+1,31,32,13,100,0,0,22,0,0,0,-1--1--1,,1|(1446,823)|
+11,32,0,1060,823,6,8,34,3,0,0,1,0,0,0
+10,33,Build Infrastructure,1060,842,47,19,40,3,0,0,-1,0,0,0
+10,34,Infrastructure building time,1288,913,47,19,8,3,0,0,0,0,0,0
+1,35,23,7,1,0,0,0,0,64,0,-1--1--1,,1|(871,364)|
+10,36,Leakage,478,460,29,11,8,3,0,0,0,0,0,0
+1,37,36,8,1,0,0,0,0,64,0,-1--1--1,,1|(525,410)|
+1,38,34,33,1,0,0,0,0,64,0,-1--1--1,,1|(1183,859)|
+10,39,Total water demand,613,40,40,19,8,3,0,0,0,0,0,0
+1,40,39,23,1,0,0,0,0,64,0,-1--1--1,,1|(760,154)|
+1,41,8,23,1,0,0,0,0,64,0,-1--1--1,,1|(673,317)|
+10,42,Maximum infrastructure capacity,423,182,77,19,8,3,0,0,0,0,0,0
+1,43,8,42,1,0,0,0,0,64,0,-1--1--1,,1|(538,283)|
+1,44,9,42,1,0,0,0,0,64,0,-1--1--1,,1|(347,258)|
+10,45,percentage infrastructure maintained annually,936,166,70,28,8,3,0,0,0,0,0,0
+1,46,45,7,1,0,0,0,0,64,0,-1--1--1,,1|(982,316)|
+1,47,1,45,1,0,0,0,0,64,0,-1--1--1,,1|(835,211)|
+10,48,Available maintenance staff,815,39,62,19,8,3,0,0,0,0,0,0
+10,49,Available maintenance funds,1054,26,66,19,8,3,0,0,0,0,0,0
+1,50,48,45,0,0,0,0,0,64,0,-1--1--1,,1|(866,93)|
+1,51,49,45,0,0,0,0,0,64,0,-1--1--1,,1|(1003,87)|
+///---\\\
+:L<%^E!@
+9:Current
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:Week,Weeks
+22:Year,Years
+15:0,0,0,1,0,0
+19:90,0
+27:2,
+34:0,
+5:Total water demand
+35:Date
+36:YYYY-MM-DD
+37:2001
+38:1
+39:1
+40:0
+41:0
+42:1
+24:0
+25:0
+26:0
