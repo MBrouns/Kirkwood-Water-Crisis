@@ -1,9 +1,14 @@
 {UTF-8}
-Aged Infrastructure  = A FUNCTION OF( Infrastructure Aging,-Restore infrastructure)
+Available maintenance funds  = A FUNCTION OF( )
 	~	
 	~		|
 
-Build Infrastructure  = A FUNCTION OF( Infrastructure building time)
+Available maintenance staff  = A FUNCTION OF( )
+	~	
+	~		|
+
+Build Infrastructure  = A FUNCTION OF( Available maintenance funds,Available maintenance staff\
+		,Infrastructure building time)
 	~	
 	~		|
 
@@ -11,12 +16,12 @@ hgfjhgf  = A FUNCTION OF( )
 	~	
 	~		|
 
-Infrastructure Aging  = A FUNCTION OF( Infrastructure Aging Time,Theoretical Infrastructure Capacity\
-		)
+Infrastructure aging  = A FUNCTION OF( Infrastructure Aging Time)
 	~	
 	~		|
 
-Infrastructure Aging Time  = A FUNCTION OF( Infrastructure Shortage)
+Infrastructure Aging Time  = A FUNCTION OF( Infrastructure Shortage,percentage infrastructure maintained annually\
+		)
 	~	
 	~		|
 
@@ -42,17 +47,17 @@ Maximum infrastructure capacity  = A FUNCTION OF( Maximum capacity exceeding,Pra
 	~	
 	~		|
 
-Newly required infrastructure  = A FUNCTION OF( Aged Infrastructure,Infrastructure Shortage\
-		)
+percentage infrastructure maintained annually  = A FUNCTION OF( Available maintenance funds\
+		,Available maintenance staff,Theoretical Infrastructure Capacity)
 	~	
 	~		|
 
-Plan new infrastructure  = A FUNCTION OF( Newly required infrastructure)
+Plan new infrastructure  = A FUNCTION OF( Infrastructure Shortage)
 	~	
 	~		|
 
 Planned infrastructure  = A FUNCTION OF( -Build Infrastructure,Plan new infrastructure\
-		,Restore infrastructure)
+		)
 	~	
 	~		|
 
@@ -62,12 +67,10 @@ Practical infrastructure capacity=
 	~	
 	~		|
 
-Restore infrastructure  = A FUNCTION OF( Aged Infrastructure,Infrastructure Shortage)
-	~	
-	~		|
-
+Theoretical Infrastructure Capacity  = A FUNCTION OF( Build Infrastructure,-Infrastructure aging\
+		) ~~|
 Theoretical Infrastructure Capacity= INTEG (
-	Build Infrastructure-Infrastructure Aging,
+	Build Infrastructure-Infrastructure aging,
 		1825)
 	~	
 	~		|
@@ -107,66 +110,65 @@ TIME STEP  = 0.015625
 V300  Do not put anything below this section - it will be ignored
 *View 1
 $192-192-192,0,Calibri|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,90,0
-10,1,Theoretical Infrastructure Capacity,650,473,85,50,3,131,0,0,0,0,0,0
-10,2,Aged Infrastructure,1087,476,101,59,3,131,0,0,0,0,0,0
-1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(924,473)|
-1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(793,473)|
-11,5,0,857,473,6,8,34,3,0,0,1,0,0,0
-10,6,Infrastructure Aging,857,500,0,0,40,3,0,0,-1,0,0,0
-10,7,Infrastructure Aging Time,901,345,0,0,8,3,0,0,0,0,0,0
-10,8,Practical infrastructure capacity,608,248,0,0,8,3,0,0,0,0,0,0
-10,9,Maximum capacity exceeding,358,249,0,0,8,3,0,0,0,0,0,0
-1,10,1,8,1,0,0,0,0,64,0,-1--1--1,,1|(586,314)|
-1,11,7,6,1,0,0,0,0,64,0,-1--1--1,,1|(907,413)|
-1,12,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(783,518)|
-10,13,Planned infrastructure,1446,478,89,55,3,131,0,0,0,0,0,0
-1,14,16,13,4,0,0,22,0,0,0,-1--1--1,,1|(1317,478)|
-1,15,16,2,100,0,0,22,0,0,0,-1--1--1,,1|(1227,478)|
-11,16,0,1272,478,6,8,34,3,0,0,1,0,0,0
-10,17,Restore infrastructure,1272,505,0,0,40,3,0,0,-1,0,0,0
-12,18,48,1439,273,10,8,0,3,0,0,-1,0,0,0
-1,19,21,13,4,0,0,22,0,0,0,-1--1--1,,1|(1446,391)|
-1,20,21,18,100,0,0,22,0,0,0,-1--1--1,,1|(1446,314)|
-11,21,0,1446,353,8,6,33,3,0,0,4,0,0,0
-10,22,Plan new infrastructure,1496,353,0,0,40,3,0,0,-1,0,0,0
-10,23,Infrastructure Shortage,818,189,0,0,8,3,0,0,0,0,0,0
-10,24,Newly required infrastructure,1299,300,0,0,8,3,0,0,0,0,0,0
-1,25,2,24,1,0,0,0,0,64,0,-1--1--1,,1|(1178,363)|
-1,26,23,24,1,0,0,0,0,64,0,-1--1--1,,1|(1065,202)|
-1,27,23,16,1,0,0,0,0,64,0,-1--1--1,,1|(1130,319)|
-1,28,2,16,1,0,0,0,0,64,0,-1--1--1,,1|(1169,441)|
-1,29,24,22,1,0,0,0,0,64,0,-1--1--1,,1|(1400,301)|
-1,30,32,1,4,0,0,22,0,0,0,-1--1--1,,1|(650,710)|
-1,31,32,13,100,0,0,22,0,0,0,-1--1--1,,1|(1446,710)|
-11,32,0,1060,710,6,8,34,3,0,0,1,0,0,0
-10,33,Build Infrastructure,1060,729,0,0,40,3,0,0,-1,0,0,0
-10,34,Infrastructure building time,1288,800,0,0,8,3,0,0,0,0,0,0
-1,35,23,7,1,0,0,0,0,64,0,-1--1--1,,1|(871,251)|
-10,36,Leakage,478,347,0,0,8,3,0,0,0,0,0,0
-1,37,36,8,1,0,0,0,0,64,0,-1--1--1,,1|(525,297)|
-1,38,34,33,1,0,0,0,0,64,0,-1--1--1,,1|(1183,746)|
-10,39,Total water demand,600,56,0,0,8,3,0,0,0,0,0,0
-1,40,39,23,1,0,0,0,0,64,0,-1--1--1,,1|(732,105)|
-1,41,8,23,1,0,0,0,0,64,0,-1--1--1,,1|(673,204)|
-10,42,Maximum infrastructure capacity,423,69,0,0,8,3,0,0,0,0,0,0
-1,43,8,42,1,0,0,0,0,64,0,-1--1--1,,1|(538,170)|
-1,44,9,42,1,0,0,0,0,64,0,-1--1--1,,1|(347,145)|
+10,1,Theoretical Infrastructure Capacity,863,615,85,50,3,131,0,0,0,0,0,0
+10,2,Infrastructure Aging Time,1084,470,47,19,8,3,0,0,0,0,0,0
+10,3,Practical infrastructure capacity,748,400,77,19,8,3,0,0,0,0,0,0
+10,4,Maximum capacity exceeding,498,401,65,19,8,3,0,0,0,0,0,0
+1,5,1,3,1,0,0,0,0,64,0,-1--1--1,,1|(726,466)|
+10,6,Planned infrastructure,465,604,89,55,3,131,0,0,0,0,0,0
+10,7,Infrastructure Shortage,958,341,47,19,8,3,0,0,0,0,0,0
+1,8,10,1,4,0,0,22,0,0,0,-1--1--1,,1|(715,594)|
+1,9,10,6,100,0,0,22,0,0,0,-1--1--1,,1|(597,594)|
+11,10,0,646,594,6,8,34,3,0,0,1,0,0,0
+10,11,Build Infrastructure,646,621,47,19,40,3,0,0,-1,0,0,0
+10,12,Infrastructure building time,716,715,47,19,8,3,0,0,0,0,0,0
+1,13,7,2,1,0,0,0,0,64,0,-1--1--1,,1|(1008,405)|
+10,14,Leakage,618,499,29,11,8,3,0,0,0,0,0,0
+1,15,14,3,1,0,0,0,0,64,0,-1--1--1,,1|(665,449)|
+1,16,12,11,1,0,0,0,0,64,0,-1--1--1,,1|(686,666)|
+10,17,Total water demand,753,79,40,19,8,3,0,0,0,0,0,0
+1,18,17,7,1,0,0,0,0,64,0,-1--1--1,,1|(900,193)|
+1,19,3,7,1,0,0,0,0,64,0,-1--1--1,,1|(813,356)|
+10,20,Maximum infrastructure capacity,563,221,77,19,8,3,0,0,0,0,0,0
+1,21,3,20,1,0,0,0,0,64,0,-1--1--1,,1|(678,322)|
+1,22,4,20,1,0,0,0,0,64,0,-1--1--1,,1|(487,297)|
+10,23,percentage infrastructure maintained annually,1308,294,70,28,8,3,0,0,0,0,0,0
+1,24,23,2,1,0,0,0,0,64,0,-1--1--1,,1|(1120,358)|
+1,25,1,23,1,0,0,0,0,64,0,-1--1--1,,1|(1389,527)|
+10,26,Available maintenance staff,955,78,62,19,8,3,0,0,0,0,0,0
+10,27,Available maintenance funds,1226,78,66,19,8,3,0,0,0,0,0,0
+1,28,26,23,0,0,0,0,0,64,0,-1--1--1,,1|(1118,177)|
+1,29,27,23,0,0,0,0,2,64,0,-1--1--1,|0||-1--1--1,1|(1262,174)|
+12,30,48,1281,614,10,8,0,3,0,0,-1,0,0,0
+1,31,33,30,4,0,0,22,0,0,0,-1--1--1,,1|(1193,614)|
+1,32,33,1,100,0,0,22,0,0,0,-1--1--1,,1|(1025,614)|
+11,33,0,1109,614,6,8,34,3,0,0,1,0,0,0
+10,34,Infrastructure aging,1109,641,47,19,40,3,0,0,-1,0,0,0
+1,35,2,34,0,0,0,0,0,64,0,-1--1--1,,1|(1094,548)|
+12,36,48,116,606,10,8,0,3,0,0,-1,0,0,0
+1,37,39,6,4,0,0,22,0,0,0,-1--1--1,,1|(316,606)|
+1,38,39,36,100,0,0,22,0,0,0,-1--1--1,,1|(185,606)|
+11,39,0,251,606,6,8,34,3,0,0,1,0,0,0
+10,40,Plan new infrastructure,251,633,47,19,40,3,0,0,-1,0,0,0
+1,41,7,40,1,0,0,0,0,64,0,-1--1--1,,1|(338,257)|
+1,42,26,11,0,0,0,0,0,64,0,-1--1--1,,1|(803,343)|
+1,43,27,11,0,0,0,0,0,64,0,-1--1--1,,1|(941,344)|
 ///---\\\
 :L<%^E!@
 9:Current
 22:$,Dollar,Dollars,$s
+22:Day,Days
 22:Hour,Hours
 22:Month,Months
 22:Person,People,Persons
 22:Unit,Units
 22:Week,Weeks
 22:Year,Years
-22:Day,Days
 15:0,0,0,1,0,0
 19:90,0
 27:2,
 34:0,
-5:Practical infrastructure capacity
+5:Available maintenance funds
 35:Date
 36:YYYY-MM-DD
 37:2001
