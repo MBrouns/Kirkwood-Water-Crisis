@@ -11,7 +11,11 @@ The following systems have been identified:
 
 There are several interfaces between these systems. These are:
 
-The maintenance of infrastructure is limited by maintenance staff availability and municipal funds availability. The need for new infrastructure is determined by the discrepancy between maximum infrastructure capacity and total population demand. Also, the productivity of the technical staff is influenced by their work pressure. 
+- The maintenance of infrastructure is limited by maintenance staff availability and municipal funds availability. 
+- The building of new infrastructure or restoring aged infrastructure is limited by maintenance staff and municipal funds availability.
+- The need for new infrastructure is determined by the discrepancy between maximum infrastructure capacity and total population demand. 
+- The productivity of the technical staff is influenced by their work pressure. 
+
 
 
 # Experimental setup
