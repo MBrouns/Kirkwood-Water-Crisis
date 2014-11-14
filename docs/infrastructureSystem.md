@@ -24,7 +24,6 @@ This section will describe the variables this system needs from other subsystems
 | Available building capacity by staff  | The amount of infrastructure which can be built limited by staff      		|  *ML/year*  |
 | Available building capacity by funds  | The amount of infrastructure which can be built limited by funds      		|  *ML/year*  |
 | Available staff capacity for planning infrastructure  | The amount of infrastructure which can be planned limited by staff      		|  *ML/year*  |
-
 | **Outgoing**	 |   		|    |
 | Theoretical infrastructure capacity  | The capacity of built infrastructure without leaks    		| *ML/year*   |
 | Maximum infrastructure capacity  | The maximum water which can be supplied to users including pushing the infrastructure capacity    		| *ML/year*   |
