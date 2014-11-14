@@ -1,0 +1,6 @@
+200,M,1234,,0
+Available building capacity by funds=RANDOM_UNIFORM(0,1000)
+Available building capacity by staff=RANDOM_UNIFORM(0,1000)
+Available maintenance capacity by funds=RANDOM_UNIFORM(0,1000)
+Available maintenance capacity by staff=RANDOM_UNIFORM(0,1000)
+Available planning capacity by staff=RANDOM_UNIFORM(0,1000)

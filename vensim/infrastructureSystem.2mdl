@@ -1,40 +1,57 @@
 {UTF-8}
-Build infrastructure=
-	MIN(MIN(Planned infrastructure/Infrastructure building time, Available building capacity by funds\
-		),Available building capacity by staff)
-	~	
-	~		|
-
-Effect of infrastructure pushing on aging time= WITH LOOKUP (
-	Infrastructure Shortage/Practical infrastructure capacity,
-		([(0,-10)-(30,10)],(0,0),(30,-10) ))
-	~	
-	~		|
-
 Infrastructure Surplus=
 	MAX(Practical infrastructure capacity-Total water demand, 0)
-	~	
-	~		|
-
-Plan new infrastructure=
-	MIN(DELAY1(Infrastructure Shortage+Infrastructure aging-Infrastructure Surplus,Infrastructure planning time\
-		), Available planning capacity by staff)
-	~	ML/(Year*Year)
-	~		|
-
-Available planning capacity by staff  = A FUNCTION OF( )
-	~	
+	~	ML/Year
 	~		|
 
 Effect of maintenance on aging time= WITH LOOKUP (
 	percentage infrastructure maintained annually,
 		([(0,-10)-(100,10)],(0,-10),(8,0),(100,10) ))
-	~	
+	~	Dmnl
+	~		|
+
+Production rate required for primary staff activities=
+	Target percentage infrastructure maintenance*Theoretical Infrastructure Capacity
+	~	ML/Year
 	~		|
 
 Infrastructure Aging Time=
 	30 + Effect of maintenance on aging time + Effect of infrastructure pushing on aging time
-	~	
+	~	Year
+	~		|
+
+Available planning capacity by staff=
+	1000
+	~	ML/Year
+	~		|
+
+Build infrastructure=
+	MIN(MIN(Planned infrastructure/Infrastructure building time, Available building capacity by funds\
+		),Available building capacity by staff)
+	~	ML/(Year*Year)
+	~		|
+
+Effect of infrastructure pushing on aging time= WITH LOOKUP (
+	Infrastructure Shortage/Practical infrastructure capacity,
+		([(0,-10)-(30,10)],(0,0),(30,-10) ))
+	~	Dmnl
+	~		|
+
+Target percentage infrastructure maintenance=
+	0.08
+	~	Dmnl
+	~		|
+
+Plan new infrastructure=
+	MIN(DELAY1(Infrastructure Shortage-Infrastructure Surplus,Infrastructure planning time\
+		), Available planning capacity by staff)+Infrastructure aging
+	~	ML/(Year*Year)
+	~		|
+
+Production rate required for secondary staff activities=
+	(DELAY1(Infrastructure Shortage+Infrastructure aging-Infrastructure Surplus,Infrastructure planning time\
+		)) + Planned infrastructure/Infrastructure building time
+	~	ML/Year
 	~		|
 
 Infrastructure aging=
@@ -57,7 +74,7 @@ Theoretical Infrastructure Capacity= INTEG (
 
 Available building capacity by funds=
 	1000
-	~	ML/Year
+	~	ML/(Year*Year)
 	~		|
 
 Available maintenance capacity by funds=
@@ -67,7 +84,7 @@ Available maintenance capacity by funds=
 
 Available building capacity by staff=
 	1000
-	~	ML/Year
+	~	ML/(Year*Year)
 	~		|
 
 Available maintenance capacity by staff=
@@ -88,7 +105,7 @@ Infrastructure planning time=
 percentage infrastructure maintained annually=
 	MIN(Available maintenance capacity by staff, Available maintenance capacity by funds\
 		) / Theoretical Infrastructure Capacity * 100
-	~	
+	~	Dmnl
 	~		|
 
 Leakage=
@@ -103,7 +120,7 @@ Maximum infrastructure capacity=
 
 Total water demand=
 	2000
-	~	ML / Year
+	~	ML/Year
 	~		|
 
 Maximum capacity exceeding=
@@ -152,67 +169,84 @@ TIME STEP  = 0.0078125
 V300  Do not put anything below this section - it will be ignored
 *View 1
 $192-192-192,0,Calibri|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,70,0
-10,1,Theoretical Infrastructure Capacity,1136,706,85,50,3,131,0,0,0,0,0,0
-10,2,Infrastructure Aging Time,1352,570,47,19,8,3,0,0,0,0,0,0
-10,3,Practical infrastructure capacity,1016,500,77,19,8,3,0,0,0,0,0,0
-10,4,Maximum capacity exceeding,632,487,65,19,8,3,0,0,0,0,0,0
-1,5,1,3,1,0,0,0,0,64,0,-1--1--1,,1|(998,565)|
-10,6,Planned infrastructure,733,704,89,55,3,131,0,0,0,0,0,0
-10,7,Infrastructure Shortage,1095,304,47,19,8,3,0,0,0,0,0,0
-10,8,Infrastructure building time,965,911,47,19,8,3,0,0,0,0,0,0
-10,9,Leakage,823,505,29,11,8,3,0,0,0,0,0,0
-1,10,9,3,1,0,0,0,0,64,0,-1--1--1,,1|(925,530)|
-10,11,Total water demand,1108,107,40,19,8,3,0,0,0,0,0,0
-1,12,11,7,1,0,0,0,0,64,0,-1--1--1,,1|(1114,205)|
-1,13,3,7,1,0,0,0,0,64,0,-1--1--1,,1|(1021,423)|
-10,14,Maximum infrastructure capacity,838,382,77,19,8,3,0,0,0,0,0,0
-1,15,3,14,1,0,0,0,0,64,0,-1--1--1,,1|(932,454)|
-1,16,4,14,1,0,0,0,0,64,0,-1--1--1,,1|(689,403)|
-10,17,percentage infrastructure maintained annually,1576,394,70,28,8,3,0,0,0,0,0,0
-1,18,1,17,1,0,0,0,0,64,0,-1--1--1,,1|(1651,621)|
-10,19,Available maintenance capacity by staff,1368,186,78,19,8,3,0,0,0,0,0,0
-10,20,Available maintenance capacity by funds,1568,175,66,19,8,3,0,0,0,0,0,0
-1,21,19,17,0,0,0,0,0,64,0,-1--1--1,,1|(1462,280)|
-1,22,20,17,0,0,0,0,2,64,0,-1--1--1,|12||0-0-0,1|(1570,273)|
-12,23,48,1549,714,10,8,0,3,0,0,-1,0,0,0
-1,24,26,23,4,0,0,22,0,0,0,-1--1--1,,1|(1457,713)|
-1,25,26,1,100,0,0,22,0,0,0,-1--1--1,,1|(1292,713)|
-11,26,48,1369,713,6,8,34,3,0,0,1,0,0,0
-10,27,Infrastructure aging,1369,740,47,19,40,3,0,0,-1,0,0,0
-1,28,2,27,0,0,0,0,0,64,0,-1--1--1,,1|(1359,648)|
-12,29,48,384,706,10,8,0,3,0,0,-1,0,0,0
-1,30,32,6,4,0,0,22,0,0,0,-1--1--1,,1|(587,708)|
-1,31,32,29,100,0,0,22,0,0,0,-1--1--1,,1|(456,708)|
-11,32,48,524,708,6,8,34,3,0,0,1,0,0,0
-10,33,Plan new infrastructure,524,735,47,19,40,3,0,0,-1,0,0,0
-1,34,7,33,1,0,0,0,0,64,0,-1--1--1,,1|(542,398)|
-10,35,Available building capacity by staff,1911,184,74,28,8,3,0,0,0,0,0,0
-10,36,Available building capacity by funds,1730,185,49,19,8,3,0,0,0,0,0,0
-10,37,Infrastructure planning time,390,854,47,19,8,3,0,0,0,0,0,0
-1,38,37,33,0,0,0,0,0,64,0,-1--1--1,,1|(451,799)|
-1,39,1,26,1,0,0,0,0,64,0,-1--1--1,,1|(1282,636)|
-1,40,42,1,4,0,0,22,0,0,0,-1--1--1,,1|(996,711)|
-1,41,42,6,100,0,0,22,0,0,0,-1--1--1,,1|(876,711)|
-11,42,204,936,711,6,8,34,3,0,0,1,0,0,0
-10,43,Build infrastructure,936,738,47,19,40,3,0,0,-1,0,0,0
-1,44,6,43,1,0,0,0,0,64,0,-1--1--1,,1|(855,641)|
-1,45,8,43,1,0,0,0,0,64,0,-1--1--1,,1|(979,792)|
-1,46,27,33,1,0,0,0,0,64,0,-1--1--1,,1|(1086,940)|
-10,47,Infrastructure Surplus,923,308,47,19,8,3,0,0,0,0,0,0
-1,48,3,47,1,0,0,0,0,64,0,-1--1--1,,1|(961,419)|
-1,49,11,47,1,0,0,0,0,64,0,-1--1--1,,1|(994,202)|
-1,50,47,33,1,0,0,0,0,64,0,-1--1--1,,1|(547,498)|
-10,53,Effect of maintenance on aging time,1446,465,55,28,8,3,0,0,0,0,0,0
-1,54,17,53,1,0,0,0,0,64,0,-1--1--1,,1|(1463,410)|
-1,55,53,2,1,0,0,0,0,64,0,-1--1--1,,1|(1377,516)|
-10,56,Effect of infrastructure pushing on aging time,1222,421,78,19,8,3,0,0,0,0,0,0
-1,57,7,56,1,0,0,0,0,64,0,-1--1--1,,1|(1167,350)|
-1,58,56,2,1,0,0,0,0,64,0,-1--1--1,,1|(1316,497)|
-1,59,3,56,1,0,0,0,0,64,0,-1--1--1,,1|(1084,444)|
-1,60,36,43,1,0,0,0,0,64,0,-1--1--1,,1|(1777,730)|
-1,61,35,43,1,0,0,0,0,64,0,-1--1--1,,1|(1890,774)|
-10,62,Available planning capacity by staff,2098,179,64,19,8,3,0,0,0,0,0,0
-1,63,62,33,1,0,0,0,0,64,0,-1--1--1,,1|(1982,801)|
+10,1,Theoretical Infrastructure Capacity,1137,754,85,50,3,131,0,0,0,0,0,0
+10,2,Infrastructure Aging Time,1353,618,47,19,8,3,0,0,0,0,0,0
+10,3,Practical infrastructure capacity,1017,548,77,19,8,3,0,0,0,0,0,0
+10,4,Maximum capacity exceeding,633,535,65,19,8,3,0,0,0,0,0,0
+1,5,1,3,1,0,0,0,0,64,0,-1--1--1,,1|(999,613)|
+10,6,Planned infrastructure,734,752,89,55,3,131,0,0,0,0,0,0
+10,7,Infrastructure Shortage,1096,352,47,19,8,3,0,0,0,0,0,0
+10,8,Infrastructure building time,966,959,47,19,8,3,0,0,0,0,0,0
+10,9,Leakage,824,553,29,11,8,3,0,0,0,0,0,0
+1,10,9,3,1,0,0,0,0,64,0,-1--1--1,,1|(926,578)|
+10,11,Total water demand,1093,230,40,19,8,3,0,0,0,0,0,0
+1,12,11,7,1,0,0,0,0,64,0,-1--1--1,,1|(1099,290)|
+1,13,3,7,1,0,0,0,0,64,0,-1--1--1,,1|(1022,471)|
+10,14,Maximum infrastructure capacity,839,430,77,19,8,3,0,0,0,0,0,0
+1,15,3,14,1,0,0,0,0,64,0,-1--1--1,,1|(933,502)|
+1,16,4,14,1,0,0,0,0,64,0,-1--1--1,,1|(690,451)|
+10,17,percentage infrastructure maintained annually,1577,442,70,28,8,3,0,0,0,0,0,0
+1,18,1,17,1,0,0,0,0,64,0,-1--1--1,,1|(1652,669)|
+10,19,Available maintenance capacity by staff,1369,234,78,19,8,3,0,0,0,0,0,0
+10,20,Available maintenance capacity by funds,1569,223,66,19,8,3,0,0,0,0,0,0
+1,21,19,17,0,0,0,0,0,64,0,-1--1--1,,1|(1463,328)|
+1,22,20,17,0,0,0,0,2,64,0,-1--1--1,|12||0-0-0,1|(1571,321)|
+12,23,48,1550,762,10,8,0,3,0,0,-1,0,0,0
+1,24,26,23,4,0,0,22,0,0,0,-1--1--1,,1|(1458,761)|
+1,25,26,1,100,0,0,22,0,0,0,-1--1--1,,1|(1293,761)|
+11,26,48,1370,761,6,8,34,3,0,0,1,0,0,0
+10,27,Infrastructure aging,1370,788,47,19,40,3,0,0,-1,0,0,0
+1,28,2,27,0,0,0,0,0,64,0,-1--1--1,,1|(1360,696)|
+12,29,48,385,754,10,8,0,3,0,0,-1,0,0,0
+1,30,32,6,4,0,0,22,0,0,0,-1--1--1,,1|(588,756)|
+1,31,32,29,100,0,0,22,0,0,0,-1--1--1,,1|(457,756)|
+11,32,48,525,756,6,8,34,3,0,0,1,0,0,0
+10,33,Plan new infrastructure,525,783,47,19,40,3,0,0,-1,0,0,0
+1,34,7,33,1,0,0,0,0,64,0,-1--1--1,,1|(543,446)|
+10,35,Available building capacity by staff,326,221,74,28,8,3,0,0,0,0,0,0
+10,36,Available building capacity by funds,145,222,49,19,8,3,0,0,0,0,0,0
+10,37,Infrastructure planning time,391,902,47,19,8,3,0,0,0,0,0,0
+1,38,37,33,0,0,0,0,0,64,0,-1--1--1,,1|(452,847)|
+1,39,1,26,1,0,0,0,0,64,0,-1--1--1,,1|(1283,684)|
+1,40,42,1,4,0,0,22,0,0,0,-1--1--1,,1|(997,759)|
+1,41,42,6,100,0,0,22,0,0,0,-1--1--1,,1|(877,759)|
+11,42,204,937,759,6,8,34,3,0,0,1,0,0,0
+10,43,Build infrastructure,937,786,47,19,40,3,0,0,-1,0,0,0
+1,44,6,43,1,0,0,0,0,64,0,-1--1--1,,1|(856,689)|
+1,45,8,43,1,0,0,0,0,64,0,-1--1--1,,1|(980,840)|
+1,46,27,33,1,0,0,0,0,64,0,-1--1--1,,1|(1087,988)|
+10,47,Infrastructure Surplus,924,356,47,19,8,3,0,0,0,0,0,0
+1,48,3,47,1,0,0,0,0,64,0,-1--1--1,,1|(962,467)|
+1,49,11,47,1,0,0,0,0,64,0,-1--1--1,,1|(995,288)|
+1,50,47,33,1,0,0,0,0,64,0,-1--1--1,,1|(548,546)|
+10,51,Effect of maintenance on aging time,1447,513,55,28,8,3,0,0,0,0,0,0
+1,52,17,51,1,0,0,0,0,64,0,-1--1--1,,1|(1464,458)|
+1,53,51,2,1,0,0,0,0,64,0,-1--1--1,,1|(1378,564)|
+10,54,Effect of infrastructure pushing on aging time,1215,470,70,20,8,131,0,0,0,0,0,0
+1,55,7,54,1,0,0,0,0,64,0,-1--1--1,,1|(1168,398)|
+1,56,54,2,1,0,0,0,0,64,0,-1--1--1,,1|(1317,545)|
+1,57,3,54,1,0,0,0,0,64,0,-1--1--1,,1|(1085,492)|
+1,58,36,43,1,0,0,0,0,64,0,-1--1--1,,1|(316,987)|
+1,59,35,43,1,0,0,0,0,64,0,-1--1--1,,1|(258,887)|
+10,60,Available planning capacity by staff,513,216,64,19,8,3,0,0,0,0,0,0
+1,61,60,33,1,0,0,0,0,64,0,-1--1--1,,1|(413,641)|
+10,62,Production rate required for primary staff activities,2168,249,89,19,8,3,0,0,0,0,0,0
+10,63,Production rate required for secondary staff activities,1916,256,83,28,8,3,0,0,0,0,0,0
+10,64,Target percentage infrastructure maintenance,2169,407,63,28,8,3,0,0,0,0,0,0
+1,65,1,62,1,0,0,0,0,64,0,-1--1--1,,1|(2078,966)|
+1,66,64,62,1,0,0,0,0,64,0,-1--1--1,,1|(2190,316)|
+10,67,Planned infrastructure,2032,361,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+10,68,Infrastructure building time,2043,430,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+10,74,Infrastructure planning time,1772,390,52,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,76,74,63,1,0,0,0,0,64,0,-1--1--1,,1|(1833,319)|
+1,77,67,63,0,0,0,0,0,64,0,-1--1--1,,1|(1984,317)|
+1,78,68,63,0,0,0,0,0,64,0,-1--1--1,,1|(1987,353)|
+10,79,Infrastructure Surplus,1803,456,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+10,80,Infrastructure Shortage,1895,516,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+10,81,Infrastructure aging,2006,489,51,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,82,81,63,0,0,0,0,0,64,0,-1--1--1,,1|(1965,383)|
+1,83,79,63,0,0,0,0,0,64,0,-1--1--1,,1|(1853,366)|
+1,84,80,63,0,0,0,0,0,64,0,-1--1--1,,1|(1903,397)|
 ///---\\\
 :L<%^E!@
 1:Current.vdf
@@ -230,7 +264,7 @@ $192-192-192,0,Calibri|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,70,0
 27:2,
 34:0,
 4:Time
-5:Plan new infrastructure
+5:Build infrastructure
 35:Date
 36:YYYY-MM-DD
 37:2001
