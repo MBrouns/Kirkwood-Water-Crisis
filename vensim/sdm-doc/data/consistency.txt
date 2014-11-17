@@ -1,36 +1,36 @@
 Units Consistency Summary Report
 
-Number of EquationsChecked: 103
-Number Consistent:          90
-Number Inconsistent:        13
+Number of EquationsChecked: 106
+Number Consistent:          102
+Number Inconsistent:        4
 
 
 =====================================
 Inconsistent Unit Equations
 
 Equation:
-	Immigration towards connected houses=(LSRV residents excluding Kirkwood*Immigration rate)*(1-Moving rate to unconnected households)
+	Effect of maintenance on aging time = Effect of maintenance on aging time_RSSDlookup(percentage infrastructure maintained annually)
 
 LHS Units:
-	(Person/Year*Year)
+	(Year)
 
 RHS Units:
-	(Person/Year)
+	(Dmnl)
 
 Complete RHS Units:
-	( ( Person * 1/year ) * ( constant - 1/year ) ) 
+	LOOKUP ( Dmnl , Dmnl ) 
 =====================================
 Equation:
-	Connected Kirkwood residents= INTEG (Population growth Kirkwood residents+Immigration towards connected houses-Emigration from Kirkwood+Connecting households to the service network,3000)
+	Maintenance expenditures=MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity, Available funds for maintenance)/year
 
 LHS Units:
-	(Person)
+	(kZAR/Year)
 
 RHS Units:
-	INTEG ( ( ( ( ERROR >>> (Person/Year) + (Person/Year*Year)  <<< ERROR ) - (Person/Year) ) + (Person/Year) ) , (constant) ) 
+	ERROR >>> Mismatched units in function call  <<< ERROR / (Year) ) 
 
 Complete RHS Units:
-	INTEG ( ( ( ( people/year + people/(year*year) ) - people/year ) + people/year ) , constant ) 
+	( MIN ( ( Ml/year * kZAR/(Ml/year) ) , kZAR ) / Year ) 
 =====================================
 Equation:
 	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
@@ -45,122 +45,14 @@ Complete RHS Units:
 	( kZAR / kZAR/(Ml/year) ) 
 =====================================
 Equation:
-	Emigration from unconnected Kirkwood households=Unconnected Kirkwood residents*Emigration rate from unconnected kirkwood
+	Effect of infrastructure pushing on aging time = Effect of infrastructure pushing on aging time_RSSDlookup(Infrastructure Shortage/Practical infrastructure capacity)
 
 LHS Units:
-	(Person/Year)
-
-RHS Units:
-	(Person*Person)
-
-Complete RHS Units:
-	( Person * Person ) 
-=====================================
-Equation:
-	Staff production change rate = Staff production change rate_RSSDlookup(Staff occupancy)
-
-LHS Units:
-	(Dmnl)
-
-RHS Units:
-	ERROR >>> (Year*staff/Ml)  <<< ERROR 
-
-Complete RHS Units:
-	LOOKUP ( Dmnl , staff*year/Ml ) 
-=====================================
-Equation:
-	Production rate required for secondary staff activities= ACTIVE INITIAL (MAX(0, (DELAY1(Required infrastructure,Infrastructure planning time)) + Planned infrastructure/Infrastructure building time),1)
-
-LHS Units:
-	(Ml/Year)
-
-RHS Units:
-	ACTIVEINITIAL ( MAX ( (constant) , ( ERROR >>> (Ml/Year) + (Ml/Year*Year)  <<< ERROR ) ) , (constant) ) 
-
-Complete RHS Units:
-	ACTIVEINITIAL ( MAX ( constant , ( DELAY1 ( Ml/year , Year ) + ( Ml/year / Year ) ) ) , constant ) 
-=====================================
-Equation:
-	Maintenance expenditures=MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity, Available funds for maintenance)
-
-LHS Units:
-	(kZAR/Year)
-
-RHS Units:
-	ERROR >>> Mismatched units in function call  <<< ERROR 
-
-Complete RHS Units:
-	MIN ( ( Ml/year * kZAR/(Ml/year) ) , kZAR ) 
-=====================================
-Equation:
-	LSRV residents excluding Kirkwood= INTEG (Population growth LSRV residents-Emigration from LSRV-Immigration towards connected houses-Immigration towards unconnected houses,40000)
-
-LHS Units:
-	(Person)
-
-RHS Units:
-	INTEG ( ( ( ERROR >>> (Person/Year) - (Person/Year*Year)  <<< ERROR ) - (Person/Year*Year) ) , (constant) ) 
-
-Complete RHS Units:
-	INTEG ( ( ( ( people/year - people/year ) - people/(year*year) ) - people/(year*year) ) , constant ) 
-=====================================
-Equation:
-	Emigration from Kirkwood=Connected Kirkwood residents*Emigration rate connected Kirkwood
-
-LHS Units:
-	(Person/Year)
-
-RHS Units:
-	(Person*Person)
-
-Complete RHS Units:
-	( Person * Person ) 
-=====================================
-Equation:
-	Build infrastructure=MAX(0, MIN(Planned infrastructure/Infrastructure building time ,Production possible for construction activities/Staff required for building infrastructure))
-
-LHS Units:
-	(Ml/Year*Year)
-
-RHS Units:
-	ERROR >>> Mismatched units in function call  <<< ERROR ) 
-
-Complete RHS Units:
-	MAX ( constant , MIN ( ( Ml/year / Year ) , ( Ml/year / 1/year ) ) ) 
-=====================================
-Equation:
-	Staff occupancy=Total production required/(Available technical staff*Normal production rate per person per year)
-
-LHS Units:
-	(Year*staff/Ml)
+	(Year)
 
 RHS Units:
 	(Dmnl)
 
 Complete RHS Units:
-	( Ml/year / ( staff * Ml/year/staff ) ) 
-=====================================
-Equation:
-	Plan new infrastructure=MAX(MIN(DELAY1(Required infrastructure, Infrastructure planning time), Production possible for planning activities/Staff required for building infrastructure), 0)
-
-LHS Units:
-	(Ml/Year*Year)
-
-RHS Units:
-	ERROR >>> Mismatched units in function call  <<< ERROR , (constant) ) 
-
-Complete RHS Units:
-	MAX ( MIN ( DELAY1 ( Ml/year , Year ) , ( Ml/year / 1/year ) ) , constant ) 
-=====================================
-Equation:
-	Unconnected Kirkwood residents= INTEG (Population growth unconnected Kirkwood residents+Immigration towards unconnected houses-Emigration from unconnected Kirkwood households-Connecting households to the service network,5850)
-
-LHS Units:
-	(Person)
-
-RHS Units:
-	INTEG ( ( ( ( ERROR >>> (Person/Year) + (Person/Year*Year)  <<< ERROR ) - (Person/Year) ) - (Person/Year) ) , (constant) ) 
-
-Complete RHS Units:
-	INTEG ( ( ( ( people/year + people/(year*year) ) - people/year ) - people/year ) , constant ) 
+	LOOKUP ( Dmnl , ( Ml/year / Ml/year ) ) 
 =====================================
