@@ -1,13 +1,186 @@
 {UTF-8}
-Delivery discrepancy connected households=
-	Volume of water supplied by household service delivery/Total water demand connected households
+connected household crisis reached=
+	IF THEN ELSE(Delivery discrepancy connected households < Crisis discrepancy rate connected households\
+		, 1, 0)
+	~	Dmnl
+	~		|
+
+other urban user crisis reached=
+	IF THEN ELSE(Delivery discrepancy other urban users<Crisis discrepancy rate other urban users\
+		, 1, 0)
+	~	Dmnl
+	~		|
+
+Required infrastructure=
+	Infrastructure Shortage+Infrastructure aging*year-Infrastructure Surplus
+	~	Ml/year
+	~		|
+
+Staff Hired=
+	1
+	~	staff
+	~		|
+
+Target population connected Kirkwood=
+	7500
+	~	people
+	~		|
+
+Target population unconnected Kirkwood=
+	5500
+	~	people
+	~		|
+
+unconnected household crisis reached=
+	IF THEN ELSE(Delivery discrepancy unconnected households<Crisis discrepancy rate unconnected households\
+		, 1, 0)
+	~	Dmnl
+	~		|
+
+year=
+	1
+	~	year
+	~		|
+
+********************************************************
+	.infrastructureSystem
+********************************************************~
+	|
+
+Production rate required for secondary staff activities= ACTIVE INITIAL (
+	MAX(0, (DELAY1(Required infrastructure,Infrastructure planning time)) + Planned infrastructure
+	/Infrastructure building time),
+		1)
+	~	Ml/year
+	~		|
+
+Plan new infrastructure=
+	MAX(MIN(DELAY1(Required infrastructure, Infrastructure planning time), Production possible for planning activities
+	/Staff required for building infrastructure), 0)
+	~	Ml/(year*year) [0,10000]
+	~	MAX(MIN(DELAY1(Required infrastructure, Infrastructure planning time), Production \
+		possible for planning activities
+		/Staff required for building infrastructure), 0)
+	|
+
+Staff required for building infrastructure=
+	0.1
+	~	1/year
+	~		|
+
+Build infrastructure=
+	MAX(0, MIN(Planned infrastructure/Infrastructure building time ,Production possible for construction activities\
+		/Staff required for building infrastructure))
+	~	Ml/(year*year)
+	~		|
+
+percentage infrastructure maintained annually=
+	MIN(MIN(Production possible for primary activities, Available maintenance capacity by funds\
+		) / Theoretical Infrastructure Capacity
+	 * 100, Target percentage infrastructure maintenance * 100)
+	~	Dmnl
+	~		|
+
+Infrastructure Surplus=
+	MAX(Practical infrastructure capacity-Total water demand, 0)
+	~	Ml/year
+	~		|
+
+Leakage=
+	0.3
+	~	Dmnl
+	~		|
+
+Maximum capacity exceeding=
+	0.3
+	~	Dmnl
+	~		|
+
+Infrastructure Aging Time=
+	30 + Effect of maintenance on aging time + Effect of infrastructure pushing on aging time
+	~	year
+	~		|
+
+Effect of infrastructure pushing on aging time= WITH LOOKUP (
+	Infrastructure Shortage/Practical infrastructure capacity,
+		([(0,-10)-(30,10)],(0,0),(30,-10) ))
+	~	year
+	~		|
+
+Effect of maintenance on aging time= WITH LOOKUP (
+	percentage infrastructure maintained annually,
+		([(0,-10)-(100,10)],(0,-10),(8,0),(100,10) ))
+	~	year
+	~		|
+
+Maximum infrastructure capacity=
+	Practical infrastructure capacity*(1+Maximum capacity exceeding)
+	~	Ml / year
+	~		|
+
+Practical infrastructure capacity=
+	Theoretical Infrastructure Capacity * (1-Leakage)
+	~	Ml/year
+	~		|
+
+Production rate required for primary staff activities= ACTIVE INITIAL (
+	Target percentage infrastructure maintenance*Theoretical Infrastructure Capacity,
+		1)
+	~	Ml/year
+	~		|
+
+Infrastructure aging=
+	Theoretical Infrastructure Capacity/Infrastructure Aging Time
+	~	Ml/(year*year)
+	~	Theoretical Infrastructure Capacity/ Infrastructure Aging Time
+	|
+
+Infrastructure planning time=
+	0.1
+	~	year
+	~		|
+
+Target percentage infrastructure maintenance=
+	0.08
+	~	Dmnl
+	~		|
+
+Infrastructure building time=
+	5
+	~	year
+	~		|
+
+Theoretical Infrastructure Capacity= INTEG (
+	Build infrastructure-Infrastructure aging,
+		1825)
+	~	Ml/year [0,100000]
+	~		|
+
+Infrastructure Shortage=
+	MAX(Total water demand-Practical infrastructure capacity, 0)
+	~	Ml/year
+	~		|
+
+Planned infrastructure= INTEG (
+	Plan new infrastructure-Build infrastructure,
+		1000)
+	~	Ml/year [0,100000]
+	~		|
+
+********************************************************
+	.crisisSystem
+********************************************************~
+	|
+
+Water crisis reached=
+	MIN(1, other urban user crisis reached+unconnected household crisis reached+connected household crisis reached\
+		)
 	~	1
 	~		|
 
-Staff occupancy=
-	Total production required/(Available technical staff*Normal production rate per person per year\
-		)
-	~	staff*year/Ml
+Delivery discrepancy connected households=
+	Volume of water supplied by household service delivery/Total water demand connected households
+	~	1
 	~		|
 
 Crisis discrepancy rate connected households=
@@ -20,14 +193,6 @@ Crisis discrepancy rate unconnected households=
 	~	Dmnl
 	~		|
 
-Water crisis reached=
-	IF THEN ELSE(Delivery discrepancy connected households<=Crisis discrepancy rate connected households\
-		, 1, IF THEN ELSE(Delivery discrepancy other urban users<=Crisis discrepancy rate other urban users\
-		, 1, IF THEN ELSE(Delivery discrepancy unconnected households<=Crisis discrepancy rate unconnected households\
-		, 1, 0)))
-	~	1
-	~		|
-
 Delivery discrepancy other urban users=
 	Volume of water supplied for urban water users/Total water demand other urban users
 	~	1
@@ -38,154 +203,19 @@ Delivery discrepancy unconnected households=
 	~	1
 	~		|
 
-Production possible for planning activities=
-	IF THEN ELSE(Water crisis reached=1, 0.1*Production planning activities*Total production possible\
-		, Production planning activities*Total production possible)
-	~	Ml/year
-	~		|
-
-Production possible for construction activities=
-	IF THEN ELSE(Water crisis reached=1, 0.1*Production constructing activities*Total production possible\
-		, Production constructing activities*Total production possible)
-	~	Ml/year
-	~		|
-
 Crisis discrepancy rate other urban users=
 	0
 	~	Dmnl
 	~		|
 
-Production possible for primary activities=
-	IF THEN ELSE(Water crisis reached=1, 0.1*Attention rate for primary activities*Total production possible\
-		, Attention rate for primary activities*Total production possible)
-	~	Ml/year
-	~		|
-
-Emigration rate from unconnected kirkwood=
-	0.03 + (0.03 * Unconnected Kirkwood residents/5500)
-	~	1/year
-	~		|
-
-growth rate connected houses=
-	0.0375
-	~	
-	~		|
-
-growth rate LSRV=
-	0.03625
-	~	1/year
-	~		|
-
-Population growth LSRV residents=
-	LSRV residents excluding Kirkwood*growth rate LSRV
-	~	people/year
-	~		|
-
-Emigration rate from LSRV=
-	0.035 - Immigration rate
-	~	
-	~		|
-
-Emigration from Kirkwood=
-	Connected Kirkwood residents*Emigration rate connected Kirkwood
-	~	people/year
-	~		|
-
-Immigration towards connected houses=
-	(LSRV residents excluding Kirkwood*Immigration rate)*(1-Moving rate to unconnected households\
-		)
-	~	people/(year*year)
-	~		|
-
-Population growth Kirkwood residents=
-	Connected Kirkwood residents*growth rate connected houses
-	~	people/year
-	~		|
-
-Emigration rate connected Kirkwood=
-	0.09 + (0.02 *Connected Kirkwood residents/7500)
-	~	
-	~		|
-
-Connected Kirkwood residents= INTEG (
-	Population growth Kirkwood residents+Immigration towards connected houses-Emigration from Kirkwood\
-		+Connecting households to the service network,
-		3000)
-	~	people
-	~	Initial value = 3182
-	|
-
-LSRV residents excluding Kirkwood= INTEG (
-	Population growth LSRV residents-Emigration from LSRV-Immigration towards connected houses\
-		-Immigration towards unconnected houses,
-		40000)
-	~	people
-	~	Initial value = 40000
-	|
-
-Immigration towards unconnected houses=
-	(LSRV residents excluding Kirkwood*Immigration rate)*Moving rate to unconnected households
-	~	people/(year*year)
-	~		|
-
-Emigration from LSRV=
-	LSRV residents excluding Kirkwood*Emigration rate from LSRV
-	~	people/year
-	~		|
-
-Unconnected Kirkwood residents= INTEG (
-	Population growth unconnected Kirkwood residents+Immigration towards unconnected houses\
-		-Emigration from unconnected Kirkwood households-Connecting households to the service network\
-		,
-		5850)
-	~	people
-	~	Initial value = 6818
+********************************************************
+	.fundingSystem
+********************************************************~
 	|
 
 Available maintenance capacity by funds=
 	Available funds for maintenance/Average annual maintenance cost per unit of capacity
 	~	Ml/year
-	~		|
-
-Real production rate per person per year=
-	Normal production rate per person per year*Staff production change rate
-	~	Ml/(staff*year)
-	~		|
-
-Total production required=
-	Production rate required for primary staff activities+Production rate required for secondary staff activities
-	~	Ml/year
-	~		|
-
-Attention rate for constructing infrastructure=
-	0.75
-	~	Dmnl
-	~		|
-
-Attention rate for planning new infrastructure=
-	0.25
-	~	Dmnl
-	~		|
-
-Attention rate for primary activities=
-	Production rate required for primary staff activities/Total production required
-	~	Dmnl
-	~		|
-
-Attention rate for secondary activities=
-	Production rate required for secondary staff activities/Total production required
-	~	Dmnl
-	~		|
-
-Staff service time=
-	10
-	~	year
-	~		|
-
-Available technical staff= INTEG (
-	Hiring of staff-Staff leaving,
-		10)
-	~	staff
 	~		|
 
 Volume of water supplied by household service delivery=
@@ -197,53 +227,11 @@ Volume of water supplied by household service delivery=
 	~	Ml/year
 	~		|
 
-Hiring of staff=
-	1/Hiring time
-	~	staff/year
-	~	(1/TIME STEP) * PULSE TRAIN( 0, TIME STEP, Hiring time, 2e+010)
-	|
-
-Hiring time=
-	2
-	~	year
-	~		|
-
-Total production possible=
-	Available technical staff*Real production rate per person per year
-	~	Ml/year
-	~		|
-
-Production constructing activities=
-	Attention rate for constructing infrastructure*Attention rate for secondary activities
-	~	1
-	~		|
-
-Production planning activities=
-	Attention rate for planning new infrastructure*Attention rate for secondary activities
-	~	1
-	~		|
-
-Staff production change rate= WITH LOOKUP (
-	Staff occupancy,
-		([(0,0)-(10,2)],(0,1.5),(1,1),(5,0.1),(10,0.1) ))
-	~	Dmnl
-	~		|
-
-Normal production rate per person per year=
-	20
-	~	Ml/year/staff
-	~		|
-
 Volume of water supplied for urban water users=
 	IF THEN ELSE(Total water demand > Maximum infrastructure capacity, (Total water demand other urban users\
 		/Total water demand) * Maximum infrastructure capacity , Total water demand other urban users\
 		 )
 	~	Ml/year
-	~		|
-
-Staff leaving=
-	Available technical staff/Staff service time
-	~	staff/year
 	~		|
 
 "Annual financial bail-out"=
@@ -279,7 +267,7 @@ Unit charge=
 
 Maintenance expenditures=
 	MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity\
-		, Available funds for maintenance)
+		, Available funds for maintenance)/year
 	~	kZAR/year
 	~		|
 
@@ -294,6 +282,93 @@ Municipality income=
 	)))
 	~	kZAR/year
 	~		|
+
+********************************************************
+	.populationSystem
+********************************************************~
+	|
+
+Emigration rate connected Kirkwood=
+	0.09 + (0.02 *Connected Kirkwood residents/Target population connected Kirkwood)
+	~	Dmnl
+	~		|
+
+Emigration rate from unconnected kirkwood=
+	0.03 + (0.03 * Unconnected Kirkwood residents/Target population unconnected Kirkwood\
+		)
+	~	Dmnl
+	~		|
+
+growth rate connected houses=
+	0.0375
+	~	1/year
+	~		|
+
+growth rate LSRV=
+	0.03625
+	~	1/year
+	~		|
+
+Population growth LSRV residents=
+	LSRV residents excluding Kirkwood*growth rate LSRV
+	~	people/year
+	~		|
+
+Emigration rate from LSRV=
+	0.035 - Immigration rate
+	~	Dmnl/year
+	~		|
+
+Emigration from Kirkwood=
+	Connected Kirkwood residents*Emigration rate connected Kirkwood/year
+	~	people/year
+	~		|
+
+Immigration towards connected houses=
+	(LSRV residents excluding Kirkwood*Immigration rate)*(1-Moving rate to unconnected households\
+		)
+	~	people/year
+	~		|
+
+Population growth Kirkwood residents=
+	Connected Kirkwood residents*growth rate connected houses
+	~	people/year
+	~		|
+
+Connected Kirkwood residents= INTEG (
+	Population growth Kirkwood residents+Immigration towards connected houses-Emigration from Kirkwood\
+		+Connecting households to the service network,
+		3000)
+	~	people
+	~	Initial value = 3182
+	|
+
+LSRV residents excluding Kirkwood= INTEG (
+	Population growth LSRV residents-Emigration from LSRV-Immigration towards connected houses\
+		-Immigration towards unconnected houses,
+		40000)
+	~	people
+	~	Initial value = 40000
+	|
+
+Immigration towards unconnected houses=
+	(LSRV residents excluding Kirkwood*Immigration rate)*Moving rate to unconnected households
+	~	people/year
+	~		|
+
+Emigration from LSRV=
+	LSRV residents excluding Kirkwood*Emigration rate from LSRV
+	~	people/year
+	~		|
+
+Unconnected Kirkwood residents= INTEG (
+	Population growth unconnected Kirkwood residents+Immigration towards unconnected houses\
+		-Emigration from unconnected Kirkwood households-Connecting households to the service network\
+		,
+		5850)
+	~	people
+	~	Initial value = 6818
+	|
 
 Connected households=
 	Connected Kirkwood residents/Residents per household
@@ -343,13 +418,15 @@ Total water demand unconnected households=
 
 Total Residents=
 	Connected Kirkwood residents+LSRV residents excluding Kirkwood+Unconnected Kirkwood residents
-	~	
-	~		|
+	~	people
+	~		~	:SUPPLEMENTARY 
+	|
 
 Total Kirkwood Residents=
 	Connected Kirkwood residents+Unconnected Kirkwood residents
 	~	people
-	~		|
+	~		~	:SUPPLEMENTARY 
+	|
 
 Connecting households to the service network=
 	Unconnected Kirkwood residents*Service network connecting rate
@@ -357,7 +434,7 @@ Connecting households to the service network=
 	~		|
 
 Emigration from unconnected Kirkwood households=
-	Unconnected Kirkwood residents*Emigration rate from unconnected kirkwood
+	Unconnected Kirkwood residents*Emigration rate from unconnected kirkwood/year
 	~	people/year
 	~		|
 
@@ -373,7 +450,7 @@ Immigration rate=
 
 Moving rate to unconnected households=
 	1
-	~	1/year
+	~	Dmnl
 	~		|
 
 Population growth unconnected Kirkwood residents=
@@ -387,126 +464,115 @@ Service network connecting rate=
 	~		|
 
 ********************************************************
-	.infrastructureSystem
+	.staffSystem
 ********************************************************~
 	|
 
-Staff required for building infrastructure=
-	0.1
-	~	
+Staff occupancy=
+	Total production required/(Available technical staff*Normal production rate per person per year\
+		)
+	~	staff*year/Ml
 	~		|
 
-Plan new infrastructure=
-	MAX(MIN(DELAY1(Infrastructure Shortage-Infrastructure Surplus+Infrastructure aging,Infrastructure planning time\
-		), Production possible for planning activities/Staff required for building infrastructure
-	), 0)
-	~	Ml/(year*year)
-	~		|
-
-Build infrastructure=
-	MAX(0, MIN(Planned infrastructure/Infrastructure building time ,Production possible for construction activities\
-		/Staff required for building infrastructure))
-	~	Ml/(year*year)
-	~		|
-
-percentage infrastructure maintained annually=
-	MIN(MIN(Production possible for primary activities, Available maintenance capacity by funds\
-		) / Theoretical Infrastructure Capacity
-	 * 100, Target percentage infrastructure maintenance * 100)
-	~	Dmnl
-	~		|
-
-Infrastructure Surplus=
-	MAX(Practical infrastructure capacity-Total water demand, 0)
+Production possible for planning activities=
+	IF THEN ELSE(Water crisis reached=1, 0.1*Production planning activities*Total production possible\
+		, Production planning activities*Total production possible)
 	~	Ml/year
 	~		|
 
-Leakage=
-	0.3
+Production possible for construction activities=
+	IF THEN ELSE(Water crisis reached=1, 0.1*Production constructing activities*Total production possible\
+		, Production constructing activities*Total production possible)
+	~	Ml/year
+	~		|
+
+Production possible for primary activities=
+	IF THEN ELSE(Water crisis reached=1, 0.1*Attention rate for primary activities*Total production possible\
+		, Attention rate for primary activities*Total production possible)
+	~	Ml/year
+	~		|
+
+Real production rate per person per year=
+	Normal production rate per person per year*Staff production change rate
+	~	Ml/(staff*year)
+	~		|
+
+Total production required=
+	Production rate required for primary staff activities+Production rate required for secondary staff activities
+	~	Ml/year
+	~		|
+
+Attention rate for constructing infrastructure=
+	0.75
 	~	Dmnl
 	~		|
 
-Maximum capacity exceeding=
-	0.3
+Attention rate for planning new infrastructure=
+	0.25
 	~	Dmnl
 	~		|
 
-Infrastructure Aging Time=
-	30 + Effect of maintenance on aging time + Effect of infrastructure pushing on aging time
+Attention rate for primary activities=
+	Production rate required for primary staff activities/Total production required
+	~	Dmnl
+	~		|
+
+Attention rate for secondary activities=
+	Production rate required for secondary staff activities/Total production required
+	~	Dmnl
+	~		|
+
+Staff service time=
+	10
 	~	year
 	~		|
 
-Effect of infrastructure pushing on aging time= WITH LOOKUP (
-	Infrastructure Shortage/Practical infrastructure capacity,
-		([(0,-10)-(30,10)],(0,0),(30,-10) ))
-	~	Dmnl
+Available technical staff= INTEG (
+	Hiring of staff-Staff leaving,
+		10)
+	~	staff
 	~		|
 
-Effect of maintenance on aging time= WITH LOOKUP (
-	percentage infrastructure maintained annually,
-		([(0,-10)-(100,10)],(0,-10),(8,0),(100,10) ))
-	~	Dmnl
-	~		|
-
-Maximum infrastructure capacity=
-	Practical infrastructure capacity*(1+Maximum capacity exceeding)
-	~	Ml / year
-	~		|
-
-Practical infrastructure capacity=
-	Theoretical Infrastructure Capacity * (1-Leakage)
-	~	Ml/year
-	~		|
-
-Production rate required for primary staff activities= ACTIVE INITIAL (
-	Target percentage infrastructure maintenance*Theoretical Infrastructure Capacity,
-		1)
-	~	Ml/year
-	~		|
-
-Production rate required for secondary staff activities= ACTIVE INITIAL (
-	MAX(0, (DELAY1(Infrastructure Shortage+Infrastructure aging-Infrastructure Surplus,Infrastructure planning time\
-		)) + Planned infrastructure/Infrastructure building time),
-		1)
-	~	Ml/year
-	~		|
-
-Infrastructure aging=
-	Theoretical Infrastructure Capacity/Infrastructure Aging Time
-	~	Ml/(year*year)
-	~	Theoretical Infrastructure Capacity/ Infrastructure Aging Time
+Hiring of staff=
+	Staff Hired/Hiring time
+	~	staff/year
+	~	(1/TIME STEP) * PULSE TRAIN( 0, TIME STEP, Hiring time, 2e+010)
 	|
 
-Infrastructure planning time=
-	0.1
+Hiring time=
+	2
 	~	year
 	~		|
 
-Target percentage infrastructure maintenance=
-	0.08
-	~	Dmnl
-	~		|
-
-Infrastructure building time=
-	5
-	~	year
-	~		|
-
-Theoretical Infrastructure Capacity= INTEG (
-	Build infrastructure-Infrastructure aging,
-		1825)
-	~	Ml/year [0,100000]
-	~		|
-
-Infrastructure Shortage=
-	MAX(Total water demand-Practical infrastructure capacity, 0)
+Total production possible=
+	Available technical staff*Real production rate per person per year
 	~	Ml/year
 	~		|
 
-Planned infrastructure= INTEG (
-	Plan new infrastructure-Build infrastructure,
-		1000)
-	~	Ml/year [0,100000]
+Production constructing activities=
+	Attention rate for constructing infrastructure*Attention rate for secondary activities
+	~	1
+	~		|
+
+Production planning activities=
+	Attention rate for planning new infrastructure*Attention rate for secondary activities
+	~	1
+	~		|
+
+Staff production change rate= WITH LOOKUP (
+	Staff occupancy,
+		([(0,0)-(10,2)],(0,1.5),(1,1),(5,0.1),(10,0.1) ))
+	~	Dmnl
+	~		|
+
+Normal production rate per person per year=
+	20
+	~	Ml/year/staff
+	~		|
+
+Staff leaving=
+	Available technical staff/Staff service time
+	~	staff/year
 	~		|
 
 ********************************************************
@@ -540,345 +606,364 @@ TIME STEP  = 0.015625
 V300  Do not put anything below this section - it will be ignored
 *populationSystem
 $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,70,0
-10,1,LSRV residents excluding Kirkwood,815,982,60,31,3,131,0,0,0,0,0,0
-10,2,Connected Kirkwood residents,816,727,48,25,3,131,0,0,0,0,0,0
-10,3,Unconnected Kirkwood residents,803,444,55,31,3,131,0,0,0,0,0,0
-12,4,48,427,448,10,8,0,3,0,0,-1,0,0,0
-12,5,48,431,729,10,8,0,3,0,0,-1,0,0,0
-1,6,8,2,4,0,0,22,0,0,0,-1--1--1,,1|(692,729)|
-1,7,8,5,100,0,0,22,0,0,0,-1--1--1,,1|(523,729)|
-11,8,48,611,729,6,8,34,3,0,0,1,0,0,0
-10,9,Population growth Kirkwood residents,611,756,64,19,40,3,0,0,-1,0,0,0
-1,10,12,3,4,0,0,22,0,0,0,-1--1--1,,1|(679,446)|
-1,11,12,4,100,0,0,22,0,0,0,-1--1--1,,1|(517,446)|
-11,12,1020,604,446,6,8,34,3,0,0,1,0,0,0
-10,13,Population growth unconnected Kirkwood residents,604,482,75,28,40,3,0,0,-1,0,0,0
-12,14,48,430,980,10,8,0,3,0,0,-1,0,0,0
-1,15,17,1,4,0,0,22,0,0,0,-1--1--1,,1|(677,980)|
-1,16,17,14,100,0,0,22,0,0,0,-1--1--1,,1|(513,980)|
-11,17,48,593,980,6,8,34,3,0,0,1,0,0,0
-10,18,Population growth LSRV residents,593,1007,58,19,40,3,0,0,-1,0,0,0
-1,19,3,12,1,0,0,0,0,64,0,-1--1--1,,1|(676,398)|
-1,20,2,8,1,0,0,0,0,64,0,-1--1--1,,1|(710,674)|
-1,21,1,17,1,0,0,0,0,64,0,-1--1--1,,1|(678,924)|
-1,22,24,2,4,0,0,22,0,0,0,-1--1--1,,1|(810,647)|
-1,23,24,3,100,0,0,22,0,0,0,-1--1--1,,1|(810,528)|
-11,24,860,810,587,8,6,33,3,0,0,2,0,0,0
-10,25,Connecting households to the service network,744,587,58,23,40,131,0,0,-1,0,0,0
-12,26,48,1154,729,10,8,0,3,0,0,-1,0,0,0
-1,27,29,26,4,0,0,22,0,0,0,-1--1--1,,1|(1075,732)|
-1,28,29,2,100,0,0,22,0,0,0,-1--1--1,,1|(929,732)|
-11,29,48,1000,732,6,8,34,3,0,0,1,0,0,0
-10,30,Emigration from Kirkwood,1000,759,51,19,40,3,0,0,-1,0,0,0
-1,31,2,29,1,0,0,0,0,64,0,-1--1--1,,1|(932,692)|
-1,32,3,24,1,0,0,0,0,64,0,-1--1--1,,1|(857,510)|
-12,33,48,1159,439,10,8,0,3,0,0,-1,0,0,0
-10,34,TIME STEP,994,525,50,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,35,growth rate,335,516,37,11,8,3,0,0,0,0,0,0
-1,36,35,13,1,0,0,0,0,64,0,-1--1--1,,1|(497,456)|
-10,37,Emigration rate from unconnected kirkwood,1263,380,62,29,8,131,0,0,0,0,0,0
-10,38,Service network connecting rate,532,573,53,19,8,3,0,0,0,0,0,0
-1,39,38,25,1,0,0,0,0,64,0,-1--1--1,,1|(604,567)|
-10,40,Immigration rate,532,811,51,11,8,3,0,0,0,0,0,0
-10,41,Moving rate to unconnected households,535,877,78,19,8,3,0,0,0,0,0,0
-1,42,44,33,4,0,0,22,0,0,0,-1--1--1,,1|(1079,439)|
-1,43,44,3,100,0,0,22,0,0,0,-1--1--1,,1|(927,439)|
-11,44,1004,1003,439,6,8,34,3,0,0,1,0,0,0
-10,45,Emigration from unconnected Kirkwood households,1003,475,75,28,40,3,0,0,-1,0,0,0
-1,46,37,45,1,0,0,0,0,64,0,-1--1--1,,1|(1138,402)|
-1,47,3,44,1,0,0,0,0,64,0,-1--1--1,,1|(917,390)|
-10,48,Total Kirkwood Residents,493,231,52,19,8,3,0,0,0,0,0,0
-12,49,48,1145,983,10,8,0,3,0,0,-1,0,0,0
-1,50,52,49,4,0,0,22,0,0,0,-1--1--1,,1|(1079,983)|
-1,51,52,1,100,0,0,22,0,0,0,-1--1--1,,1|(943,983)|
-11,52,48,1018,983,6,8,34,3,0,0,1,0,0,0
-10,53,Emigration from LSRV,1018,1010,51,19,40,3,0,0,-1,0,0,0
-1,54,1,52,1,0,0,0,0,64,0,-1--1--1,,1|(918,944)|
-10,55,Total Residents,328,233,49,11,8,3,0,0,0,0,0,0
-10,56,LSRV residents excluding Kirkwood,219,139,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,57,Connected Kirkwood residents,374,122,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,58,Unconnected Kirkwood residents,516,131,68,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,59,58,48,1,0,0,0,0,64,0,-1--1--1,,1|(497,175)|
-1,60,57,48,1,0,0,0,0,64,0,-1--1--1,,1|(441,172)|
-1,61,56,55,1,0,0,0,0,64,0,-1--1--1,,1|(256,191)|
-1,62,57,55,1,0,0,0,0,64,0,-1--1--1,,1|(339,166)|
-1,63,58,55,1,0,0,0,0,64,0,-1--1--1,,1|(400,176)|
-10,64,Unconnected households,766,266,43,19,8,3,0,0,0,0,0,0
-10,65,Connected households,766,50,36,19,8,3,0,0,0,0,0,0
-10,66,Water demand connected household,891,113,67,19,8,3,0,0,0,0,0,0
-10,67,Total water demand other urban users,1083,167,64,19,8,3,0,0,0,0,0,0
-10,68,Residents per household,656,138,44,19,8,3,0,0,0,0,0,0
-1,69,58,64,1,0,0,0,0,64,0,-1--1--1,,1|(636,224)|
-1,70,57,65,1,0,0,0,0,64,0,-1--1--1,,1|(564,60)|
-1,71,68,64,1,0,0,0,0,64,0,-1--1--1,,1|(698,198)|
-1,72,68,65,1,0,0,0,0,64,0,-1--1--1,,1|(685,101)|
-10,73,Total water demand unconnected households,1107,266,78,19,8,3,0,0,0,0,0,0
-10,74,Total water demand connected households,1087,63,70,19,8,3,0,0,0,0,0,0
-1,75,64,73,1,0,0,0,0,64,0,-1--1--1,,1|(934,287)|
-1,76,65,74,1,0,0,0,0,64,0,-1--1--1,,1|(928,41)|
-1,77,66,74,1,0,0,0,0,64,0,-1--1--1,,1|(937,76)|
-1,78,74,67,1,0,0,0,0,64,0,-1--1--1,,1|(1099,126)|
-1,79,73,67,1,0,0,0,0,64,0,-1--1--1,,1|(1109,220)|
-10,80,Water demand unconnected household,882,216,50,28,8,3,0,0,0,0,0,0
-1,81,80,73,1,0,0,0,0,64,0,-1--1--1,,1|(992,256)|
-10,82,Total water demand,1332,159,37,19,8,3,0,0,0,0,0,0
-1,83,74,82,1,0,0,0,0,64,0,-1--1--1,,1|(1251,104)|
-1,84,67,82,1,0,0,0,0,64,0,-1--1--1,,1|(1191,160)|
-1,85,73,82,1,0,0,0,0,64,0,-1--1--1,,1|(1282,214)|
-1,86,88,2,4,0,0,22,0,0,0,-1--1--1,,1|(804,792)|
-1,87,88,1,100,0,0,22,0,0,0,-1--1--1,,1|(804,897)|
-11,88,1372,804,838,8,6,33,3,0,0,4,0,0,0
-10,89,Immigration towards connected houses,878,838,66,19,40,3,0,0,-1,0,0,0
-1,90,92,3,4,0,0,22,0,0,0,-1--1--1,,4|(267,340)|(267,340)|(804,340)|(804,376)|
-1,91,92,1,100,0,0,22,0,0,0,-1--1--1,,4|(267,1080)|(267,1080)|(816,1080)|(816,1046)|
-11,92,988,267,725,8,6,33,3,0,0,2,0,0,0
-10,93,Immigration towards unconnected houses,193,725,66,19,40,3,0,0,-1,0,0,0
-1,94,40,89,1,0,0,0,0,64,0,-1--1--1,,1|(700,804)|
-1,95,41,92,1,0,0,0,0,64,0,-1--1--1,,1|(346,833)|
-1,96,41,88,1,0,0,0,0,64,0,-1--1--1,,1|(732,867)|
-1,97,1,89,1,0,0,0,0,64,0,-1--1--1,,1|(877,909)|
-1,98,1,93,1,0,0,0,0,64,0,-1--1--1,,1|(320,1168)|
-1,99,40,92,1,0,0,0,0,64,0,-1--1--1,,1|(377,785)|
-10,100,growth rate LSRV,351,1027,58,11,8,3,0,0,0,0,0,0
-1,101,100,18,1,0,0,0,0,64,0,-1--1--1,,1|(487,1020)|
-10,102,Emigration rate connected Kirkwood,1233,651,68,19,8,3,0,0,0,0,0,0
-1,103,102,29,1,0,0,0,0,64,0,-1--1--1,,1|(1068,684)|
-10,104,growth rate connected houses,369,654,57,19,8,3,0,0,0,0,0,0
-1,105,104,9,1,0,0,0,0,64,0,-1--1--1,,1|(542,682)|
-1,106,2,102,1,0,0,0,0,64,0,-1--1--1,,1|(952,614)|
-10,107,Emigration rate from LSRV,1247,905,48,19,8,3,0,0,0,0,0,0
-1,108,107,53,1,0,0,0,0,64,0,-1--1--1,,1|(1105,921)|
-1,109,3,37,1,0,0,0,0,64,0,-1--1--1,,1|(948,338)|
-1,110,40,107,0,0,0,0,0,64,0,-1--1--1,,1|(883,856)|
+10,1,LSRV residents excluding Kirkwood,888,832,60,31,3,131,0,0,0,0,0,0
+10,2,Connected Kirkwood residents,889,577,48,25,3,131,0,0,0,0,0,0
+10,3,Unconnected Kirkwood residents,876,294,55,31,3,131,0,0,0,0,0,0
+12,4,48,500,298,10,8,0,3,0,0,-1,0,0,0
+12,5,48,504,579,10,8,0,3,0,0,-1,0,0,0
+1,6,8,2,4,0,0,22,0,0,0,-1--1--1,,1|(765,579)|
+1,7,8,5,100,0,0,22,0,0,0,-1--1--1,,1|(596,579)|
+11,8,48,684,579,6,8,34,3,0,0,1,0,0,0
+10,9,Population growth Kirkwood residents,684,606,64,19,40,3,0,0,-1,0,0,0
+1,10,12,3,4,0,0,22,0,0,0,-1--1--1,,1|(752,296)|
+1,11,12,4,100,0,0,22,0,0,0,-1--1--1,,1|(590,296)|
+11,12,1324,677,296,6,8,34,3,0,0,1,0,0,0
+10,13,Population growth unconnected Kirkwood residents,677,332,75,28,40,3,0,0,-1,0,0,0
+12,14,48,503,830,10,8,0,3,0,0,-1,0,0,0
+1,15,17,1,4,0,0,22,0,0,0,-1--1--1,,1|(750,830)|
+1,16,17,14,100,0,0,22,0,0,0,-1--1--1,,1|(586,830)|
+11,17,48,666,830,6,8,34,3,0,0,1,0,0,0
+10,18,Population growth LSRV residents,666,857,58,19,40,3,0,0,-1,0,0,0
+1,19,3,12,1,0,0,0,0,64,0,-1--1--1,,1|(749,248)|
+1,20,2,8,1,0,0,0,0,64,0,-1--1--1,,1|(783,524)|
+1,21,1,17,1,0,0,0,0,64,0,-1--1--1,,1|(751,774)|
+1,22,24,2,4,0,0,22,0,0,0,-1--1--1,,1|(883,497)|
+1,23,24,3,100,0,0,22,0,0,0,-1--1--1,,1|(883,378)|
+11,24,1180,883,437,8,6,33,3,0,0,2,0,0,0
+10,25,Connecting households to the service network,817,437,58,23,40,131,0,0,-1,0,0,0
+12,26,48,1227,579,10,8,0,3,0,0,-1,0,0,0
+1,27,29,26,4,0,0,22,0,0,0,-1--1--1,,1|(1148,582)|
+1,28,29,2,100,0,0,22,0,0,0,-1--1--1,,1|(1002,582)|
+11,29,48,1073,582,6,8,34,3,0,0,1,0,0,0
+10,30,Emigration from Kirkwood,1073,609,51,19,40,3,0,0,-1,0,0,0
+1,31,2,29,1,0,0,0,0,64,0,-1--1--1,,1|(1005,542)|
+1,32,3,24,1,0,0,0,0,64,0,-1--1--1,,1|(930,360)|
+12,33,48,1232,289,10,8,0,3,0,0,-1,0,0,0
+10,34,TIME STEP,1067,375,50,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,35,growth rate,408,366,37,11,8,3,0,0,0,0,0,0
+1,36,35,13,1,0,0,0,0,64,0,-1--1--1,,1|(570,306)|
+10,37,Emigration rate from unconnected kirkwood,1336,230,62,29,8,131,0,0,0,0,0,0
+10,38,Service network connecting rate,605,423,53,19,8,3,0,0,0,0,0,0
+1,39,38,25,1,0,0,0,0,64,0,-1--1--1,,1|(677,417)|
+10,40,Immigration rate,605,661,51,11,8,3,0,0,0,0,0,0
+10,41,Moving rate to unconnected households,608,727,78,19,8,3,0,0,0,0,0,0
+1,42,44,33,4,0,0,22,0,0,0,-1--1--1,,1|(1152,289)|
+1,43,44,3,100,0,0,22,0,0,0,-1--1--1,,1|(1000,289)|
+11,44,1308,1076,289,6,8,34,3,0,0,1,0,0,0
+10,45,Emigration from unconnected Kirkwood households,1076,325,75,28,40,3,0,0,-1,0,0,0
+1,46,37,45,1,0,0,0,0,64,0,-1--1--1,,1|(1211,252)|
+1,47,3,44,1,0,0,0,0,64,0,-1--1--1,,1|(990,240)|
+10,48,Total Kirkwood Residents,566,81,52,19,8,3,0,0,0,0,0,0
+12,49,48,1218,833,10,8,0,3,0,0,-1,0,0,0
+1,50,52,49,4,0,0,22,0,0,0,-1--1--1,,1|(1152,833)|
+1,51,52,1,100,0,0,22,0,0,0,-1--1--1,,1|(1016,833)|
+11,52,48,1091,833,6,8,34,3,0,0,1,0,0,0
+10,53,Emigration from LSRV,1091,860,51,19,40,3,0,0,-1,0,0,0
+1,54,1,52,1,0,0,0,0,64,0,-1--1--1,,1|(991,794)|
+10,55,Total Residents,401,83,49,11,8,3,0,0,0,0,0,0
+10,56,LSRV residents excluding Kirkwood,292,-11,70,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,57,Connected Kirkwood residents,447,-28,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,58,Unconnected Kirkwood residents,589,-19,68,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,59,58,48,1,0,0,0,0,64,0,-1--1--1,,1|(570,25)|
+1,60,57,48,1,0,0,0,0,64,0,-1--1--1,,1|(514,22)|
+1,61,56,55,1,0,0,0,0,64,0,-1--1--1,,1|(329,41)|
+1,62,57,55,1,0,0,0,0,64,0,-1--1--1,,1|(412,16)|
+1,63,58,55,1,0,0,0,0,64,0,-1--1--1,,1|(473,26)|
+10,64,Unconnected households,839,116,43,19,8,3,0,0,0,0,0,0
+10,65,Connected households,839,-100,36,19,8,3,0,0,0,0,0,0
+10,66,Water demand connected household,964,-37,67,19,8,3,0,0,0,0,0,0
+10,67,Total water demand other urban users,1156,17,64,19,8,3,0,0,0,0,0,0
+10,68,Residents per household,729,-12,44,19,8,3,0,0,0,0,0,0
+1,69,58,64,1,0,0,0,0,64,0,-1--1--1,,1|(709,74)|
+1,70,57,65,1,0,0,0,0,64,0,-1--1--1,,1|(637,-90)|
+1,71,68,64,1,0,0,0,0,64,0,-1--1--1,,1|(771,48)|
+1,72,68,65,1,0,0,0,0,64,0,-1--1--1,,1|(758,-49)|
+10,73,Total water demand unconnected households,1180,116,78,19,8,3,0,0,0,0,0,0
+10,74,Total water demand connected households,1160,-87,70,19,8,3,0,0,0,0,0,0
+1,75,64,73,1,0,0,0,0,64,0,-1--1--1,,1|(1007,137)|
+1,76,65,74,1,0,0,0,0,64,0,-1--1--1,,1|(1001,-109)|
+1,77,66,74,1,0,0,0,0,64,0,-1--1--1,,1|(1010,-74)|
+1,78,74,67,1,0,0,0,0,64,0,-1--1--1,,1|(1172,-24)|
+1,79,73,67,1,0,0,0,0,64,0,-1--1--1,,1|(1182,70)|
+10,80,Water demand unconnected household,955,66,50,28,8,3,0,0,0,0,0,0
+1,81,80,73,1,0,0,0,0,64,0,-1--1--1,,1|(1065,106)|
+10,82,Total water demand,1405,9,37,19,8,3,0,0,0,0,0,0
+1,83,74,82,1,0,0,0,0,64,0,-1--1--1,,1|(1324,-46)|
+1,84,67,82,1,0,0,0,0,64,0,-1--1--1,,1|(1264,10)|
+1,85,73,82,1,0,0,0,0,64,0,-1--1--1,,1|(1355,64)|
+1,86,88,2,4,0,0,22,0,0,0,-1--1--1,,1|(877,642)|
+1,87,88,1,100,0,0,22,0,0,0,-1--1--1,,1|(877,747)|
+11,88,524,877,688,8,6,33,3,0,0,4,0,0,0
+10,89,Immigration towards connected houses,951,688,66,19,40,3,0,0,-1,0,0,0
+1,90,92,3,4,0,0,22,0,0,0,-1--1--1,,4|(340,190)|(340,190)|(877,190)|(877,226)|
+1,91,92,1,100,0,0,22,0,0,0,-1--1--1,,4|(340,930)|(340,930)|(889,930)|(889,896)|
+11,92,1292,340,575,8,6,33,3,0,0,2,0,0,0
+10,93,Immigration towards unconnected houses,266,575,66,19,40,3,0,0,-1,0,0,0
+1,94,40,89,1,0,0,0,0,64,0,-1--1--1,,1|(773,654)|
+1,95,41,92,1,0,0,0,0,64,0,-1--1--1,,1|(419,683)|
+1,96,41,88,1,0,0,0,0,64,0,-1--1--1,,1|(805,717)|
+1,97,1,89,1,0,0,0,0,64,0,-1--1--1,,1|(950,759)|
+1,98,1,93,1,0,0,0,0,64,0,-1--1--1,,1|(393,1018)|
+1,99,40,92,1,0,0,0,0,64,0,-1--1--1,,1|(450,635)|
+10,100,growth rate LSRV,424,877,58,11,8,3,0,0,0,0,0,0
+1,101,100,18,1,0,0,0,0,64,0,-1--1--1,,1|(560,870)|
+10,102,Emigration rate connected Kirkwood,1306,501,68,19,8,3,0,0,0,0,0,0
+1,103,102,29,1,0,0,0,0,64,0,-1--1--1,,1|(1141,534)|
+10,104,growth rate connected houses,442,504,57,19,8,3,0,0,0,0,0,0
+1,105,104,9,1,0,0,0,0,64,0,-1--1--1,,1|(615,532)|
+1,106,2,102,1,0,0,0,0,64,0,-1--1--1,,1|(1025,464)|
+10,107,Emigration rate from LSRV,1320,755,48,19,8,3,0,0,0,0,0,0
+1,108,107,53,1,0,0,0,0,64,0,-1--1--1,,1|(1178,771)|
+1,109,3,37,1,0,0,0,0,64,0,-1--1--1,,1|(1021,188)|
+1,110,40,107,0,0,0,0,0,64,0,-1--1--1,,1|(956,706)|
+10,111,year,1073,647,24,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,112,111,30,0,0,0,0,0,64,0,-1--1--1,,1|(1073,639)|
+10,113,year,1076,372,24,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,114,113,45,0,0,0,0,0,64,0,-1--1--1,,1|(1076,364)|
+10,115,Target population connected Kirkwood,1420,452,68,19,8,3,0,0,0,0,0,0
+1,116,115,102,1,0,0,0,0,64,0,-1--1--1,,1|(1335,454)|
+10,117,Target population unconnected Kirkwood,1429,318,75,19,8,3,0,0,-1,0,0,0
+1,118,117,37,0,0,0,0,0,64,0,-1--1--1,,1|(1392,283)|
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
 *fundingSystem
 $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,70,0
-10,1,Average annual maintenance cost per unit of capacity,1180,252,80,28,8,3,0,0,0,0,0,0
-10,2,"Annual financial bail-out",303,157,50,19,8,3,0,0,0,0,0,0
-10,3,Municipality income,431,223,39,19,8,3,0,0,0,0,0,0
-10,4,Percentage of household service delivery costs recovered,159,340,78,28,8,3,0,0,0,0,0,0
-10,5,Percentage of other urban user service delivery costs recovered,159,235,83,28,8,3,0,0,0,0,0,0
-10,6,Unit charge,281,387,37,11,8,3,0,0,0,0,0,0
-10,7,Volume of water supplied by household service delivery,412,432,82,28,8,131,0,0,0,0,0,0
-10,8,Volume of water supplied for urban water users,573,359,78,28,8,3,0,0,0,0,0,0
-10,9,Available funds for maintenance,778,121,88,42,3,131,0,0,0,0,0,0
-12,10,48,394,119,10,8,0,3,0,0,-1,0,0,0
-1,11,13,9,4,0,0,22,0,0,0,-1--1--1,,1|(621,119)|
-1,12,13,10,100,0,0,22,0,0,0,-1--1--1,,1|(472,119)|
-11,13,48,547,119,6,8,34,3,0,0,1,0,0,0
-10,14,Income flow,547,138,40,11,40,3,0,0,-1,0,0,0
-12,15,48,1175,121,10,8,0,3,0,0,-1,0,0,0
-1,16,18,15,4,0,0,22,0,0,0,-1--1--1,,1|(1088,121)|
-1,17,18,9,100,0,0,22,0,0,0,-1--1--1,,1|(932,121)|
-11,18,48,1005,121,6,8,34,3,0,0,1,0,0,0
-10,19,Maintenance expenditures,1005,148,41,19,40,3,0,0,-1,0,0,0
-1,20,3,14,1,0,0,0,0,64,0,-1--1--1,,1|(531,181)|
-1,21,2,14,1,0,0,0,0,64,0,-1--1--1,,1|(449,155)|
-1,22,1,19,1,0,0,0,0,64,0,-1--1--1,,1|(1131,189)|
-1,23,37,19,1,0,0,0,0,64,0,-1--1--1,,1|(975,173)|
-1,24,5,3,1,0,0,0,0,64,0,-1--1--1,,1|(293,219)|
-1,25,4,3,1,0,0,0,0,64,0,-1--1--1,,1|(302,269)|
-1,26,6,3,1,0,0,0,0,64,0,-1--1--1,,1|(350,290)|
-1,27,7,3,1,0,0,0,0,64,0,-1--1--1,,1|(410,344)|
-1,28,8,3,1,0,0,0,0,64,0,-1--1--1,,1|(487,299)|
-10,29,Maximum infrastructure capacity,604,557,74,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,30,Total water demand,363,652,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,31,Total water demand other urban users,776,443,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,32,31,8,0,0,0,0,0,64,0,-1--1--1,,1|(691,408)|
-1,33,29,8,1,0,0,0,0,64,0,-1--1--1,,1|(600,458)|
-1,34,30,8,1,0,0,0,0,64,0,-1--1--1,,1|(502,516)|
-1,35,29,7,1,0,0,0,0,64,0,-1--1--1,,1|(511,575)|
-1,36,30,7,1,0,0,0,0,64,0,-1--1--1,,1|(344,609)|
-10,37,Theoretical Infrastructure Capacity,916,269,73,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,38,Total water demand connected households,94,486,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,39,Total water demand unconnected households,196,588,82,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,40,38,7,0,0,0,0,0,64,0,-1--1--1,,1|(242,460)|
-1,41,39,7,1,0,0,0,0,64,0,-1--1--1,,1|(272,502)|
-1,42,9,19,0,0,0,0,0,64,0,-1--1--1,,1|(908,136)|
-10,43,Available maintenance capacity by funds,1041,363,71,19,8,3,0,0,0,0,0,0
-1,44,1,43,0,0,0,0,0,64,0,-1--1--1,,1|(1109,307)|
-1,45,9,43,1,0,0,0,0,64,0,-1--1--1,,1|(838,313)|
+10,1,Average annual maintenance cost per unit of capacity,1180,324,80,28,8,3,0,0,0,0,0,0
+10,2,"Annual financial bail-out",303,229,50,19,8,3,0,0,0,0,0,0
+10,3,Municipality income,431,295,39,19,8,3,0,0,0,0,0,0
+10,4,Percentage of household service delivery costs recovered,159,412,78,28,8,3,0,0,0,0,0,0
+10,5,Percentage of other urban user service delivery costs recovered,159,307,83,28,8,3,0,0,0,0,0,0
+10,6,Unit charge,281,459,37,11,8,3,0,0,0,0,0,0
+10,7,Volume of water supplied by household service delivery,412,504,82,28,8,131,0,0,0,0,0,0
+10,8,Volume of water supplied for urban water users,573,431,78,28,8,3,0,0,0,0,0,0
+10,9,Available funds for maintenance,778,193,88,42,3,131,0,0,0,0,0,0
+12,10,48,394,191,10,8,0,3,0,0,-1,0,0,0
+1,11,13,9,4,0,0,22,0,0,0,-1--1--1,,1|(621,191)|
+1,12,13,10,100,0,0,22,0,0,0,-1--1--1,,1|(472,191)|
+11,13,48,547,191,6,8,34,3,0,0,1,0,0,0
+10,14,Income flow,547,210,40,11,40,3,0,0,-1,0,0,0
+12,15,48,1175,193,10,8,0,3,0,0,-1,0,0,0
+1,16,18,15,4,0,0,22,0,0,0,-1--1--1,,1|(1088,193)|
+1,17,18,9,100,0,0,22,0,0,0,-1--1--1,,1|(932,193)|
+11,18,48,1005,193,6,8,34,3,0,0,1,0,0,0
+10,19,Maintenance expenditures,1005,220,41,19,40,3,0,0,-1,0,0,0
+1,20,3,14,1,0,0,0,0,64,0,-1--1--1,,1|(531,253)|
+1,21,2,14,1,0,0,0,0,64,0,-1--1--1,,1|(449,227)|
+1,22,1,19,1,0,0,0,0,64,0,-1--1--1,,1|(1131,261)|
+1,23,37,19,1,0,0,0,0,64,0,-1--1--1,,1|(975,245)|
+1,24,5,3,1,0,0,0,0,64,0,-1--1--1,,1|(293,291)|
+1,25,4,3,1,0,0,0,0,64,0,-1--1--1,,1|(302,341)|
+1,26,6,3,1,0,0,0,0,64,0,-1--1--1,,1|(350,362)|
+1,27,7,3,1,0,0,0,0,64,0,-1--1--1,,1|(410,416)|
+1,28,8,3,1,0,0,0,0,64,0,-1--1--1,,1|(487,371)|
+10,29,Maximum infrastructure capacity,604,629,74,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,30,Total water demand,363,724,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,31,Total water demand other urban users,776,515,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,32,31,8,0,0,0,0,0,64,0,-1--1--1,,1|(691,480)|
+1,33,29,8,1,0,0,0,0,64,0,-1--1--1,,1|(600,530)|
+1,34,30,8,1,0,0,0,0,64,0,-1--1--1,,1|(502,588)|
+1,35,29,7,1,0,0,0,0,64,0,-1--1--1,,1|(511,647)|
+1,36,30,7,1,0,0,0,0,64,0,-1--1--1,,1|(344,681)|
+10,37,Theoretical Infrastructure Capacity,916,341,73,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,38,Total water demand connected households,94,558,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,39,Total water demand unconnected households,196,660,82,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,40,38,7,0,0,0,0,0,64,0,-1--1--1,,1|(242,532)|
+1,41,39,7,1,0,0,0,0,64,0,-1--1--1,,1|(272,574)|
+1,42,9,19,0,0,0,0,0,64,0,-1--1--1,,1|(908,208)|
+10,43,Available maintenance capacity by funds,1041,435,71,19,8,3,0,0,0,0,0,0
+1,44,1,43,0,0,0,0,0,64,0,-1--1--1,,1|(1109,379)|
+1,45,9,43,1,0,0,0,0,64,0,-1--1--1,,1|(838,385)|
+10,46,year,1005,258,24,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,47,46,19,0,0,0,0,0,64,0,-1--1--1,,1|(1005,250)|
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
 *infrastructureSystem
 $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,70,0
-10,1,Theoretical Infrastructure Capacity,961,586,85,50,3,131,0,0,0,0,0,0
-10,2,Infrastructure Aging Time,1177,450,43,19,8,3,0,0,0,0,0,0
-10,3,Practical infrastructure capacity,841,380,70,19,8,3,0,0,0,0,0,0
-10,4,Maximum capacity exceeding,457,367,60,19,8,3,0,0,0,0,0,0
-1,5,1,3,1,0,0,0,0,64,0,-1--1--1,,1|(823,445)|
-10,6,Planned infrastructure,558,584,89,55,3,131,0,0,0,0,0,0
-10,7,Infrastructure Shortage,920,184,43,19,8,3,0,0,0,0,0,0
-10,8,Infrastructure building time,790,791,43,19,8,3,0,0,0,0,0,0
-10,9,Leakage,648,385,28,11,8,3,0,0,0,0,0,0
-1,10,9,3,1,0,0,0,0,64,0,-1--1--1,,1|(750,410)|
-1,11,71,7,1,0,0,0,0,64,0,-1--1--1,,1|(934,170)|
-1,12,3,7,1,0,0,0,0,64,0,-1--1--1,,1|(846,303)|
-10,13,Maximum infrastructure capacity,663,262,70,19,8,3,0,0,0,0,0,0
-1,14,3,13,1,0,0,0,0,64,0,-1--1--1,,1|(757,334)|
-1,15,4,13,1,0,0,0,0,64,0,-1--1--1,,1|(514,283)|
-10,16,percentage infrastructure maintained annually,1401,274,78,19,8,3,0,0,0,0,0,0
-1,17,1,16,1,0,0,0,0,64,0,-1--1--1,,1|(1476,501)|
-1,18,78,16,0,0,0,0,0,64,0,-1--1--1,,1|(1288,162)|
-12,19,48,1374,594,10,8,0,3,0,0,-1,0,0,0
-1,20,22,19,4,0,0,22,0,0,0,-1--1--1,,1|(1282,593)|
-1,21,22,1,100,0,0,22,0,0,0,-1--1--1,,1|(1117,593)|
-11,22,48,1194,593,6,8,34,3,0,0,1,0,0,0
-10,23,Infrastructure aging,1194,612,60,11,40,3,0,0,-1,0,0,0
-1,24,2,23,0,0,0,0,0,64,0,-1--1--1,,1|(1184,528)|
-12,25,48,209,586,10,8,0,3,0,0,-1,0,0,0
-1,26,28,6,4,0,0,22,0,0,0,-1--1--1,,1|(412,588)|
-1,27,28,25,100,0,0,22,0,0,0,-1--1--1,,1|(281,588)|
-11,28,48,349,588,6,8,34,3,0,0,1,0,0,0
-10,29,Plan new infrastructure,349,615,42,19,40,3,0,0,-1,0,0,0
-1,30,7,29,1,0,0,0,0,64,0,-1--1--1,,1|(367,278)|
-10,31,Infrastructure planning time,215,734,43,19,8,3,0,0,0,0,0,0
-1,32,31,29,0,0,0,0,0,64,0,-1--1--1,,1|(276,679)|
-1,33,1,22,1,0,0,0,0,64,0,-1--1--1,,1|(1107,516)|
-1,34,36,1,4,0,0,22,0,0,0,-1--1--1,,1|(821,599)|
-1,35,36,6,100,0,0,22,0,0,0,-1--1--1,,1|(701,599)|
-11,36,604,761,599,6,8,34,3,0,0,1,0,0,0
-10,37,Build infrastructure,761,618,59,11,40,131,0,0,-1,0,0,0
-1,38,6,37,1,0,0,0,0,64,0,-1--1--1,,1|(680,521)|
-1,39,8,37,1,0,0,0,0,64,0,-1--1--1,,1|(804,672)|
-1,40,23,29,1,0,0,0,0,64,0,-1--1--1,,1|(911,820)|
-10,41,Infrastructure Surplus,748,188,43,19,8,3,0,0,0,0,0,0
-1,42,3,41,1,0,0,0,0,64,0,-1--1--1,,1|(786,299)|
-1,43,71,41,1,0,0,0,0,64,0,-1--1--1,,1|(768,114)|
-1,44,41,29,1,0,0,0,0,64,0,-1--1--1,,1|(372,378)|
-10,45,Effect of maintenance on aging time,1271,345,68,19,8,3,0,0,0,0,0,0
-1,46,16,45,1,0,0,0,0,64,0,-1--1--1,,1|(1288,290)|
-1,47,45,2,1,0,0,0,0,64,0,-1--1--1,,1|(1202,396)|
-10,48,Effect of infrastructure pushing on aging time,1039,302,70,19,8,131,0,0,0,0,0,0
-1,49,7,48,1,0,0,0,0,64,0,-1--1--1,,1|(992,230)|
-1,50,48,2,1,0,0,0,0,64,0,-1--1--1,,1|(1141,377)|
-1,51,3,48,1,0,0,0,0,64,0,-1--1--1,,1|(909,324)|
-1,52,76,37,1,0,0,0,0,64,0,-1--1--1,,1|(232,754)|
-1,53,77,29,1,0,0,0,0,64,0,-1--1--1,,1|(245,517)|
-10,54,Production rate required for primary staff activities,1992,81,80,19,8,3,0,0,0,0,0,0
-10,55,Production rate required for secondary staff activities,1740,88,88,19,8,3,0,0,0,0,0,0
-10,56,Target percentage infrastructure maintenance,1692,459,82,19,8,3,0,0,0,0,0,0
-1,57,1,54,1,0,0,0,0,64,0,-1--1--1,,1|(1902,798)|
-1,58,56,54,1,0,0,0,0,64,0,-1--1--1,,1|(2021,367)|
-10,59,Planned infrastructure,1856,193,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,60,Infrastructure building time,1867,262,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,61,Infrastructure planning time,1596,222,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,62,61,55,1,0,0,0,0,64,0,-1--1--1,,1|(1657,151)|
-1,63,59,55,0,0,0,0,0,64,0,-1--1--1,,1|(1803,145)|
-1,64,60,55,0,0,0,0,0,64,0,-1--1--1,,1|(1807,180)|
-10,65,Infrastructure Surplus,1627,288,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,66,Infrastructure Shortage,1719,348,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,67,Infrastructure aging,1830,321,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,68,67,55,0,0,0,0,0,64,0,-1--1--1,,1|(1787,211)|
-1,69,65,55,0,0,0,0,0,64,0,-1--1--1,,1|(1679,194)|
-1,70,66,55,0,0,0,0,0,64,0,-1--1--1,,1|(1728,224)|
-10,71,Total water demand,927,76,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,72,56,16,1,0,0,0,0,64,0,-1--1--1,,1|(1554,440)|
-10,73,Available maintenance capacity by funds,1431,73,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,74,Available funds for maintenance,1401,312,65,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,75,73,16,1,0,0,0,0,64,0,-1--1--1,,1|(1435,155)|
-10,76,Production possible for construction activities,129,45,79,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,77,Production possible for planning activities,357,49,79,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,78,Production possible for primary activities,1186,61,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,79,Staff required for building infrastructure,591,894,68,19,8,3,0,0,0,0,0,0
-1,80,79,37,1,0,0,0,0,64,0,-1--1--1,,1|(674,757)|
-1,81,79,29,1,0,0,0,0,64,0,-1--1--1,,1|(434,785)|
+10,1,Theoretical Infrastructure Capacity,963,621,85,50,3,131,0,0,0,0,0,0
+10,2,Infrastructure Aging Time,1179,485,43,19,8,3,0,0,0,0,0,0
+10,3,Practical infrastructure capacity,843,415,70,19,8,3,0,0,0,0,0,0
+10,4,Maximum capacity exceeding,555,492,60,19,8,3,0,0,0,0,0,0
+1,5,1,3,1,0,0,0,0,64,0,-1--1--1,,1|(825,480)|
+10,6,Planned infrastructure,560,619,89,55,3,131,0,0,0,0,0,0
+10,7,Infrastructure Shortage,922,219,43,19,8,3,0,0,0,0,0,0
+10,8,Infrastructure building time,792,826,43,19,8,3,0,0,0,0,0,0
+10,9,Leakage,709,477,28,11,8,3,0,0,0,0,0,0
+1,10,9,3,1,0,0,0,0,64,0,-1--1--1,,1|(786,459)|
+1,11,62,7,1,0,0,0,0,64,0,-1--1--1,,1|(936,205)|
+1,12,3,7,1,0,0,0,0,64,0,-1--1--1,,1|(848,338)|
+10,13,Maximum infrastructure capacity,661,391,70,19,8,3,0,0,0,0,0,0
+1,14,3,13,1,0,0,0,0,64,0,-1--1--1,,1|(761,410)|
+1,15,4,13,1,0,0,0,0,64,0,-1--1--1,,1|(582,438)|
+10,16,percentage infrastructure maintained annually,1403,309,78,19,8,3,0,0,0,0,0,0
+1,17,1,16,1,0,0,0,0,64,0,-1--1--1,,1|(1478,536)|
+1,18,69,16,0,0,0,0,0,64,0,-1--1--1,,1|(1290,197)|
+12,19,48,1376,629,10,8,0,3,0,0,-1,0,0,0
+1,20,22,19,4,0,0,22,0,0,0,-1--1--1,,1|(1284,628)|
+1,21,22,1,100,0,0,22,0,0,0,-1--1--1,,1|(1119,628)|
+11,22,48,1196,628,6,8,34,3,0,0,1,0,0,0
+10,23,Infrastructure aging,1196,647,60,11,40,3,0,0,-1,0,0,0
+1,24,2,23,0,0,0,0,0,64,0,-1--1--1,,1|(1186,563)|
+12,25,48,211,621,10,8,0,3,0,0,-1,0,0,0
+1,26,28,6,4,0,0,22,0,0,0,-1--1--1,,1|(414,623)|
+1,27,28,25,100,0,0,22,0,0,0,-1--1--1,,1|(283,623)|
+11,28,48,351,623,6,8,34,3,0,0,1,0,0,0
+10,29,Plan new infrastructure,351,650,42,19,40,3,0,0,-1,0,0,0
+10,30,Infrastructure planning time,247,704,43,19,8,3,0,0,0,0,0,0
+1,31,30,29,0,0,0,0,0,64,0,-1--1--1,,1|(292,680)|
+1,32,1,22,1,0,0,0,0,64,0,-1--1--1,,1|(1109,551)|
+1,33,35,1,4,0,0,22,0,0,0,-1--1--1,,1|(823,634)|
+1,34,35,6,100,0,0,22,0,0,0,-1--1--1,,1|(703,634)|
+11,35,316,763,634,6,8,34,3,0,0,1,0,0,0
+10,36,Build infrastructure,763,653,59,11,40,131,0,0,-1,0,0,0
+1,37,6,36,1,0,0,0,0,64,0,-1--1--1,,1|(682,556)|
+1,38,8,36,1,0,0,0,0,64,0,-1--1--1,,1|(806,707)|
+10,39,Infrastructure Surplus,729,222,43,19,8,3,0,0,0,0,0,0
+1,40,3,39,1,0,0,0,0,64,0,-1--1--1,,1|(778,335)|
+1,41,62,39,1,0,0,0,0,64,0,-1--1--1,,1|(753,139)|
+10,42,Effect of maintenance on aging time,1273,380,68,19,8,3,0,0,0,0,0,0
+1,43,16,42,1,0,0,0,0,64,0,-1--1--1,,1|(1290,325)|
+1,44,42,2,1,0,0,0,0,64,0,-1--1--1,,1|(1204,431)|
+10,45,Effect of infrastructure pushing on aging time,1041,337,70,19,8,131,0,0,0,0,0,0
+1,46,7,45,1,0,0,0,0,64,0,-1--1--1,,1|(994,265)|
+1,47,45,2,1,0,0,0,0,64,0,-1--1--1,,1|(1143,412)|
+1,48,3,45,1,0,0,0,0,64,0,-1--1--1,,1|(911,359)|
+1,49,67,36,1,0,0,0,0,64,0,-1--1--1,,1|(312,811)|
+1,50,68,29,1,0,0,0,0,64,0,-1--1--1,,1|(247,552)|
+10,51,Production rate required for primary staff activities,1994,116,80,19,8,3,0,0,0,0,0,0
+10,52,Production rate required for secondary staff activities,1742,123,88,19,8,3,0,0,0,0,0,0
+10,53,Target percentage infrastructure maintenance,1694,494,82,19,8,3,0,0,0,0,0,0
+1,54,1,51,1,0,0,0,0,64,0,-1--1--1,,1|(1904,833)|
+1,55,53,51,1,0,0,0,0,64,0,-1--1--1,,1|(2023,402)|
+10,56,Planned infrastructure,1858,228,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,57,Infrastructure building time,1869,297,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,58,Infrastructure planning time,1598,257,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,59,58,52,1,0,0,0,0,64,0,-1--1--1,,1|(1659,186)|
+1,60,56,52,0,0,0,0,0,64,0,-1--1--1,,1|(1805,180)|
+1,61,57,52,0,0,0,0,0,64,0,-1--1--1,,1|(1809,215)|
+10,62,Total water demand,929,111,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,63,53,16,1,0,0,0,0,64,0,-1--1--1,,1|(1556,475)|
+10,64,Available maintenance capacity by funds,1433,108,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,65,Available funds for maintenance,1403,347,65,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,66,64,16,1,0,0,0,0,64,0,-1--1--1,,1|(1437,190)|
+10,67,Production possible for construction activities,131,80,79,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,68,Production possible for planning activities,359,84,79,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,69,Production possible for primary activities,1188,96,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,70,Staff required for building infrastructure,545,757,68,19,8,3,0,0,0,0,0,0
+1,71,70,36,1,0,0,0,0,64,0,-1--1--1,,1|(636,736)|
+1,72,70,29,1,0,0,0,0,64,0,-1--1--1,,1|(415,724)|
+10,73,Required infrastructure,348,519,42,19,8,3,0,0,0,0,0,0
+1,74,7,73,1,0,0,0,0,64,0,-1--1--1,,1|(632,322)|
+1,75,39,73,1,0,0,0,0,64,0,-1--1--1,,1|(461,388)|
+10,76,year,359,337,39,14,8,131,0,0,-1,0,0,0
+1,77,76,73,0,0,0,0,0,64,0,-1--1--1,,1|(354,418)|
+1,78,73,29,1,0,0,0,0,64,0,-1--1--1,,1|(345,575)|
+10,79,Infrastructure aging,297,405,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,80,79,73,1,0,0,0,0,64,0,-1--1--1,,1|(292,461)|
+10,81,Required infrastructure,1709,290,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128
+1,82,81,52,1,0,0,0,0,64,0,-1--1--1,,1|(1705,231)|
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
 *staffSystem
 $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,60,0
-10,1,Available technical staff,718,264,62,33,3,131,0,0,0,0,0,0
-12,2,48,1067,260,10,8,0,3,0,0,-1,0,0,0
-1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(981,265)|
-1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(836,265)|
-11,5,48,899,265,6,8,34,3,0,0,1,0,0,0
-10,6,Staff leaving,899,284,39,11,40,3,0,0,-1,0,0,0
-1,7,8,1,4,0,0,22,0,0,0,-1--1--1,,1|(597,260)|
-11,8,1356,533,260,6,8,34,3,0,0,1,0,0,0
-10,9,Hiring of staff,533,279,43,11,40,3,0,0,-1,0,0,0
-10,10,Hiring time,421,187,35,11,8,3,0,0,0,0,0,0
-10,11,Staff service time,1037,168,54,11,8,3,0,0,0,0,0,0
-1,12,11,6,1,0,0,0,0,64,0,-1--1--1,,1|(975,241)|
-12,13,48,427,262,10,8,0,3,0,0,-1,0,0,0
-1,14,8,13,100,0,0,22,0,0,0,-1--1--1,,1|(482,260)|
-1,15,10,9,1,0,0,0,0,64,0,-1--1--1,,1|(478,216)|
-10,16,TIME STEP,533,309,50,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,17,1,5,1,0,0,0,0,64,0,-1--1--1,,1|(834,227)|
-10,18,TIME STEP,591,175,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,19,Total production required,1112,610,53,19,8,3,0,0,0,0,0,0
-10,20,Normal production rate per person per year,720,490,75,19,8,3,0,0,0,0,0,0
-10,21,Staff production change rate,873,520,52,19,8,3,0,0,0,0,0,0
-10,22,Staff occupancy,877,426,51,11,8,3,0,0,0,0,0,0
-1,23,19,22,1,0,0,0,0,64,0,-1--1--1,,1|(1033,490)|
-1,24,1,22,1,0,0,0,0,64,0,-1--1--1,,1|(860,367)|
-1,25,22,21,1,0,0,0,0,64,0,-1--1--1,,1|(880,472)|
-10,26,Real production rate per person per year,697,608,65,19,8,131,0,0,0,0,0,0
-1,27,21,26,1,0,0,0,0,64,0,-1--1--1,,1|(820,583)|
-1,28,20,26,1,0,0,0,0,64,0,-1--1--1,,1|(717,560)|
-10,29,Total production possible,545,464,53,19,8,131,0,0,0,0,0,0
-1,30,1,29,1,0,0,0,0,64,0,-1--1--1,,1|(576,352)|
-1,31,26,29,1,0,0,0,0,64,0,-1--1--1,,1|(554,512)|
-10,32,Attention rate for planning new infrastructure,660,1072,55,28,8,131,0,0,0,0,0,0
-10,33,Attention rate for constructing infrastructure,1082,1093,81,19,8,3,0,0,0,0,0,0
-1,34,58,19,1,0,0,0,0,64,0,-1--1--1,,1|(1089,703)|
-1,35,57,19,1,0,0,0,0,64,0,-1--1--1,,1|(1037,632)|
-10,36,Attention rate for primary activities,739,724,55,19,8,3,0,0,0,0,0,0
-10,37,Attention rate for secondary activities,896,894,62,19,8,3,0,0,0,0,0,0
-1,38,57,36,1,0,0,0,0,64,0,-1--1--1,,1|(846,752)|
-1,39,19,36,1,0,0,0,0,64,0,-1--1--1,,1|(883,638)|
-1,40,19,37,1,0,0,0,0,64,0,-1--1--1,,1|(1126,785)|
-1,41,58,37,1,0,0,0,0,64,0,-1--1--1,,1|(901,883)|
-10,42,Production possible for primary activities,548,711,74,19,8,131,0,0,0,0,0,0
-10,43,Production constructing activities,946,1001,67,19,8,131,0,0,0,0,0,0
-1,44,37,43,1,0,0,0,0,64,0,-1--1--1,,1|(953,953)|
-1,45,33,43,1,0,0,0,0,64,0,-1--1--1,,1|(1014,1022)|
-1,46,36,42,1,0,0,0,0,64,0,-1--1--1,,1|(632,707)|
-10,47,Production planning activities,721,993,63,19,8,3,0,0,0,0,0,0
-1,48,32,47,1,0,0,0,0,64,0,-1--1--1,,1|(675,1043)|
-1,49,37,47,1,0,0,0,0,64,0,-1--1--1,,1|(777,945)|
-10,50,Production possible for planning activities,495,838,74,19,8,3,0,0,0,0,0,0
-10,51,Production possible for construction activities,455,973,74,19,8,3,0,0,0,0,0,0
-1,52,29,42,1,0,0,0,0,64,0,-1--1--1,,1|(513,617)|
-1,53,29,50,1,0,0,0,0,64,0,-1--1--1,,1|(436,641)|
-1,54,29,51,1,0,0,0,0,64,0,-1--1--1,,1|(379,838)|
-1,55,47,50,1,0,0,0,0,64,0,-1--1--1,,1|(628,915)|
-1,56,43,51,1,0,0,0,0,64,0,-1--1--1,,1|(606,1124)|
-10,57,Production rate required for primary staff activities,943,714,84,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,58,Production rate required for secondary staff activities,984,789,93,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,59,Water crisis reached,171,734,61,30,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,60,59,42,1,0,0,0,0,64,0,-1--1--1,,1|(326,671)|
-1,61,59,50,1,0,0,0,0,64,0,-1--1--1,,1|(311,770)|
-1,62,59,51,1,0,0,0,0,64,0,-1--1--1,,1|(253,875)|
-1,63,20,22,1,0,0,0,0,64,0,-1--1--1,,1|(745,418)|
+10,1,Available technical staff,811,155,62,33,3,131,0,0,0,0,0,0
+12,2,48,1160,151,10,8,0,3,0,0,-1,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(1074,156)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(929,156)|
+11,5,48,992,156,6,8,34,3,0,0,1,0,0,0
+10,6,Staff leaving,992,175,39,11,40,3,0,0,-1,0,0,0
+1,7,8,1,4,0,0,22,0,0,0,-1--1--1,,1|(690,151)|
+11,8,1868,626,151,6,8,34,3,0,0,1,0,0,0
+10,9,Hiring of staff,626,170,43,11,40,3,0,0,-1,0,0,0
+10,10,Hiring time,514,78,35,11,8,3,0,0,0,0,0,0
+10,11,Staff service time,1130,59,54,11,8,3,0,0,0,0,0,0
+1,12,11,6,1,0,0,0,0,64,0,-1--1--1,,1|(1068,132)|
+12,13,48,520,153,10,8,0,3,0,0,-1,0,0,0
+1,14,8,13,100,0,0,22,0,0,0,-1--1--1,,1|(575,151)|
+1,15,10,9,1,0,0,0,0,64,0,-1--1--1,,1|(571,107)|
+10,16,TIME STEP,626,200,50,11,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,17,1,5,1,0,0,0,0,64,0,-1--1--1,,1|(927,118)|
+10,18,TIME STEP,684,66,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,19,Total production required,1205,501,53,19,8,3,0,0,0,0,0,0
+10,20,Normal production rate per person per year,813,381,75,19,8,3,0,0,0,0,0,0
+10,21,Staff production change rate,966,411,52,19,8,3,0,0,0,0,0,0
+10,22,Staff occupancy,970,317,51,11,8,3,0,0,0,0,0,0
+1,23,19,22,1,0,0,0,0,64,0,-1--1--1,,1|(1126,381)|
+1,24,1,22,1,0,0,0,0,64,0,-1--1--1,,1|(953,258)|
+1,25,22,21,1,0,0,0,0,64,0,-1--1--1,,1|(973,363)|
+10,26,Real production rate per person per year,790,499,65,19,8,131,0,0,0,0,0,0
+1,27,21,26,1,0,0,0,0,64,0,-1--1--1,,1|(913,474)|
+1,28,20,26,1,0,0,0,0,64,0,-1--1--1,,1|(810,451)|
+10,29,Total production possible,638,355,53,19,8,131,0,0,0,0,0,0
+1,30,1,29,1,0,0,0,0,64,0,-1--1--1,,1|(669,243)|
+1,31,26,29,1,0,0,0,0,64,0,-1--1--1,,1|(647,403)|
+10,32,Attention rate for planning new infrastructure,753,963,55,28,8,131,0,0,0,0,0,0
+10,33,Attention rate for constructing infrastructure,1175,984,81,19,8,3,0,0,0,0,0,0
+1,34,58,19,1,0,0,0,0,64,0,-1--1--1,,1|(1182,594)|
+1,35,57,19,1,0,0,0,0,64,0,-1--1--1,,1|(1130,523)|
+10,36,Attention rate for primary activities,832,615,55,19,8,3,0,0,0,0,0,0
+10,37,Attention rate for secondary activities,989,785,62,19,8,3,0,0,0,0,0,0
+1,38,57,36,1,0,0,0,0,64,0,-1--1--1,,1|(939,643)|
+1,39,19,36,1,0,0,0,0,64,0,-1--1--1,,1|(976,529)|
+1,40,19,37,1,0,0,0,0,64,0,-1--1--1,,1|(1219,676)|
+1,41,58,37,1,0,0,0,0,64,0,-1--1--1,,1|(994,774)|
+10,42,Production possible for primary activities,641,602,74,19,8,131,0,0,0,0,0,0
+10,43,Production constructing activities,1039,892,67,19,8,131,0,0,0,0,0,0
+1,44,37,43,1,0,0,0,0,64,0,-1--1--1,,1|(1046,844)|
+1,45,33,43,1,0,0,0,0,64,0,-1--1--1,,1|(1107,913)|
+1,46,36,42,1,0,0,0,0,64,0,-1--1--1,,1|(725,598)|
+10,47,Production planning activities,814,884,63,19,8,3,0,0,0,0,0,0
+1,48,32,47,1,0,0,0,0,64,0,-1--1--1,,1|(768,934)|
+1,49,37,47,1,0,0,0,0,64,0,-1--1--1,,1|(870,836)|
+10,50,Production possible for planning activities,588,729,74,19,8,3,0,0,0,0,0,0
+10,51,Production possible for construction activities,548,864,74,19,8,3,0,0,0,0,0,0
+1,52,29,42,1,0,0,0,0,64,0,-1--1--1,,1|(606,508)|
+1,53,29,50,1,0,0,0,0,64,0,-1--1--1,,1|(529,532)|
+1,54,29,51,1,0,0,0,0,64,0,-1--1--1,,1|(472,729)|
+1,55,47,50,1,0,0,0,0,64,0,-1--1--1,,1|(721,806)|
+1,56,43,51,1,0,0,0,0,64,0,-1--1--1,,1|(699,1015)|
+10,57,Production rate required for primary staff activities,1036,605,84,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,58,Production rate required for secondary staff activities,1077,680,93,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,59,Water crisis reached,264,625,61,30,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+1,60,59,42,1,0,0,0,0,64,0,-1--1--1,,1|(419,562)|
+1,61,59,50,1,0,0,0,0,64,0,-1--1--1,,1|(404,661)|
+1,62,59,51,1,0,0,0,0,64,0,-1--1--1,,1|(346,766)|
+1,63,20,22,1,0,0,0,0,64,0,-1--1--1,,1|(838,309)|
+10,64,Staff Hired,463,232,35,11,8,3,0,0,-1,0,0,0
+1,65,64,9,0,0,0,0,0,64,0,-1--1--1,,1|(537,203)|
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
 *crisisSystem
 $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,70,0
-10,1,Volume of water supplied by household service delivery,88,283,86,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,2,Volume of water supplied for urban water users,124,524,78,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,3,Total water demand connected households,321,219,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,4,Total water demand other urban users,120,436,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,5,Total water demand unconnected households,329,320,82,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-10,6,Delivery discrepancy connected households,617,218,70,19,8,3,0,0,0,0,0,0
-1,7,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(305,177)|
-1,8,3,6,1,0,0,0,0,64,0,-1--1--1,,1|(496,255)|
-10,9,Delivery discrepancy unconnected households,611,356,78,19,8,3,0,0,0,0,0,0
-10,10,Delivery discrepancy other urban users,584,475,67,19,8,3,0,0,0,0,0,0
-1,11,1,9,1,0,0,0,0,64,0,-1--1--1,,1|(317,377)|
-1,12,5,9,1,0,0,0,0,64,0,-1--1--1,,1|(479,314)|
-1,13,4,10,1,0,0,0,0,64,0,-1--1--1,,1|(380,484)|
-1,14,2,10,1,0,0,0,0,64,0,-1--1--1,,1|(426,571)|
-10,15,Crisis discrepancy rate connected households,825,154,72,19,8,3,0,0,0,0,0,0
-10,16,Crisis discrepancy rate unconnected households,805,315,78,19,8,3,0,0,0,0,0,0
-10,17,Crisis discrepancy rate other urban users,774,442,72,19,8,3,0,0,0,0,0,0
-10,18,Water crisis reached,1176,351,58,23,8,131,0,0,0,0,0,0
-1,19,10,18,1,0,0,0,0,64,0,-1--1--1,,1|(1045,479)|
-1,20,17,18,1,0,0,0,0,64,0,-1--1--1,,1|(947,432)|
-1,21,16,18,1,0,0,0,0,64,0,-1--1--1,,1|(1014,305)|
-1,22,9,18,1,0,0,0,0,64,0,-1--1--1,,1|(896,353)|
-1,23,6,18,1,0,0,0,0,64,0,-1--1--1,,1|(1051,260)|
-1,24,15,18,1,0,0,0,0,64,0,-1--1--1,,1|(1110,225)|
+10,1,Volume of water supplied by household service delivery,88,331,86,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,2,Volume of water supplied for urban water users,124,572,78,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,3,Total water demand connected households,321,267,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,4,Total water demand other urban users,120,484,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,5,Total water demand unconnected households,329,368,82,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
+10,6,Delivery discrepancy connected households,617,210,70,19,8,3,0,0,0,0,0,0
+1,7,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(296,200)|
+1,8,3,6,1,0,0,0,0,64,0,-1--1--1,,1|(503,271)|
+10,9,Delivery discrepancy unconnected households,614,444,78,19,8,3,0,0,0,0,0,0
+10,10,Delivery discrepancy other urban users,637,672,67,19,8,3,0,0,0,0,0,0
+1,11,1,9,1,0,0,0,0,64,0,-1--1--1,,1|(313,445)|
+1,12,5,9,1,0,0,0,0,64,0,-1--1--1,,1|(484,382)|
+1,13,4,10,1,0,0,0,0,64,0,-1--1--1,,1|(400,623)|
+1,14,2,10,1,0,0,0,0,64,0,-1--1--1,,1|(432,615)|
+10,15,Crisis discrepancy rate connected households,609,118,72,19,8,3,0,0,0,0,0,0
+10,16,Crisis discrepancy rate unconnected households,618,326,78,19,8,3,0,0,0,0,0,0
+10,17,Crisis discrepancy rate other urban users,613,551,72,19,8,3,0,0,0,0,0,0
+10,18,Water crisis reached,1176,399,58,23,8,131,0,0,0,0,0,0
+10,25,connected household crisis reached,911,194,67,19,8,3,0,0,0,0,0,0
+10,26,unconnected household crisis reached,960,358,50,28,8,3,0,0,0,0,0,0
+10,27,other urban user crisis reached,887,545,52,19,8,3,0,0,0,0,0,0
+1,28,15,25,1,0,0,0,0,64,0,-1--1--1,,1|(762,168)|
+1,29,6,25,1,0,0,0,0,64,0,-1--1--1,,1|(744,216)|
+1,30,16,26,1,0,0,0,0,64,0,-1--1--1,,1|(828,318)|
+1,31,9,26,1,0,0,0,0,64,0,-1--1--1,,1|(794,380)|
+1,32,17,27,1,0,0,0,0,64,0,-1--1--1,,1|(818,531)|
+1,33,10,27,1,0,0,0,0,64,0,-1--1--1,,1|(804,616)|
+1,34,25,18,1,0,0,0,0,64,0,-1--1--1,,1|(1061,228)|
+1,35,26,18,1,0,0,0,0,64,0,-1--1--1,,1|(1064,361)|
+1,36,27,18,1,0,0,0,0,64,0,-1--1--1,,1|(1028,527)|
 ///---\\\
 :L<%^E!@
 1:Current.vdf
@@ -892,11 +977,11 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,7
 22:Year,Years
 22:Day,Days
 15:0,0,0,1,0,0
-19:70,2
+19:70,1
 27:2,
 34:0,
 4:Time
-5:Production rate required for primary staff activities
+5:Maintenance expenditures
 35:Date
 36:YYYY-MM-DD
 37:2001
