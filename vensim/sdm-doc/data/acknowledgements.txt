@@ -1,0 +1,14 @@
+Developers: 
+
+    Mark Bragen, Mark Jusko, Ignacio J Martinez-Moyano
+
+Collaborators: 
+
+    John Sterman, David Ford, Jean-Jacques Lauble, George Richardson,
+    David Andersen, Rogelio Oliva, Bob Eberlein, Eliot Rich, 
+    Stefan Grosser, Markus Schwaninger, Tom Fiddaman
+	
+Internationalization: 
+
+    Jean-Jacques Lauble, Yutaka Takahashi, 
+    Martin Schaffernicht, Rogelio Oliva, Patricia Martinez-Moyano

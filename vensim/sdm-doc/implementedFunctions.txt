@@ -1,0 +1,142 @@
+ExternalName	InternalName	Supported	Object	InsertName	InsertValue	InsertTime	InsertTimeStep	ReturnType	ReturnUnits	InitialValue	MinNumArgs	MaxNumArgs	ArgUnits1	ArgUnits2	ArgUnits3	ArgUnits4	ArgUnits5	ArgUnits6	ArgUnits7	ArgUnits8	ArgUnits9	ArgUnits10	marker	
+ABS	ABS	N		N	N	N	N	double	arg1	N	1	1	dmnl										#	
+ACTIVE INITIAL	ACTIVEINITIAL	Y	sdFunctions	Y	Y	Y	Y	double	arg1	Y	2	2	units	units									#	"active eq, initial eq"
+ALLOCATE AVAILABLE	ALLOCATEAVAILABLE	N		N	N	N	N	double	arg1	N	3	3											#	
+ALLOCATE BY PRIORITY	ALLOCATEBYPRIORITY	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	5	5	units	dmnl	dmnl	dmnl	units						#	"request,priority,size,width,supply"
+ALLOC	ALLOC	N		N	N	N	N	double	arg1	N	4	4											#	
+ARCCOS	ARCCOS	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	x
+ARCSIN	ARCSIN	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	x
+ARCTAN	ARCTAN	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	"input, delay time,initial value"
+COS	COS	N		N	N	N	N	double	arg1	N	1	1	dmnl										#	
+COSH	COSH	N		N	N	N	N	double	arg1	N	1	1	dmnl										#	
+CUMULATE	CUMULATE	N		N	N	N	N	double	arg1	N	1	1											#	
+CUMULATEF	CUMULATEF	N		N	N	N	N	double	arg1	N	1	1											#	
+DELAY BATCH	DELAYBATCH	N		N	N	N	N	double	arg1	N	6	6											#	
+DELAY CONVEYOR	DELAYCONVEYOR	Y	sdFunctions	Y	Y	Y	Y	double	arg1	Y	6	6	units	time	units	units	units	time					#	
+DELAY FIXED	DELAYFIXED	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	3	3	units	time	units								#	
+DELAY INFORMATION	DELAYINFORMATION	N		N	N	N	N	double	arg1	N	3	3											#	
+DELAY MATERIAL	DELAYMATERIAL	N		N	N	N	N	double	arg1	N	4	4											#	
+DELAY N	DELAYN	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	4	4	units	time	units	dmnl							#	
+DELAY PROFILE	DELAYPROFILE	N		N	N	N	N	double	arg1	N	5	5											#	
+DELAY1	DELAY1	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	time									#	
+DELAY1I	DELAY1I	Y	sdFunctions	Y	Y	Y	Y	double	arg1	Y	3	3	units	time	units								#	
+DELAY3	DELAY3	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	time									#	
+DELAY3I	DELAY3I	Y	sdFunctions	Y	Y	Y	Y	double	arg1	Y	3	3	units	time	units								#	
+DELAYP	DELAYP	N		N	N	N	N	double	arg1	N	3	3											#	
+DEMAND AT PRICE	DEMANDATPRICE	N		N	N	N	N	double	arg1	N	3	3											#	
+DEPRECIATE BY SCHEDULE	DEPRECIATEBYSCHEDULE	N		N	N	N	N	double	arg1	N	5	5											#	
+DEPRECIATE STRAIGHTLINE	DEPRECIATESTRAIGHTLINE	N		N	N	N	N	double	arg1	N	4	4											#	
+ELMCOUNT	ELMCOUNT	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	dmnl										#	
+EXP	EXP	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	
+FIND ZERO	FINDZERO	N		N	N	N	N	double	arg1	N	-1	-1											#	
+FORECAST	FORECAST	N		N	N	N	N	double	arg1	N	3	3											#	
+GAME	GAME	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	units										#	
+GAMMA LN	GAMMALN	N		N	N	N	N	double	arg1	N	1	1											#	
+GET 123 CONSTANTS	GET123CONSTANTS	N		N	N	N	N	double	arg1	N	3	3											#	
+GET 123 DATA	GET123DATA	N		N	N	N	N	double	arg1	N	4	4											#	
+GET DATA AT TIME	GETDATAATTIME	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	time									#	
+GET DATA BETWEEN TIMES	GETDATABETWEENTIMES	Y	sdFunctions	N	N	N	N	double	arg1	N	3	3	units	time	dmnl								#	
+GET DATA FIRST TIME	GETDATAFIRSTTIME	N		N	N	N	N	double	arg1	N	1	1											#	
+GET DATA LAST TIME	GETDATALASTTIME	N		N	N	N	N	double	arg1	N	1	1											#	
+GET DATA TOTAL POINTS	GETDATATOTALPOINTS	N		N	N	N	N	double	arg1	N	1	1											#	
+GET DATA MAX	GETDATAMAX	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	3	3	units	time	time								#	
+GET XLS CONSTANTS	GETXLSCONSTANTS	Y	sdFunctions	N	N	N	N	double	NA	N	3	3	NA	NA	NA								#	
+GET XLS DATA	GETXLSDATA	Y	sdFunctions	N	N	N	N	double	NA	N	4	4	NA	NA	NA	NA							#	
+GET XLS LOOKUPS	GETXLSLOOKUPS	Y	sdFunctions	N	N	N	N	double	NA	N	4	4	NA	NA	NA	NA							#	
+GET XLS SUBSCRIPT	GETXLSSUBSCRIPT	Y	sdFunctions	Y	Y	Y	Y	double	NA	N	5	5	NA	NA	NA	NA	NA						#	
+IF THEN ELSE	IFTHENELSE	Y	sdFunctions	Y	Y	Y	Y	double	arg2	N	3	3	dmnl	units	units								#	
+INITIAL	INITIAL	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	units										#	
+INTEG	INTEG	Y	sdFunctions	Y	Y	Y	Y	double	arg2	Y	2	2	units/time	units									#	
+INTEGER	INTEGER	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	x
+INTERNAL RATE OF RETURN	INTERNALRATEOFRETURN	N		N	N	N	N	double	arg1	N	4	4											#	
+INVERT MATRIX	INVERTMATRIX	N		N	N	N	N	double	arg1	N	2	2											#	
+LN	LN	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	
+LOG	LOG	N		N	N	N	N	double	arg1	N	1	1	dmnl										#	
+LOOKUP	LOOKUP	Y	sdFunctions	N	N	N	N	double	arg1	N	2	2	units	dmnl									#	
+LOOKUP AREA	LOOKUPAREA	N		N	N	N	N	double	arg1	N	3	3											#	
+LOOKUP BACKWARD	LOOKUPBACKWARD	N		N	N	N	N	double	arg1	N	2	2											#	
+LOOKUP EXTRAPOLATE	LOOKUPEXTRAPOLATE	N		N	N	N	N	double	arg1	N	2	2											#	
+LOOKUP FORWARD	LOOKUPFORWARD	N		N	N	N	N	double	arg1	N	2	2											#	
+LOOKUP INVERT	LOOKUPINVERT	N		N	N	N	N	double	arg1	N	2	2											#	
+LOOKUP SLOPE	LOOKUPSLOPE	N		N	N	N	N	double	arg1	N	3	3											#	
+MARKETP	MARKETP	N		N	N	N	N	double	arg1	N	5	5											#	
+MAX	MAX	Y	sdFunctions	N	N	N	N	double	arg1#arg2	N	2	2	units	units									#	
+MIN	MIN	Y	sdFunctions	N	N	N	N	double	arg1	N	2	2	units	units									#	
+MODULO	MODULO	Y	sdFunctions	N	N	N	N	double	arg1	N	2	2	units	untis	units								#	
+NOP	NOP	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	0	0											#	
+NPV	NPV	N		N	N	N	N	double	arg1	N	4	4											#	
+NPEV	NPEV	N		N	N	N	N	double	arg1	N	4	4											#	
+NET PRESENT VALUE	NETPRESENTVALUE	N		N	N	N	N	double	arg1	N	5	5											#	
+POWER	POWER	Y	sdFunctions	N	N	N	N	double	arg1*arg2	N	2	2	units	units									#	
+PROD	PROD	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	dmnl										#	
+PULSE	PULSE	Y	sdFunctions	Y	Y	Y	Y	double	dmnl	N	2	2	time	time									#	
+PULSE TRAIN	PULSETRAIN	Y	sdFunctions	Y	Y	Y	Y	double	dmnl	N	4	4	time	time	time	time							#	
+QUANTUM	QUANTUM	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	units									#	
+QUEUE AGE AVERAGE	QUEUEAGEAVERAGE	N		N	N	N	N	double	arg1	N	2	2											#	
+QUEUE AGE IN RANGE	QUEUEAGEINRANGE	N		N	N	N	N	double	arg1	N	3	3											#	
+QUEUE AGE OLDEST	QUEUEAGEOLDEST	N		N	N	N	N	double	arg1	N	1	1											#	
+QUEUE ATTRIB AVERAGE	QUEUEATTRIBAVERAGE	N		N	N	N	N	double	arg1	N	2	2											#	
+QUEUE ATTRIB IN RANGE	QUEUEATTRIBINRANGE	N		N	N	N	N	double	arg1	N	3	3											#	
+QUEUE ATTRIB MAX	QUEUEATTRIBMAX	N		N	N	N	N	double	arg1	N	1	1											#	
+QUEUE ATTRIB MIN	QUEUEATTRIBMIN	N		N	N	N	N	double	arg1	N	1	1											#	
+QUEUE ATTRIB QUANTITY	QUEUEATTRIBQUANTITY	N		N	N	N	N	double	arg1	N	2	2											#	
+QUEUE FIFO	QUEUEFIFO	N		N	N	N	N	double	arg1	N	5	5											#	
+QUEUE FIFO ATTRIB	QUEUEFIFOATTRIB	N		N	N	N	N	double	arg1	N	9	9											#	
+RAMP	RAMP	Y	sdFunctions	Y	Y	Y	Y	double	arg1*arg2	N	3	3	units	time	time								#	
+RANDOM 0 1	RANDOMUNIFORM	Y	sdFunctions	N	N	N	N	double	NA	N	0	0											#	
+RANDOM BETA	RANDOMBETA	N		N	N	N	N	double	arg1	N	7	7											#	
+RANDOM BINOMIAL	RANDOMBINOMIAL	N		N	N	N	N	double	arg1	N	7	7											#	
+RANDOM EXPONENTIAL	RANDOMEXPONENTIAL	N		N	N	N	N	double	arg1	N	5	5											#	
+RANDOM GAMMA	RANDOMGAMMA	N		N	N	N	N	double	arg1	N	6	6											#	
+RANDOM LOOKUP	RANDOMLOOKUP	N		N	N	N	N	double	arg1	N	6	6											#	
+RANDOM NEGATIVE	RANDOMNEGATIVE	N		N	N	N	N	double	arg1	N	-1	-1											#	
+RANDOM NORMAL	RANDOMNORMAL	Y	sdFunctions	N	N	N	N	double	arg1	N	5	5	NA	NA	NA	NA	NA						#	
+RANDOM POISSON	RANDOMPOISSON	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	6	6	NA	NA	NA	NA	NA	NA					#	
+RANDOM TRIANGULAR	RANDOMTRIANGULAR	N		N	N	N	N	double	arg1	N	6	6											#	
+RANDOM UNIFORM	RANDOMUNIFORM	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	3	3	units	units	NA								#	
+RANDOM WEIBULL	RANDOMWEIBULL	N		N	N	N	N	double	arg1	N	6	6											#	
+RC COMPARE	RCCOMPARE	N		N	N	N	N	double	arg1	N	-3	5											#	
+RC COMPARE CHECK	RCCOMPARECHECK	N		N	N	N	N	double	arg1	N	-4	6											#	
+RC DECAY	RCDECAY	N		N	N	N	N	double	arg1	N	-2	4											#	
+RC DECAY CHECK	RCDECAYCHECK	N		N	N	N	N	double	arg1	N	-3	5											#	
+RC GROW	RCGROW	N		N	N	N	N	double	arg1	N	-2	4											#	
+RC GROW CHECK	RCGROWCHECK	N		N	N	N	N	double	arg1	N	-3	5											#	
+RC RAMP	RCRAMP	N		N	N	N	N	double	arg1	N	-2	3											#	
+RC RAMP CHECK	RCRAM CHECK	N		N	N	N	N	double	arg1	N	-3	4											#	
+RC STEP	RCSTEP	N		N	N	N	N	double	arg1	N	-2	3											#	
+RC STEP CHECK	RCSTEPCHECK	N		N	N	N	N	double	arg1	N	-3	4											#	
+REINITIAL	REINITIAL	N		N	N	N	N	double	arg1	N	1	1											#	
+SAMPLE IF TRUE	SAMPLEIFTRUE	Y	sdFunctions	Y	Y	Y	Y	double	arg2	N	3	3	dmnl	units	units								#	
+SHIFT IF TRUE	SHIFTIFTRUE	N		N	N	N	N	double	arg1	N	5	5											#	
+SIN	SIN	Y	sdFunctions	N	N	N	N	double	NA	N	1	1	NA										#	
+SINH	SINH	N		N	N	N	N	double	arg1	N	1	1	dmnl										#	
+SINTEG	SINTEG	N		N	N	N	N	double	arg1	N	7	7											#	
+SMOOTH	SMOOTH	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	time									#	
+SMOOTH N	SMOOTHN	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	4	4	units	time	units	dmnl							#	
+SMOOTH3	SMOOTH3	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	time									#	
+SMOOTH3I	SMOOTH3I	N		N	N	N	N	double	arg1	N	3	3	units	time	units								#	
+SMOOTHI	SMOOTHI	Y	sdFunctions	Y	Y	Y	Y	double	arg1	Y	3	3	units	time	units								#	
+SQRT	SQRT	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	units*units										#	
+STEP	STEP	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	time									#	
+SUM	SUM	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	units										#	
+SUPPLY AT PRICE	SUPPLYATPRICE	N		N	N	N	N	double	arg1	N	3	3											#	
+TABBED ARRAY	TABBEDARRAY	N		N	N	N	N	double	arg1	N	4	4											#	
+TAN	TAN	Y	sdFunctions	N	N	N	N	double	arg1	N	1	1	dmnl										#	
+TANH	TANH	N		N	N	N	N	double	arg1	N	1	1	dmnl										#	
+TIME BASE	TIMEBASE	N		N	N	N	N	double	arg1	N	2	2											#	
+TIME SHIFT	TIMESHIFT	N		N	N	N	N	double	arg1	N	2	2											#	
+TIME TRANSITION	TIMETRANSITION	N		N	N	N	N	double	arg1	N	-1	-1											#	
+TIMEX	TIMEX	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	3	3	NA	NA	NA								#	
+TREND	TREND	Y	sdFunctions	Y	Y	Y	Y	double	1/arg2	N	3	3	units	time	1/time								#	
+VDMLOOKUP	VDMLOOKUP	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	NA										#	
+VECTOR ELM MAP	VECTORELMMAP	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	2	2	units	dml									#	
+VECTOR RANK	VECTORRANK	N		N	N	N	N	double	arg1	N	2	2											#	
+VECTOR REORDER	VECTORREORDER	N		N	N	N	N	double	arg1	N	2	2											#	
+VECTOR SELECT	VECTORSELECT	Y	sdFunctions	Y	Y	Y	Y	double	arg1*arg2	N	5	5	unit1	unit2	units1*units2	dmnl	dmnl						#	
+VECTOR SORT ORDER	VECTORSORTORDER	Y	sdFunctions	Y	Y	Y	Y	double	dmnl	N	2	2	units	dmnl									#	
+VMAX	VMAX	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	units										#	
+VMIN	VMIN	Y	sdFunctions	Y	Y	Y	Y	double	arg1	N	1	1	units										#	
+WITH LOOKUP	WITHLOOKUP	Y	sdFunctions	Y	Y	Y	Y	double	arg2?	N	2	2	dmnl	units									#	
+X IF MISSING	XIFMISSING	N		N	N	N	N	double	arg1	N	2	2											#	
+XIDZ	XIDZ	Y	sdFunctions	N	N	N	N	double	arg1/arg2	N	3	3	units1	units2	units1/units2								#	
+ZIDZ	ZIDZ	Y	sdFunctions	N	N	N	N	double	arg1/arg2	N	2	2	units1	units2									#	
