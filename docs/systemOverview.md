@@ -21,6 +21,12 @@ There are several interfaces between these systems. These are:
 # Experimental setup
 The base unit of the model is in years. The system is observed over a period of 50 years, since this allows for several cycles of infrastructure ageing and rebuilding. As a solver method runge-kutta4 is chosen. The time step needs to be ranging from 0.5 to 0.1 times the smallest time-constraint in the system. Currently in the model this is 1/10th of a year for planning to address discrepancies in infrastructure. Therefore the time-step of 0.015 is chosen.
 
+
+# Maintenance staff system
+
+# Municipal funds system
+
+
 # Population System
 
 # Infrastructure System
