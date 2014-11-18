@@ -65,20 +65,29 @@ Constructing new water infrastructure is mostly done by staff on a governmental 
 
 ## Validation
 Three validation methods will be used:
-- Direct structure test: Structure assessment
+- Theoretical direct structure test: Structure assessment
 - Structure-oriented behaviour test: Extreme conditions
 - Structure-oriented behaviour test: Behaviour reproduction & Surprise behaviour
 
+### Structure assessment
+The structure assessment test is a validation test which falls under the direct structure test category. This means the validation tests strictly focusses on validating the structure of the model and not the behaviour. Theoretical direct structure tests are validation tests which have to be done in the earlier steps of validating a model according to Barlas' sequence of steps of model validation (1996). 
+
+The purpose of the structure assessment test is to check whether the model structure is consistent with relevant descriptive knowledge of the system (Sterman, ????). We have performed this test by drawing a causal diagram of the system as it was communicated to us and then checking this against how we modeled the relations in the actual model. Figure 2 shows the causal model of the Kirkwood water infrastructure system.
+
+**Figure 2: Causal model**
+![Causal model](images/Causal-model.png)
+
+### Behaviour reproduction & Surprise behaviour
 When the system is not constrained by funds or staff constraints it is expected that the practical infrastructure capacity will meet the total water demand relatively easy and smooth in about 5 years (the infrastructure building time). Introducing a large step change in the water demand in the system will result in a large peak which will also be solved relatively smooth.
 
-**Figure 2: Baseline system behaviour**
+**Figure 3: Baseline system behaviour**
 ![Capacity validation](images/val-infrastructure-capacity.png)
 
 
-
+### Extreme conditions
 When we drastically reduce the time required to build and plan infrastructure we expect the shortage to be  solved sooner than in our base case scenario. However, when we increase the planning times we expect that the shortage cannot be solved and instead remain on a constant level over time. Also, the oscillations around the target infrastructure capacity will be much lower when the delays arae smaller. This is shown in Figure 3. 
 
-**Figure 3: Extreme value testing on  building times and water demand**
+**Figure 4: Extreme value testing on  building times and water demand**
 ![Capacity validation](images/val-infrastructure-ext-delays.png)
 
 When performing extreme values testing on the variables constraining the building and maintaining of the infrastructure we expect to see that in the non restricted cases the infrastructure shortage gets solved smooth and easy. However, when heavily constrained we expect the shortage not to be solved and instead remain on a constant level over time. This is shown in figure 4.
