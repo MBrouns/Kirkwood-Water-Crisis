@@ -38,6 +38,10 @@ Several assumptions needed to be made due to gaps in the background reading. The
 ### Effect of maintenance on ageing time
 In the background reading it was described that at 8% maintenance per year the average aging time of infrastructure is 30 years. We assumed that when there is 0% of the infrastructure is maintained per year, the average aging time will become 15 years. Having a higher maintenance coverage than 8% will not increase the lifespan of infrastructure.
 
+### Effect of maintenance on leakage
+In the background reading it was described that there is an average leakage of 30% due to bad maintenance. We assumed that if maintenance levels drop below the 8% indicated in the reading, leakages will rise to 50%. However, if infrastructure maintenance is increased the leakages will gradually drop to 0%.
+
+
 ### Effect of capacity pushing on ageing time
 The background reading described that pushing the infrastructure can drastically decrease the lifespan of infrastructure. We assumed that at the maximum pushing of infrastructure of 30% the lifespan of infrastructure is decreased by 10 years.
 

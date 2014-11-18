@@ -160,9 +160,9 @@ Build infrastructure=
 	|
 
 percentage infrastructure maintained annually=
-	MIN(MIN(Production possible for primary activities, Available maintenance capacity by funds\
+	MIN(Production possible for primary activities, Available maintenance capacity by funds\
 		) / Theoretical Infrastructure Capacity
-	 * 100, Target percentage infrastructure maintenance * 100)
+	 * 100
 	~	Dmnl
 	~		|
 
@@ -890,9 +890,9 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,7
 1,50,68,29,1,0,0,0,0,64,0,-1--1--1,,1|(327,566)|
 10,51,Production rate required for primary staff activities,2074,130,80,19,8,3,0,0,0,0,0,0
 10,52,Production rate required for secondary staff activities,1822,137,88,19,8,3,0,0,0,0,0,0
-10,53,Target percentage infrastructure maintenance,1774,508,82,19,8,3,0,0,0,0,0,0
+10,53,Target percentage infrastructure maintenance,2235,268,82,19,8,3,0,0,0,0,0,0
 1,54,1,51,1,0,0,0,0,64,0,-1--1--1,,1|(1984,847)|
-1,55,53,51,1,0,0,0,0,64,0,-1--1--1,,1|(2103,416)|
+1,55,53,51,1,0,0,0,0,64,0,-1--1--1,,1|(2220,216)|
 10,56,Planned infrastructure,1938,242,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
 10,57,Infrastructure building time,1949,311,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
 10,58,Infrastructure planning time,1678,271,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
@@ -900,7 +900,6 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,7
 1,60,56,52,0,0,0,0,0,64,0,-1--1--1,,1|(1885,194)|
 1,61,57,52,0,0,0,0,0,64,0,-1--1--1,,1|(1889,229)|
 10,62,Total water demand,1009,125,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
-1,63,53,16,1,0,0,0,0,64,0,-1--1--1,,1|(1636,489)|
 10,64,Available maintenance capacity by funds,1513,122,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
 10,65,Available funds for maintenance,1483,361,65,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
 1,66,64,16,1,0,0,0,0,64,0,-1--1--1,,1|(1517,204)|
@@ -1084,11 +1083,11 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,7
 22:Year,Years
 22:Day,Days
 15:0,0,0,0,0,0
-19:70,4
+19:70,2
 27:2,
 34:0,
 4:Time
-5:year
+5:Effect of maintenance on leakage
 35:Date
 36:YYYY-MM-DD
 37:2001
