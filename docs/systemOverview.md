@@ -46,6 +46,11 @@ Constructing new water infrastructure is mostly done by staff on a governmental 
 
 
 ## Validation
+Three validation methods will be used:
+- Direct structure test: Structure assessment
+- Structure-oriented behaviour test: Extreme conditions
+- Structure-oriented behaviour test: Behaviour reproduction & Surprise behaviour
+
 When the system is not constrained by funds or staff constraints it is expected that the practical infrastructure capacity will meet the total water demand relatively easy and smooth in about 5 years (the infrastructure building time). Introducing a large step change in the water demand in the system will result in a large peak which will also be solved relatively smooth.
 
 **Figure 2: Baseline system behaviour**
