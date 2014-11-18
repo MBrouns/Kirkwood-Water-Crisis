@@ -34,11 +34,15 @@ The first water crisis is when there is general unrest or dissatisfaction regard
 
 Dissatisfaction depends on the delivery rate of water, and the period for which there was a delivery discrepancy. The delivery rate is defined as the portion of the water demand which can be met based on the infrastructure capacity. The unrest is then defined as the discrepancy rate times the time for which this discrepancy has been going on. The graphical output of this system is shown in figure 1.
 
+**Figure 1: Water delivery dissatisfaction**
 ![Dissatisfaction](images/sys-crisis-unrest.png)
 
 The second water crisis which can occur is when there is a chance that the basic water limit for survival cannot be met. This water limit is set to a minimum of 10 liter / person / day. We assumed that water will not be distributed evenly among all households. Instead, we assume that when only 50% of total water demand can be met, already 10% of the households will be facing water shortages large enough for additional water supply through tankers to be necessary (see figure 2). Each tanker is assumed to require the attention of 1 staff member in order to distribute the water. 
 
+**Figure 2: Water supply crisis**
 ![water supply crisis](images/sys-crisis-households.png)
+
+
 # Population System
 
 
@@ -63,19 +67,23 @@ The background reading described that pushing the infrastructure can drastically
 Constructing new water infrastructure is mostly done by staff on a governmental level rather than staff on the municipal level. However, some supervision is still required by municipal staff. We assume that municipal staff is required for about 10% of the construction and planning activities. The rest is carried out by governmental staff which is out of scope of this model. Therefore, governmental staff is assumed to be always available.
 
 
-## Validation
-Three validation methods will be used:
-- Theoretical direct structure test: Structure assessment
-- Structure-oriented behaviour test: Extreme conditions
-- Structure-oriented behaviour test: Behaviour reproduction & Surprise behaviour
 
-### Structure assessment
+# Validation
+## Structure assessment
 The structure assessment test is a validation test which falls under the direct structure test category. This means the validation tests strictly focusses on validating the structure of the model and not the behaviour. Theoretical direct structure tests are validation tests which have to be done in the earlier steps of validating a model according to Barlas' sequence of steps of model validation (1996). 
 
 The purpose of the structure assessment test is to check whether the model structure is consistent with relevant descriptive knowledge of the system (Sterman, ????). We have performed this test by drawing a causal diagram of the system as it was communicated to us and then checking this against how we modeled the relations in the actual model. Figure 2 shows the causal model of the Kirkwood water infrastructure system.
 
 **Figure 2: Causal model**
-![Causal model](images/Causal-model.png)
+![Causal model](images/val-overall-causal.png)
+
+
+## Infrastructure System Validation
+Three validation methods will be used:
+- Theoretical direct structure test: Structure assessment
+- Structure-oriented behaviour test: Extreme conditions
+- Structure-oriented behaviour test: Behaviour reproduction & Surprise behaviour
+
 
 ### Behaviour reproduction & Surprise behaviour
 When the system is not constrained by funds or staff constraints it is expected that the practical infrastructure capacity will meet the total water demand relatively easy and smooth in about 5 years (the infrastructure building time). Introducing a large step change in the water demand in the system will result in a large peak which will also be solved relatively smooth.
@@ -94,3 +102,11 @@ When performing extreme values testing on the variables constraining the buildin
 
 **Figure 3: Extreme value analysis on constraining variables**
 ![Capacity validation](images/val-infrastructure-ext-constrained.png)
+
+## Population system validation
+
+## Staff system validation
+
+## Funding system validation
+
+## Coupled model validation
