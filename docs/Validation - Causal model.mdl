@@ -1,0 +1,124 @@
+{UTF-8}
+Available funds  = A FUNCTION OF( Available infrastructure,Shortage infrastructure)
+	~	
+	~		|
+
+Available infrastructure  = A FUNCTION OF( Available funds,Infrastructure maintenance\
+		,Shortage infrastructure,Staff availability)
+	~	
+	~		|
+
+Infrastructure maintenance  = A FUNCTION OF( Staff availability)
+	~	
+	~		|
+
+Shortage infrastructure  = A FUNCTION OF( Available infrastructure,Water demand)
+	~	
+	~		|
+
+Staff availability  = A FUNCTION OF( Shortage infrastructure)
+	~	
+	~		|
+
+Water demand  = A FUNCTION OF( )
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP 
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,110,0
+10,1,Available infrastructure,844,355,50,19,8,3,0,48,0,0,0,0,-1--1--1,0-0-0,Calibri|0|B|0-0-0
+10,2,Available funds,1061,243,55,11,8,3,0,48,0,0,0,0,-1--1--1,0-0-0,Calibri|0|B|0-0-0
+10,3,Infrastructure maintenance,828,547,50,19,8,3,0,48,0,0,0,0,-1--1--1,0-0-0,Calibri|0|B|0-0-0
+10,4,Staff availability,566,408,58,11,8,3,0,48,0,0,0,0,-1--1--1,0-0-0,Calibri|0|B|0-0-0
+10,5,Shortage infrastructure,637,210,50,19,8,3,0,48,0,0,0,0,-1--1--1,0-0-0,Calibri|0|B|0-0-0
+10,6,Water demand,479,143,54,11,8,3,0,48,0,0,0,0,-1--1--1,0-0-0,Calibri|0|B|0-0-0
+1,7,6,5,1,0,43,0,2,192,0,-1--1--1,|0||-1--1--1,1|(588,159)|
+1,8,5,4,1,0,45,0,2,64,0,-1--1--1,|0||-1--1--1,1|(556,293)|
+1,9,4,3,1,0,43,0,2,64,0,-1--1--1,|0||-1--1--1,1|(612,513)|
+1,10,3,1,1,0,43,0,2,64,0,-1--1--1,|0||-1--1--1,1|(881,476)|
+1,11,5,1,1,0,43,0,2,64,0,-1--1--1,|0||-1--1--1,1|(761,232)|
+1,12,1,5,1,0,45,0,2,192,0,-1--1--1,|0||-1--1--1,1|(689,297)|
+1,13,4,1,1,0,43,0,2,192,0,-1--1--1,|0||-1--1--1,1|(710,424)|
+1,14,5,2,1,0,45,0,2,192,0,-1--1--1,|0||-1--1--1,1|(827,125)|
+1,15,2,1,1,0,43,0,2,64,0,-1--1--1,|0||-1--1--1,1|(917,276)|
+1,16,1,2,1,0,43,0,2,192,0,-1--1--1,|0||-1--1--1,1|(989,334)|
+12,17,0,863,192,20,20,4,135,0,1,-1,0,0,0,0-0-255,0-0-0,|0||0-0-0
++
+12,18,0,949,305,20,20,5,7,0,1,-1,0,0,0,0-0-255,0-0-0,|0||0-0-0
++
+12,19,0,741,479,20,20,5,7,0,1,-1,0,0,0,0-0-255,0-0-0,|0||0-0-0
++
+12,20,0,744,277,20,20,4,7,0,33,-1,0,0,0,0-0-255,0-0-0,Calibri|0||0-0-0
+-
+12,21,0,646,351,20,20,5,7,0,1,-1,0,0,0,0-0-255,0-0-0,|0||0-0-0
++
+12,22,0,854,104,80,17,8,135,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Infrastructure building costs
+12,23,0,909,248,49,9,8,135,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Less maintenance
+12,24,0,1025,354,42,15,8,7,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Less delivery to payers
+12,25,0,928,467,41,15,8,7,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Ageing time & Leakage
+12,26,0,604,554,37,15,8,7,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Maintenance requirements
+12,27,0,503,294,48,15,8,7,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Crisis attention & Building time
+12,28,0,695,409,37,9,8,7,0,56,-1,0,0,0,-1--1--1,0-0-0,Calibri|10|I|0-0-0
+Building time
+///---\\\
+:L<%^E!@
+9:Current
+22:$,Dollar,Dollars,$s
+22:Hour,Hours
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:Week,Weeks
+22:Year,Years
+22:Day,Days
+15:0,0,0,0,0,0
+19:110,0
+27:2,
+34:0,
+5:Water demand
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+42:1
+24:0
+25:0
+26:0
