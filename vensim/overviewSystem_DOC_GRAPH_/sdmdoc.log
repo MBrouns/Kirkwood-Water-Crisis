@@ -1,8 +1,8 @@
 INFO  [SDM_Doc] Logging initialized.
 INFO  [FunctionManager] OPENING implementedFunctions.txt
-INFO  [FunctionManager] LOCATION: E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\sdm-doc\implementedFunctions.txt
+INFO  [FunctionManager] LOCATION: C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\sdm-doc\implementedFunctions.txt
 INFO  [SDM_Doc] **** Units Consistency ****
-INFO  [SDM_Doc] MDL File: E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem.mdl
+INFO  [SDM_Doc] MDL File: C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem.mdl
 INFO  [SDM_Doc] Results File: data/consistency.txt
 DEBUG [SDM_Doc] ********
 DEBUG [View] Indirection Results: redirect = false delete = false
@@ -16,8 +16,71 @@ DEBUG [EquationProcessor] Setting currentGroup: <.fundingSystem>
 DEBUG [EquationProcessor] Setting currentGroup: <.populationSystem>
 DEBUG [EquationProcessor] Setting currentGroup: <.staffSystem>
 DEBUG [EquationProcessor] Setting currentGroup: <.Control>
-DEBUG [UnitsManager] UNITS Not Specified: memory.Total_unrest=((memory.connected_household_unrest+memory.unconnected_household_unrest+memory.urban_users_unsrest)/3)*10
-DEBUG [UnitsManager] UNITS Not Specified: memory.Time_since_connected_household_delivery_discrepancy=sdFunctions.IFTHENELSE("Time since connected household delivery discrepancy",memory.Time_since_connected_household_delivery_discrepancy, time, timeStep, memory.Delivery_rate_connected_households==1,memory.Time,sdFunctions.DELAY1I("Time since connected household delivery discrepancy",memory.Time_since_connected_household_delivery_discrepancy, time, timeStep, memory.Time_since_connected_household_delivery_discrepancy,1,1))
+DEBUG [UnitExpression] Cannot execute operator -
+DEBUG [Equation]  <memory.Total_production_possible>
+DEBUG [Equation]  <=>
+DEBUG [Equation]  <sdFunctions.MAX>
+DEBUG [Equation]  <(>
+DEBUG [Equation]  <0>
+DEBUG [Equation]  <,>
+DEBUG [Equation]  <(>
+DEBUG [Equation]  <memory.Available_technical_staff>
+DEBUG [Equation]  <->
+DEBUG [Equation]  <(>
+DEBUG [Equation]  <memory.Staff_required_for_tankers>
+DEBUG [Equation]  <*>
+DEBUG [Equation]  <memory.Required_tankers>
+DEBUG [Equation]  <)>
+DEBUG [Equation]  <)>
+DEBUG [Equation]  <*>
+DEBUG [Equation]  <memory.Real_production_rate_per_person_per_year>
+DEBUG [Equation]  <)>
+DEBUG [Equation] 
+
+DEBUG [UnitsManager]  "Ml/year"
+DEBUG [UnitsManager]  "="
+DEBUG [UnitsManager]  "sdFunctions.MAX<null>"
+DEBUG [UnitsManager]  "("
+DEBUG [UnitsManager]  "constant#0"
+DEBUG [UnitsManager]  ","
+DEBUG [UnitsManager]  "("
+DEBUG [UnitsManager]  "("
+DEBUG [UnitsManager]  "staff"
+DEBUG [UnitsManager]  "-"
+DEBUG [UnitsManager]  "("
+DEBUG [UnitsManager]  "staff/tanker*day"
+DEBUG [UnitsManager]  "*"
+DEBUG [UnitsManager]  "tanker/day"
+DEBUG [UnitsManager]  ")"
+DEBUG [UnitsManager]  ")"
+DEBUG [UnitsManager]  "*"
+DEBUG [UnitsManager]  "Ml/(staff*year)"
+DEBUG [UnitsManager]  ")"
+DEBUG [UnitsManager]  ")"
+DEBUG [UnitsManager] 
+
+DEBUG [UnitsManager] ++++++++++++++++++++++++++++++++
+DEBUG [UnitsManager] "Ml/year"
+DEBUG [UnitsManager] "="
+DEBUG [UnitsManager] "sdFunctions.MAX<arg1#arg2>"
+DEBUG [UnitsManager] "("
+DEBUG [UnitsManager]    "constant#0"
+DEBUG [UnitsManager]    ","
+DEBUG [UnitsManager]    "("
+DEBUG [UnitsManager]       "("
+DEBUG [UnitsManager]          "staff"
+DEBUG [UnitsManager]          "-"
+DEBUG [UnitsManager]          "("
+DEBUG [UnitsManager]             "staff/tanker*day"
+DEBUG [UnitsManager]             "*"
+DEBUG [UnitsManager]             "tanker/day"
+DEBUG [UnitsManager]          ")"
+DEBUG [UnitsManager]       ")"
+DEBUG [UnitsManager]       "*"
+DEBUG [UnitsManager]       "Ml/(staff*year)"
+DEBUG [UnitsManager]    ")"
+DEBUG [UnitsManager] ")"
+DEBUG [UnitsManager] INCONSISTENT UNITS: memory.Total_production_possible=sdFunctions.MAX("Total production possible",memory.Total_production_possible, time, timeStep, 0,(memory.Available_technical_staff-(memory.Staff_required_for_tankers*memory.Required_tankers))*memory.Real_production_rate_per_person_per_year)
 DEBUG [UnitExpression] What's going on?
 DEBUG [UnitExpression] What's going on?
 DEBUG [Equation]  <memory.Effect_of_maintenance_on_aging_time>
@@ -51,38 +114,6 @@ DEBUG [UnitsManager]    "Dmnl"
 DEBUG [UnitsManager] ")"
 DEBUG [UnitsManager] INCONSISTENT UNITS: memory.Effect_of_maintenance_on_aging_time=sdFunctions.LOOKUP(lookup.Effect of maintenance on aging time_RSSDlookup,memory.percentage_infrastructure_maintained_annually)
 DEBUG [UnitExpression] What's going on?
-DEBUG [UnitsManager] UNITS Not Specified: memory.urban_users_unsrest=sdFunctions.MAX("urban users unsrest",memory.urban_users_unsrest, time, timeStep, 0,sdFunctions.MIN("urban users unsrest",memory.urban_users_unsrest, time, timeStep, 1,(memory.Time-memory.Time_since_urban_delivery_discrepancy)*(0.95-memory.Delivery_rate_other_urban_users)))
-DEBUG [UnitExpression] What's going on?
-DEBUG [Equation]  <memory.Staff_required_for_tankers>
-DEBUG [Equation]  <=>
-DEBUG [Equation]  <sdFunctions.LOOKUP>
-DEBUG [Equation]  <(>
-DEBUG [Equation]  <lookup.Staff required for tankers_RSSDlookup>
-DEBUG [Equation]  <,>
-DEBUG [Equation]  <memory.Required_tankers>
-DEBUG [Equation]  <)>
-DEBUG [Equation] 
-
-DEBUG [UnitsManager]  "staff"
-DEBUG [UnitsManager]  "="
-DEBUG [UnitsManager]  "sdFunctions.LOOKUP<null>"
-DEBUG [UnitsManager]  "("
-DEBUG [UnitsManager]  "Dmnl"
-DEBUG [UnitsManager]  ","
-DEBUG [UnitsManager]  "tanker/day"
-DEBUG [UnitsManager]  ")"
-DEBUG [UnitsManager] 
-
-DEBUG [UnitsManager] ++++++++++++++++++++++++++++++++
-DEBUG [UnitsManager] "staff"
-DEBUG [UnitsManager] "="
-DEBUG [UnitsManager] "sdFunctions.LOOKUP<arg1>"
-DEBUG [UnitsManager] "("
-DEBUG [UnitsManager]    "Dmnl"
-DEBUG [UnitsManager]    ","
-DEBUG [UnitsManager]    "tanker/day"
-DEBUG [UnitsManager] ")"
-DEBUG [UnitsManager] INCONSISTENT UNITS: memory.Staff_required_for_tankers=sdFunctions.LOOKUP(lookup.Staff required for tankers_RSSDlookup,memory.Required_tankers)
 DEBUG [Equation]  <memory.Available_maintenance_capacity_by_funds>
 DEBUG [Equation]  <=>
 DEBUG [Equation]  <memory.Available_funds_for_maintenance>
@@ -108,7 +139,6 @@ DEBUG [UnitsManager]    "/"
 DEBUG [UnitsManager]    "kZAR/(Ml/year)"
 DEBUG [UnitsManager] ")"
 DEBUG [UnitsManager] INCONSISTENT UNITS: memory.Available_maintenance_capacity_by_funds=memory.Available_funds_for_maintenance/memory.Average_annual_maintenance_cost_per_unit_of_capacity
-DEBUG [UnitsManager] UNITS Not Specified: memory.connected_household_unrest=sdFunctions.MAX("connected household unrest",memory.connected_household_unrest, time, timeStep, 0,sdFunctions.MIN("connected household unrest",memory.connected_household_unrest, time, timeStep, 1,(memory.Time-memory.Time_since_connected_household_delivery_discrepancy)*(0.95-memory.Delivery_rate_connected_households)))
 DEBUG [UnitExpression] What's going on?
 DEBUG [UnitExpression] What's going on?
 DEBUG [Equation]  <memory.Effect_of_infrastructure_pushing_on_aging_time>
@@ -201,47 +231,30 @@ DEBUG [UnitsManager]    "/"
 DEBUG [UnitsManager]    "Year"
 DEBUG [UnitsManager] ")"
 DEBUG [UnitsManager] INCONSISTENT UNITS: memory.Maintenance_expenditures=sdFunctions.MIN("Maintenance expenditures",memory.Maintenance_expenditures, time, timeStep, memory.Theoretical_Infrastructure_Capacity*memory.Average_annual_maintenance_cost_per_unit_of_capacity,memory.Available_funds_for_maintenance)/memory.year
-DEBUG [UnitsManager] UNITS Not Specified: memory.Time_since_urban_delivery_discrepancy=sdFunctions.IFTHENELSE("Time since urban delivery discrepancy",memory.Time_since_urban_delivery_discrepancy, time, timeStep, memory.Delivery_rate_other_urban_users==1,memory.Time,sdFunctions.DELAY1I("Time since urban delivery discrepancy",memory.Time_since_urban_delivery_discrepancy, time, timeStep, memory.Time_since_urban_delivery_discrepancy,1,1))
 DEBUG [UnitExpression] What's going on?
-DEBUG [UnitsManager] UNITS Not Specified: memory.Time_since_unconnected_household_delivery_discrepancy=sdFunctions.IFTHENELSE("Time since unconnected household delivery discrepancy",memory.Time_since_unconnected_household_delivery_discrepancy, time, timeStep, memory.Delivery_rate_unconnected_households==1,memory.Time,sdFunctions.DELAY1I("Time since unconnected household delivery discrepancy",memory.Time_since_unconnected_household_delivery_discrepancy, time, timeStep, memory.Time_since_unconnected_household_delivery_discrepancy,1,1))
-DEBUG [UnitsManager] UNITS Not Specified: memory.unconnected_household_unrest=sdFunctions.MAX("unconnected household unrest",memory.unconnected_household_unrest, time, timeStep, 0,sdFunctions.MIN("unconnected household unrest",memory.unconnected_household_unrest, time, timeStep, 1,(memory.Time-memory.Time_since_unconnected_household_delivery_discrepancy)*(0.95-memory.Delivery_rate_unconnected_households)))
 DEBUG [SDM_Doc] ERROR: Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity~Ml/year
 DEBUG [SDM_Doc] ERROR:  <memory.Available_maintenance_capacity_by_funds> <=> <memory.Available_funds_for_maintenance> </> <memory.Average_annual_maintenance_cost_per_unit_of_capacity>
 DEBUG [SDM_Doc] ERROR: Maintenance expenditures=MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity, Available funds for maintenance)/year~kZAR/year
 DEBUG [SDM_Doc] ERROR:  <memory.Maintenance_expenditures> <=> <sdFunctions.MIN> <(> <memory.Theoretical_Infrastructure_Capacity> <*> <memory.Average_annual_maintenance_cost_per_unit_of_capacity> <,> <memory.Available_funds_for_maintenance> <)> </> <memory.year>
-DEBUG [SDM_Doc] ERROR: Total unrest=((connected household unrest+unconnected household unrest+urban users unsrest)/3)*10~~~:SUPPLEMENTARY
-DEBUG [SDM_Doc] ERROR:  <memory.Total_unrest> <=> <(> <(> <memory.connected_household_unrest> <+> <memory.unconnected_household_unrest> <+> <memory.urban_users_unsrest> <)> </> <3> <)> <*> <10>
 DEBUG [SDM_Doc] ERROR: Effect of maintenance on aging time = Effect of maintenance on aging time_RSSDlookup(percentage infrastructure maintained annually)~year~
 DEBUG [SDM_Doc] ERROR:  <memory.Effect_of_maintenance_on_aging_time> <=> <sdFunctions.LOOKUP> <(> <lookup.Effect of maintenance on aging time_RSSDlookup> <,> <memory.percentage_infrastructure_maintained_annually> <)>
-DEBUG [SDM_Doc] ERROR: Time since connected household delivery discrepancy=IF THEN ELSE(Delivery rate connected households=1, Time, DELAY1I(Time since connected household delivery discrepancy, 1, 1))~
-DEBUG [SDM_Doc] ERROR:  <memory.Time_since_connected_household_delivery_discrepancy> <=> <sdFunctions.IFTHENELSE> <(> <"Time since connected household delivery discrepancy"> <,> <memory.Time_since_connected_household_delivery_discrepancy> <,> <time> <,> <timeStep> <,> <memory.Delivery_rate_connected_households> <==> <1> <,> <memory.Time> <,> <sdFunctions.DELAY1I> <(> <"Time since connected household delivery discrepancy"> <,> <memory.Time_since_connected_household_delivery_discrepancy> <,> <time> <,> <timeStep> <,> <memory.Time_since_connected_household_delivery_discrepancy> <,> <1> <,> <1> <)> <)>
-DEBUG [SDM_Doc] ERROR: connected household unrest=MAX(0, MIN(1, (Time - Time since connected household delivery discrepancy)*(0.95-Delivery rate connected households)))~
-DEBUG [SDM_Doc] ERROR:  <memory.connected_household_unrest> <=> <sdFunctions.MAX> <(> <0> <,> <sdFunctions.MIN> <(> <1> <,> <(> <memory.Time> <-> <memory.Time_since_connected_household_delivery_discrepancy> <)> <*> <(> <0.95> <-> <memory.Delivery_rate_connected_households> <)> <)> <)>
-DEBUG [SDM_Doc] ERROR: Time since urban delivery discrepancy=IF THEN ELSE(Delivery rate other urban users=1, Time, DELAY1I(Time since urban delivery discrepancy, 1, 1))~
-DEBUG [SDM_Doc] ERROR:  <memory.Time_since_urban_delivery_discrepancy> <=> <sdFunctions.IFTHENELSE> <(> <"Time since urban delivery discrepancy"> <,> <memory.Time_since_urban_delivery_discrepancy> <,> <time> <,> <timeStep> <,> <memory.Delivery_rate_other_urban_users> <==> <1> <,> <memory.Time> <,> <sdFunctions.DELAY1I> <(> <"Time since urban delivery discrepancy"> <,> <memory.Time_since_urban_delivery_discrepancy> <,> <time> <,> <timeStep> <,> <memory.Time_since_urban_delivery_discrepancy> <,> <1> <,> <1> <)> <)>
-DEBUG [SDM_Doc] ERROR: Time since unconnected household delivery discrepancy=IF THEN ELSE(Delivery rate unconnected households=1, Time, DELAY1I(Time since unconnected household delivery discrepancy, 1, 1))~
-DEBUG [SDM_Doc] ERROR:  <memory.Time_since_unconnected_household_delivery_discrepancy> <=> <sdFunctions.IFTHENELSE> <(> <"Time since unconnected household delivery discrepancy"> <,> <memory.Time_since_unconnected_household_delivery_discrepancy> <,> <time> <,> <timeStep> <,> <memory.Delivery_rate_unconnected_households> <==> <1> <,> <memory.Time> <,> <sdFunctions.DELAY1I> <(> <"Time since unconnected household delivery discrepancy"> <,> <memory.Time_since_unconnected_household_delivery_discrepancy> <,> <time> <,> <timeStep> <,> <memory.Time_since_unconnected_household_delivery_discrepancy> <,> <1> <,> <1> <)> <)>
 DEBUG [SDM_Doc] ERROR: Effect of infrastructure pushing on aging time = Effect of infrastructure pushing on aging time_RSSDlookup(Infrastructure Shortage/Practical infrastructure capacity)~year~
 DEBUG [SDM_Doc] ERROR:  <memory.Effect_of_infrastructure_pushing_on_aging_time> <=> <sdFunctions.LOOKUP> <(> <lookup.Effect of infrastructure pushing on aging time_RSSDlookup> <,> <memory.Infrastructure_Shortage> </> <memory.Practical_infrastructure_capacity> <)>
-DEBUG [SDM_Doc] ERROR: unconnected household unrest=MAX(0, MIN( 1, (Time - Time since unconnected household delivery discrepancy)*(0.95-Delivery rate unconnected households)))~
-DEBUG [SDM_Doc] ERROR:  <memory.unconnected_household_unrest> <=> <sdFunctions.MAX> <(> <0> <,> <sdFunctions.MIN> <(> <1> <,> <(> <memory.Time> <-> <memory.Time_since_unconnected_household_delivery_discrepancy> <)> <*> <(> <0.95> <-> <memory.Delivery_rate_unconnected_households> <)> <)> <)>
-DEBUG [SDM_Doc] ERROR: Staff required for tankers = Staff required for tankers_RSSDlookup(Required tankers)~staff~
-DEBUG [SDM_Doc] ERROR:  <memory.Staff_required_for_tankers> <=> <sdFunctions.LOOKUP> <(> <lookup.Staff required for tankers_RSSDlookup> <,> <memory.Required_tankers> <)>
-DEBUG [SDM_Doc] ERROR: urban users unsrest=MAX(0, MIN(1, (Time - Time since urban delivery discrepancy)*(0.95-Delivery rate other urban users)))~
-DEBUG [SDM_Doc] ERROR:  <memory.urban_users_unsrest> <=> <sdFunctions.MAX> <(> <0> <,> <sdFunctions.MIN> <(> <1> <,> <(> <memory.Time> <-> <memory.Time_since_urban_delivery_discrepancy> <)> <*> <(> <0.95> <-> <memory.Delivery_rate_other_urban_users> <)> <)> <)>
+DEBUG [SDM_Doc] ERROR: Total production possible=MAX(0, (Available technical staff-(Staff required for tankers*Required tankers))*Real production rate per person per year)~Ml/year
+DEBUG [SDM_Doc] ERROR:  <memory.Total_production_possible> <=> <sdFunctions.MAX> <(> <0> <,> <(> <memory.Available_technical_staff> <-> <(> <memory.Staff_required_for_tankers> <*> <memory.Required_tankers> <)> <)> <*> <memory.Real_production_rate_per_person_per_year> <)>
 DEBUG [SDObjectManager] ... initialize SDObjectManager
-DEBUG [SDObjectManager] ... numEquations: 122
+DEBUG [SDObjectManager] ... numEquations: 121
 DEBUG [ModelComponents] ### Model Components Analysis ###
 
 DEBUG [ModelComponents] Complete: true
 DEBUG [ModelComponents] Connected: true
 DEBUG [ModelComponents] EquationsComplete: true
-DEBUG [ModelComponents] UnitsComplete: false
+DEBUG [ModelComponents] UnitsComplete: true
 DEBUG [ModelComponents] 
 Causal Trees: true
 DEBUG [ModelComponents] Loops: true
-DEBUG [ModelComponents] Polarity: false
-DEBUG [ModelComponents] Generate Code: false
+DEBUG [ModelComponents] Polarity: true
+DEBUG [ModelComponents] Generate Code: true
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Emigration_from_LSRV no Prune: false
 DEBUG [Node]   <1> * no Prune: false
@@ -387,10 +400,12 @@ DEBUG [Node]     <2> 0 no Prune: false
 DEBUG [Node]     <2> * no Prune: false
 DEBUG [Node]       <3> - no Prune: false
 DEBUG [Node]         <4> memory.Available_technical_staff no Prune: false
-DEBUG [Node]         <4> memory.Staff_required_for_tankers no Prune: false
+DEBUG [Node]         <4> * no Prune: false
+DEBUG [Node]           <5> memory.Staff_required_for_tankers no Prune: false
+DEBUG [Node]           <5> memory.Required_tankers no Prune: false
 DEBUG [Node]       <3> memory.Real_production_rate_per_person_per_year no Prune: false
-DEBUG [AnalysisManager] ###Total production possible = MAX(0,Available technical staff-Staff required for tankers*Real production rate per person per year)~~autogenerated
-DEBUG [AnalysisManager] >>>> lhs = Math.max(0,(rhs[0]-(rhs[1]*rhs[2])))
+DEBUG [AnalysisManager] ###Total production possible = MAX(0,Available technical staff-Staff required for tankers*Required tankers*Real production rate per person per year)~~autogenerated
+DEBUG [AnalysisManager] >>>> lhs = Math.max(0,(rhs[0]-((rhs[1]*rhs[3])*rhs[2])))
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Available_technical_staff --> memory.Total_production_possible
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Available technical staff -> Total production possible Undefined(Load) +
@@ -398,6 +413,8 @@ DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Staff_required_fo
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Staff required for tankers -> Total production possible Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Real_production_rate_per_person_per_year --> memory.Total_production_possible
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Real production rate per person per year -> Total production possible Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 3 Polarity: 1  memory.Required_tankers --> memory.Total_production_possible
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Required tankers -> Total production possible Undefined(Load) +
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Available_technical_staff --> memory.Total_production_possible
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Available technical staff -> Total production possible Undefined(Load) +
@@ -405,6 +422,8 @@ DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Staff_required_fo
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Staff required for tankers -> Total production possible Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Real_production_rate_per_person_per_year --> memory.Total_production_possible
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Real production rate per person per year -> Total production possible Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 3 Polarity: 1  memory.Required_tankers --> memory.Total_production_possible
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Required tankers -> Total production possible Undefined(Load) +
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Total_production_required no Prune: false
 DEBUG [Node]   <1> + no Prune: false
@@ -456,59 +475,6 @@ DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.connected_househo
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to connected household unrest -> Total unrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.urban_users_unsrest --> memory.Total_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to urban users unsrest -> Total unrest Undefined(Load) +
-DEBUG [Node] <0> = no Prune: false
-DEBUG [Node]   <1> memory.Time_since_connected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
-DEBUG [Node]     <2> "Time since connected household delivery discrepancy" no Prune: false
-DEBUG [Node]     <2> memory.Time_since_connected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]     <2> time no Prune: false
-DEBUG [Node]     <2> timeStep no Prune: false
-DEBUG [Node]     <2> == no Prune: false
-DEBUG [Node]       <3> memory.Delivery_rate_connected_households no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [Node]     <2> memory.Time no Prune: false
-DEBUG [Node]     <2> + no Prune: false
-DEBUG [Node]       <3> + no Prune: false
-DEBUG [Node]         <4> memory.Time_since_connected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [AnalysisManager] ITE
-DEBUG [AnalysisManager] Time since connected household delivery discrepancy=IF THEN ELSE(Delivery rate connected households=1, Time, DELAY1I(Time since connected household delivery discrepancy, 1, 1))
-DEBUG [Node] <0> = no Prune: false
-DEBUG [Node]   <1> memory.Time_since_connected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]   <1> + no Prune: false
-DEBUG [Node]     <2> memory.Time no Prune: false
-DEBUG [Node]     <2> + no Prune: false
-DEBUG [Node]       <3> + no Prune: false
-DEBUG [Node]         <4> memory.Time_since_connected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> Time since connected household delivery discrepancy Undefined(Load) If Then Else Switch
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> Time since connected household delivery discrepancy Undefined(Load) If Then Else Switch
-DEBUG [AnalysisManager] ###Time since connected household delivery discrepancy = Time+Time since connected household delivery discrepancy+1+1~~autogenerated
-DEBUG [AnalysisManager] >>>> lhs = ((rhs[1]+rhs[0])+1)+1
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time_since_connected_household_delivery_discrepancy --> memory.Time_since_connected_household_delivery_discrepancy
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.Time_since_connected_household_delivery_discrepancy
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> Time since connected household delivery discrepancy Undefined(Load) +
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time_since_connected_household_delivery_discrepancy --> memory.Time_since_connected_household_delivery_discrepancy
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.Time_since_connected_household_delivery_discrepancy
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> Time since connected household delivery discrepancy Undefined(Load) +
-DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
-DEBUG [IfThenElseVariableRelationship] Time -> Time since connected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
-DEBUG [IfThenElseVariableRelationship] Time since connected household delivery discrepancy -> Time since connected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> Time since connected household delivery discrepancy If Then Else Switch +
-DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
-DEBUG [IfThenElseVariableRelationship] Time -> Time since connected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
-DEBUG [IfThenElseVariableRelationship] Time since connected household delivery discrepancy -> Time since connected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> Time since connected household delivery discrepancy If Then Else Switch +
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.year no Prune: false
 DEBUG [Node]   <1> 1 no Prune: false
@@ -1534,26 +1500,26 @@ DEBUG [Node]       <3> 1 no Prune: false
 DEBUG [Node]       <3> * no Prune: false
 DEBUG [Node]         <4> - no Prune: false
 DEBUG [Node]           <5> memory.Time no Prune: false
-DEBUG [Node]           <5> memory.Time_since_urban_delivery_discrepancy no Prune: false
+DEBUG [Node]           <5> memory.last_time_of_since_urban_delivery_discrepancy no Prune: false
 DEBUG [Node]         <4> - no Prune: false
 DEBUG [Node]           <5> 0.95 no Prune: false
 DEBUG [Node]           <5> memory.Delivery_rate_other_urban_users no Prune: false
-DEBUG [AnalysisManager] ###urban users unsrest = MAX(0,MIN(1,Time-Time since urban delivery discrepancy*0.95-Delivery rate other urban users))~~autogenerated
+DEBUG [AnalysisManager] ###urban users unsrest = MAX(0,MIN(1,Time-last time of since urban delivery discrepancy*0.95-Delivery rate other urban users))~~autogenerated
 DEBUG [AnalysisManager] >>>> lhs = Math.max(0,(Math.min(1,((rhs[1]-(rhs[2]*0.95))-rhs[0]))))
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Delivery_rate_other_urban_users --> memory.urban_users_unsrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> urban users unsrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.urban_users_unsrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> urban users unsrest Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Time_since_urban_delivery_discrepancy --> memory.urban_users_unsrest
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time since urban delivery discrepancy -> urban users unsrest Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.last_time_of_since_urban_delivery_discrepancy --> memory.urban_users_unsrest
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to last time of since urban delivery discrepancy -> urban users unsrest Undefined(Load) +
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Delivery_rate_other_urban_users --> memory.urban_users_unsrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> urban users unsrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.urban_users_unsrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> urban users unsrest Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Time_since_urban_delivery_discrepancy --> memory.urban_users_unsrest
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time since urban delivery discrepancy -> urban users unsrest Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.last_time_of_since_urban_delivery_discrepancy --> memory.urban_users_unsrest
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to last time of since urban delivery discrepancy -> urban users unsrest Undefined(Load) +
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Annual_financial_bail_out no Prune: false
 DEBUG [Node]   <1> 150 no Prune: false
@@ -1594,6 +1560,59 @@ DEBUG [PolarityRunner]
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Effect_of_maintenance_on_leakage --> memory.Leakage
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Effect of maintenance on leakage -> Leakage Undefined(Load) +
 DEBUG [Node] <0> = no Prune: false
+DEBUG [Node]   <1> memory.last_time_of_unconnected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
+DEBUG [Node]     <2> "last time of unconnected household delivery discrepancy" no Prune: false
+DEBUG [Node]     <2> memory.last_time_of_unconnected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]     <2> time no Prune: false
+DEBUG [Node]     <2> timeStep no Prune: false
+DEBUG [Node]     <2> == no Prune: false
+DEBUG [Node]       <3> memory.Delivery_rate_unconnected_households no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [Node]     <2> memory.Time no Prune: false
+DEBUG [Node]     <2> + no Prune: false
+DEBUG [Node]       <3> + no Prune: false
+DEBUG [Node]         <4> memory.last_time_of_unconnected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [AnalysisManager] ITE
+DEBUG [AnalysisManager] last time of unconnected household delivery discrepancy=IF THEN ELSE(Delivery rate unconnected households=1, Time, DELAY1I(last time of unconnected household delivery discrepancy, 1, 1))
+DEBUG [Node] <0> = no Prune: false
+DEBUG [Node]   <1> memory.last_time_of_unconnected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]   <1> + no Prune: false
+DEBUG [Node]     <2> memory.Time no Prune: false
+DEBUG [Node]     <2> + no Prune: false
+DEBUG [Node]       <3> + no Prune: false
+DEBUG [Node]         <4> memory.last_time_of_unconnected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> last time of unconnected household delivery discrepancy Undefined(Load) If Then Else Switch
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> last time of unconnected household delivery discrepancy Undefined(Load) If Then Else Switch
+DEBUG [AnalysisManager] ###last time of unconnected household delivery discrepancy = Time+last time of unconnected household delivery discrepancy+1+1~~autogenerated
+DEBUG [AnalysisManager] >>>> lhs = ((rhs[1]+rhs[0])+1)+1
+DEBUG [PolarityRunner] 
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.last_time_of_unconnected_household_delivery_discrepancy --> memory.last_time_of_unconnected_household_delivery_discrepancy
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.last_time_of_unconnected_household_delivery_discrepancy
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> last time of unconnected household delivery discrepancy Undefined(Load) +
+DEBUG [PolarityRunner] 
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.last_time_of_unconnected_household_delivery_discrepancy --> memory.last_time_of_unconnected_household_delivery_discrepancy
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.last_time_of_unconnected_household_delivery_discrepancy
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> last time of unconnected household delivery discrepancy Undefined(Load) +
+DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
+DEBUG [IfThenElseVariableRelationship] Time -> last time of unconnected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
+DEBUG [IfThenElseVariableRelationship] last time of unconnected household delivery discrepancy -> last time of unconnected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> last time of unconnected household delivery discrepancy If Then Else Switch +
+DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
+DEBUG [IfThenElseVariableRelationship] Time -> last time of unconnected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
+DEBUG [IfThenElseVariableRelationship] last time of unconnected household delivery discrepancy -> last time of unconnected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> last time of unconnected household delivery discrepancy If Then Else Switch +
+DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Emigration_from_unconnected_Kirkwood_households no Prune: false
 DEBUG [Node]   <1> / no Prune: false
 DEBUG [Node]     <2> * no Prune: false
@@ -1617,18 +1636,65 @@ DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to year -> Emi
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Unconnected_Kirkwood_residents --> memory.Emigration_from_unconnected_Kirkwood_households
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Unconnected Kirkwood residents -> Emigration from unconnected Kirkwood households Undefined(Load) +
 DEBUG [Node] <0> = no Prune: false
+DEBUG [Node]   <1> memory.last_time_of_connected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
+DEBUG [Node]     <2> "last time of connected household delivery discrepancy" no Prune: false
+DEBUG [Node]     <2> memory.last_time_of_connected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]     <2> time no Prune: false
+DEBUG [Node]     <2> timeStep no Prune: false
+DEBUG [Node]     <2> == no Prune: false
+DEBUG [Node]       <3> memory.Delivery_rate_connected_households no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [Node]     <2> memory.Time no Prune: false
+DEBUG [Node]     <2> + no Prune: false
+DEBUG [Node]       <3> + no Prune: false
+DEBUG [Node]         <4> memory.last_time_of_connected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [AnalysisManager] ITE
+DEBUG [AnalysisManager] last time of connected household delivery discrepancy=IF THEN ELSE(Delivery rate connected households=1, Time, DELAY1I(last time of connected household delivery discrepancy, 1, 1))
+DEBUG [Node] <0> = no Prune: false
+DEBUG [Node]   <1> memory.last_time_of_connected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]   <1> + no Prune: false
+DEBUG [Node]     <2> memory.Time no Prune: false
+DEBUG [Node]     <2> + no Prune: false
+DEBUG [Node]       <3> + no Prune: false
+DEBUG [Node]         <4> memory.last_time_of_connected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> last time of connected household delivery discrepancy Undefined(Load) If Then Else Switch
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> last time of connected household delivery discrepancy Undefined(Load) If Then Else Switch
+DEBUG [AnalysisManager] ###last time of connected household delivery discrepancy = Time+last time of connected household delivery discrepancy+1+1~~autogenerated
+DEBUG [AnalysisManager] >>>> lhs = ((rhs[1]+rhs[0])+1)+1
+DEBUG [PolarityRunner] 
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.last_time_of_connected_household_delivery_discrepancy --> memory.last_time_of_connected_household_delivery_discrepancy
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.last_time_of_connected_household_delivery_discrepancy
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> last time of connected household delivery discrepancy Undefined(Load) +
+DEBUG [PolarityRunner] 
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.last_time_of_connected_household_delivery_discrepancy --> memory.last_time_of_connected_household_delivery_discrepancy
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.last_time_of_connected_household_delivery_discrepancy
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> last time of connected household delivery discrepancy Undefined(Load) +
+DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
+DEBUG [IfThenElseVariableRelationship] Time -> last time of connected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
+DEBUG [IfThenElseVariableRelationship] last time of connected household delivery discrepancy -> last time of connected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> last time of connected household delivery discrepancy If Then Else Switch +
+DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
+DEBUG [IfThenElseVariableRelationship] Time -> last time of connected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
+DEBUG [IfThenElseVariableRelationship] last time of connected household delivery discrepancy -> last time of connected household delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> last time of connected household delivery discrepancy If Then Else Switch +
+DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Staff_required_for_tankers no Prune: false
-DEBUG [Node]   <1> * no Prune: false
-DEBUG [Node]     <2> 1.0 no Prune: false
-DEBUG [Node]     <2> memory.Required_tankers no Prune: false
-DEBUG [AnalysisManager] ###Staff required for tankers = 1.0*Required tankers~~autogenerated
-DEBUG [AnalysisManager] >>>> lhs = 1.0*rhs[0]
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Required_tankers --> memory.Staff_required_for_tankers
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Required tankers -> Staff required for tankers Undefined(Load) +
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Required_tankers --> memory.Staff_required_for_tankers
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Required tankers -> Staff required for tankers Undefined(Load) +
+DEBUG [Node]   <1> 1 no Prune: false
+DEBUG [AnalysisManager] ###Staff required for tankers = 1~~autogenerated
+DEBUG [AnalysisManager] >>>> lhs = 1
+DEBUG [PolarityResultAnalyzer] No Polarity to determine
+DEBUG [PolarityResultAnalyzer] No Polarity to determine
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Production_planning_activities no Prune: false
 DEBUG [Node]   <1> * no Prune: false
@@ -1751,6 +1817,59 @@ DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Infrastruct
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 3 Polarity: 1  memory.Infrastructure_Shortage --> memory.Required_infrastructure
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Infrastructure Shortage -> Required infrastructure Undefined(Load) +
 DEBUG [Node] <0> = no Prune: false
+DEBUG [Node]   <1> memory.last_time_of_since_urban_delivery_discrepancy no Prune: false
+DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
+DEBUG [Node]     <2> "last time of since urban delivery discrepancy" no Prune: false
+DEBUG [Node]     <2> memory.last_time_of_since_urban_delivery_discrepancy no Prune: false
+DEBUG [Node]     <2> time no Prune: false
+DEBUG [Node]     <2> timeStep no Prune: false
+DEBUG [Node]     <2> == no Prune: false
+DEBUG [Node]       <3> memory.Delivery_rate_other_urban_users no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [Node]     <2> memory.Time no Prune: false
+DEBUG [Node]     <2> + no Prune: false
+DEBUG [Node]       <3> + no Prune: false
+DEBUG [Node]         <4> memory.last_time_of_since_urban_delivery_discrepancy no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [AnalysisManager] ITE
+DEBUG [AnalysisManager] last time of since urban delivery discrepancy=IF THEN ELSE(Delivery rate other urban users=1, Time, DELAY1I(last time of since urban delivery discrepancy, 1, 1))
+DEBUG [Node] <0> = no Prune: false
+DEBUG [Node]   <1> memory.last_time_of_since_urban_delivery_discrepancy no Prune: false
+DEBUG [Node]   <1> + no Prune: false
+DEBUG [Node]     <2> memory.Time no Prune: false
+DEBUG [Node]     <2> + no Prune: false
+DEBUG [Node]       <3> + no Prune: false
+DEBUG [Node]         <4> memory.last_time_of_since_urban_delivery_discrepancy no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]         <4> 1 no Prune: false
+DEBUG [Node]       <3> 1 no Prune: false
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> last time of since urban delivery discrepancy Undefined(Load) If Then Else Switch
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> last time of since urban delivery discrepancy Undefined(Load) If Then Else Switch
+DEBUG [AnalysisManager] ###last time of since urban delivery discrepancy = Time+last time of since urban delivery discrepancy+1+1~~autogenerated
+DEBUG [AnalysisManager] >>>> lhs = ((rhs[0]+rhs[1])+1)+1
+DEBUG [PolarityRunner] 
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time --> memory.last_time_of_since_urban_delivery_discrepancy
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> last time of since urban delivery discrepancy Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.last_time_of_since_urban_delivery_discrepancy --> memory.last_time_of_since_urban_delivery_discrepancy
+DEBUG [PolarityRunner] 
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time --> memory.last_time_of_since_urban_delivery_discrepancy
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> last time of since urban delivery discrepancy Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.last_time_of_since_urban_delivery_discrepancy --> memory.last_time_of_since_urban_delivery_discrepancy
+DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
+DEBUG [IfThenElseVariableRelationship] Time -> last time of since urban delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
+DEBUG [IfThenElseVariableRelationship] last time of since urban delivery discrepancy -> last time of since urban delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> last time of since urban delivery discrepancy If Then Else Switch +
+DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
+DEBUG [IfThenElseVariableRelationship] Time -> last time of since urban delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
+DEBUG [IfThenElseVariableRelationship] last time of since urban delivery discrepancy -> last time of since urban delivery discrepancy +
+DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> last time of since urban delivery discrepancy If Then Else Switch +
+DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Volume_of_water_supplied_for_urban_water_users no Prune: false
 DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
 DEBUG [Node]     <2> "Volume of water supplied for urban water users" no Prune: false
@@ -1858,24 +1977,24 @@ DEBUG [Node]       <3> 1 no Prune: false
 DEBUG [Node]       <3> * no Prune: false
 DEBUG [Node]         <4> - no Prune: false
 DEBUG [Node]           <5> memory.Time no Prune: false
-DEBUG [Node]           <5> memory.Time_since_connected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]           <5> memory.last_time_of_connected_household_delivery_discrepancy no Prune: false
 DEBUG [Node]         <4> - no Prune: false
 DEBUG [Node]           <5> 0.95 no Prune: false
 DEBUG [Node]           <5> memory.Delivery_rate_connected_households no Prune: false
-DEBUG [AnalysisManager] ###connected household unrest = MAX(0,MIN(1,Time-Time since connected household delivery discrepancy*0.95-Delivery rate connected households))~~autogenerated
+DEBUG [AnalysisManager] ###connected household unrest = MAX(0,MIN(1,Time-last time of connected household delivery discrepancy*0.95-Delivery rate connected households))~~autogenerated
 DEBUG [AnalysisManager] >>>> lhs = Math.max(0,(Math.min(1,((rhs[2]-(rhs[1]*0.95))-rhs[0]))))
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Delivery_rate_connected_households --> memory.connected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> connected household unrest Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time_since_connected_household_delivery_discrepancy --> memory.connected_household_unrest
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time since connected household delivery discrepancy -> connected household unrest Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.last_time_of_connected_household_delivery_discrepancy --> memory.connected_household_unrest
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to last time of connected household delivery discrepancy -> connected household unrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Time --> memory.connected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> connected household unrest Undefined(Load) +
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Delivery_rate_connected_households --> memory.connected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate connected households -> connected household unrest Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time_since_connected_household_delivery_discrepancy --> memory.connected_household_unrest
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time since connected household delivery discrepancy -> connected household unrest Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.last_time_of_connected_household_delivery_discrepancy --> memory.connected_household_unrest
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to last time of connected household delivery discrepancy -> connected household unrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Time --> memory.connected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> connected household unrest Undefined(Load) +
 DEBUG [Node] <0> = no Prune: false
@@ -2035,59 +2154,6 @@ DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: -1  memory.year --> memory.
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to year -> Maintenance expenditures Undefined(Load) -
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 3 Polarity: 1  memory.Average_annual_maintenance_cost_per_unit_of_capacity --> memory.Maintenance_expenditures
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Average annual maintenance cost per unit of capacity -> Maintenance expenditures Undefined(Load) +
-DEBUG [Node] <0> = no Prune: false
-DEBUG [Node]   <1> memory.Time_since_urban_delivery_discrepancy no Prune: false
-DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
-DEBUG [Node]     <2> "Time since urban delivery discrepancy" no Prune: false
-DEBUG [Node]     <2> memory.Time_since_urban_delivery_discrepancy no Prune: false
-DEBUG [Node]     <2> time no Prune: false
-DEBUG [Node]     <2> timeStep no Prune: false
-DEBUG [Node]     <2> == no Prune: false
-DEBUG [Node]       <3> memory.Delivery_rate_other_urban_users no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [Node]     <2> memory.Time no Prune: false
-DEBUG [Node]     <2> + no Prune: false
-DEBUG [Node]       <3> + no Prune: false
-DEBUG [Node]         <4> memory.Time_since_urban_delivery_discrepancy no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [AnalysisManager] ITE
-DEBUG [AnalysisManager] Time since urban delivery discrepancy=IF THEN ELSE(Delivery rate other urban users=1, Time, DELAY1I(Time since urban delivery discrepancy, 1, 1))
-DEBUG [Node] <0> = no Prune: false
-DEBUG [Node]   <1> memory.Time_since_urban_delivery_discrepancy no Prune: false
-DEBUG [Node]   <1> + no Prune: false
-DEBUG [Node]     <2> memory.Time no Prune: false
-DEBUG [Node]     <2> + no Prune: false
-DEBUG [Node]       <3> + no Prune: false
-DEBUG [Node]         <4> memory.Time_since_urban_delivery_discrepancy no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> Time since urban delivery discrepancy Undefined(Load) If Then Else Switch
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> Time since urban delivery discrepancy Undefined(Load) If Then Else Switch
-DEBUG [AnalysisManager] ###Time since urban delivery discrepancy = Time+Time since urban delivery discrepancy+1+1~~autogenerated
-DEBUG [AnalysisManager] >>>> lhs = ((rhs[0]+rhs[1])+1)+1
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time --> memory.Time_since_urban_delivery_discrepancy
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> Time since urban delivery discrepancy Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time_since_urban_delivery_discrepancy --> memory.Time_since_urban_delivery_discrepancy
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time --> memory.Time_since_urban_delivery_discrepancy
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> Time since urban delivery discrepancy Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time_since_urban_delivery_discrepancy --> memory.Time_since_urban_delivery_discrepancy
-DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
-DEBUG [IfThenElseVariableRelationship] Time -> Time since urban delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
-DEBUG [IfThenElseVariableRelationship] Time since urban delivery discrepancy -> Time since urban delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> Time since urban delivery discrepancy If Then Else Switch +
-DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
-DEBUG [IfThenElseVariableRelationship] Time -> Time since urban delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
-DEBUG [IfThenElseVariableRelationship] Time since urban delivery discrepancy -> Time since urban delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate other urban users -> Time since urban delivery discrepancy If Then Else Switch +
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Staff_production_change_rate no Prune: false
 DEBUG [Node]   <1> * no Prune: false
@@ -2323,19 +2389,15 @@ DEBUG [PolarityResultAnalyzer] No Polarity to determine
 DEBUG [PolarityResultAnalyzer] No Polarity to determine
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.percentage_infrastructure_maintained_annually no Prune: false
-DEBUG [Node]   <1> sdFunctions.MIN no Prune: false
-DEBUG [Node]     <2> * no Prune: false
-DEBUG [Node]       <3> / no Prune: false
-DEBUG [Node]         <4> sdFunctions.MIN no Prune: false
-DEBUG [Node]           <5> memory.Production_possible_for_primary_activities no Prune: false
-DEBUG [Node]           <5> memory.Available_maintenance_capacity_by_funds no Prune: false
-DEBUG [Node]         <4> memory.Theoretical_Infrastructure_Capacity no Prune: false
-DEBUG [Node]       <3> 100 no Prune: false
-DEBUG [Node]     <2> * no Prune: false
-DEBUG [Node]       <3> memory.Target_percentage_infrastructure_maintenance no Prune: false
-DEBUG [Node]       <3> 100 no Prune: false
-DEBUG [AnalysisManager] ###percentage infrastructure maintained annually = MIN(MIN(Production possible for primary activities,Available maintenance capacity by funds)/Theoretical Infrastructure Capacity*100,Target percentage infrastructure maintenance*100)~~autogenerated
-DEBUG [AnalysisManager] >>>> lhs = Math.min((((Math.min(rhs[2],rhs[1]))/rhs[0])*100),(rhs[3]*100))
+DEBUG [Node]   <1> * no Prune: false
+DEBUG [Node]     <2> / no Prune: false
+DEBUG [Node]       <3> sdFunctions.MIN no Prune: false
+DEBUG [Node]         <4> memory.Production_possible_for_primary_activities no Prune: false
+DEBUG [Node]         <4> memory.Available_maintenance_capacity_by_funds no Prune: false
+DEBUG [Node]       <3> memory.Theoretical_Infrastructure_Capacity no Prune: false
+DEBUG [Node]     <2> 100 no Prune: false
+DEBUG [AnalysisManager] ###percentage infrastructure maintained annually = MIN(Production possible for primary activities,Available maintenance capacity by funds)/Theoretical Infrastructure Capacity*100~~autogenerated
+DEBUG [AnalysisManager] >>>> lhs = ((Math.min(rhs[2],rhs[1]))/rhs[0])*100
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: -1  memory.Theoretical_Infrastructure_Capacity --> memory.percentage_infrastructure_maintained_annually
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Theoretical Infrastructure Capacity -> percentage infrastructure maintained annually Undefined(Load) -
@@ -2343,8 +2405,6 @@ DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Available_mainten
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Available maintenance capacity by funds -> percentage infrastructure maintained annually Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Production_possible_for_primary_activities --> memory.percentage_infrastructure_maintained_annually
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Production possible for primary activities -> percentage infrastructure maintained annually Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 3 Polarity: 1  memory.Target_percentage_infrastructure_maintenance --> memory.percentage_infrastructure_maintained_annually
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Target percentage infrastructure maintenance -> percentage infrastructure maintained annually Undefined(Load) +
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: -1  memory.Theoretical_Infrastructure_Capacity --> memory.percentage_infrastructure_maintained_annually
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Theoretical Infrastructure Capacity -> percentage infrastructure maintained annually Undefined(Load) -
@@ -2352,61 +2412,6 @@ DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Available_mainten
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Available maintenance capacity by funds -> percentage infrastructure maintained annually Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Production_possible_for_primary_activities --> memory.percentage_infrastructure_maintained_annually
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Production possible for primary activities -> percentage infrastructure maintained annually Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 3 Polarity: 1  memory.Target_percentage_infrastructure_maintenance --> memory.percentage_infrastructure_maintained_annually
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Target percentage infrastructure maintenance -> percentage infrastructure maintained annually Undefined(Load) +
-DEBUG [Node] <0> = no Prune: false
-DEBUG [Node]   <1> memory.Time_since_unconnected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]   <1> sdFunctions.IFTHENELSE no Prune: false
-DEBUG [Node]     <2> "Time since unconnected household delivery discrepancy" no Prune: false
-DEBUG [Node]     <2> memory.Time_since_unconnected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]     <2> time no Prune: false
-DEBUG [Node]     <2> timeStep no Prune: false
-DEBUG [Node]     <2> == no Prune: false
-DEBUG [Node]       <3> memory.Delivery_rate_unconnected_households no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [Node]     <2> memory.Time no Prune: false
-DEBUG [Node]     <2> + no Prune: false
-DEBUG [Node]       <3> + no Prune: false
-DEBUG [Node]         <4> memory.Time_since_unconnected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [AnalysisManager] ITE
-DEBUG [AnalysisManager] Time since unconnected household delivery discrepancy=IF THEN ELSE(Delivery rate unconnected households=1, Time, DELAY1I(Time since unconnected household delivery discrepancy, 1, 1))
-DEBUG [Node] <0> = no Prune: false
-DEBUG [Node]   <1> memory.Time_since_unconnected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]   <1> + no Prune: false
-DEBUG [Node]     <2> memory.Time no Prune: false
-DEBUG [Node]     <2> + no Prune: false
-DEBUG [Node]       <3> + no Prune: false
-DEBUG [Node]         <4> memory.Time_since_unconnected_household_delivery_discrepancy no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]         <4> 1 no Prune: false
-DEBUG [Node]       <3> 1 no Prune: false
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> Time since unconnected household delivery discrepancy Undefined(Load) If Then Else Switch
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> Time since unconnected household delivery discrepancy Undefined(Load) If Then Else Switch
-DEBUG [AnalysisManager] ###Time since unconnected household delivery discrepancy = Time+Time since unconnected household delivery discrepancy+1+1~~autogenerated
-DEBUG [AnalysisManager] >>>> lhs = ((rhs[1]+rhs[0])+1)+1
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time_since_unconnected_household_delivery_discrepancy --> memory.Time_since_unconnected_household_delivery_discrepancy
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.Time_since_unconnected_household_delivery_discrepancy
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> Time since unconnected household delivery discrepancy Undefined(Load) +
-DEBUG [PolarityRunner] 
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Time_since_unconnected_household_delivery_discrepancy --> memory.Time_since_unconnected_household_delivery_discrepancy
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time --> memory.Time_since_unconnected_household_delivery_discrepancy
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> Time since unconnected household delivery discrepancy Undefined(Load) +
-DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
-DEBUG [IfThenElseVariableRelationship] Time -> Time since unconnected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
-DEBUG [IfThenElseVariableRelationship] Time since unconnected household delivery discrepancy -> Time since unconnected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> Time since unconnected household delivery discrepancy If Then Else Switch +
-DEBUG [IfThenElseVariableRelationship] ##### ITE Condition Polarity #####
-DEBUG [IfThenElseVariableRelationship] Time -> Time since unconnected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG2 Polarity = +
-DEBUG [IfThenElseVariableRelationship] Time since unconnected household delivery discrepancy -> Time since unconnected household delivery discrepancy +
-DEBUG [IfThenElseVariableRelationship] ARG3 Polarity = +
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> Time since unconnected household delivery discrepancy If Then Else Switch +
 DEBUG [Node] <0> = no Prune: false
 DEBUG [Node]   <1> memory.Production_possible_for_planning_activities no Prune: false
 DEBUG [Node]   <1> * no Prune: false
@@ -2433,28 +2438,28 @@ DEBUG [Node]       <3> 1 no Prune: false
 DEBUG [Node]       <3> * no Prune: false
 DEBUG [Node]         <4> - no Prune: false
 DEBUG [Node]           <5> memory.Time no Prune: false
-DEBUG [Node]           <5> memory.Time_since_unconnected_household_delivery_discrepancy no Prune: false
+DEBUG [Node]           <5> memory.last_time_of_unconnected_household_delivery_discrepancy no Prune: false
 DEBUG [Node]         <4> - no Prune: false
 DEBUG [Node]           <5> 0.95 no Prune: false
 DEBUG [Node]           <5> memory.Delivery_rate_unconnected_households no Prune: false
-DEBUG [AnalysisManager] ###unconnected household unrest = MAX(0,MIN(1,Time-Time since unconnected household delivery discrepancy*0.95-Delivery rate unconnected households))~~autogenerated
+DEBUG [AnalysisManager] ###unconnected household unrest = MAX(0,MIN(1,Time-last time of unconnected household delivery discrepancy*0.95-Delivery rate unconnected households))~~autogenerated
 DEBUG [AnalysisManager] >>>> lhs = Math.max(0,(Math.min(1,((rhs[2]-(rhs[1]*0.95))-rhs[0]))))
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Delivery_rate_unconnected_households --> memory.unconnected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> unconnected household unrest Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time_since_unconnected_household_delivery_discrepancy --> memory.unconnected_household_unrest
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time since unconnected household delivery discrepancy -> unconnected household unrest Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.last_time_of_unconnected_household_delivery_discrepancy --> memory.unconnected_household_unrest
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to last time of unconnected household delivery discrepancy -> unconnected household unrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Time --> memory.unconnected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> unconnected household unrest Undefined(Load) +
 DEBUG [PolarityRunner] 
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 0 Polarity: 1  memory.Delivery_rate_unconnected_households --> memory.unconnected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Delivery rate unconnected households -> unconnected household unrest Undefined(Load) +
-DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.Time_since_unconnected_household_delivery_discrepancy --> memory.unconnected_household_unrest
-DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time since unconnected household delivery discrepancy -> unconnected household unrest Undefined(Load) +
+DEBUG [PolarityResultAnalyzer] ARGUMENT: 1 Polarity: 1  memory.last_time_of_unconnected_household_delivery_discrepancy --> memory.unconnected_household_unrest
+DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to last time of unconnected household delivery discrepancy -> unconnected household unrest Undefined(Load) +
 DEBUG [PolarityResultAnalyzer] ARGUMENT: 2 Polarity: 1  memory.Time --> memory.unconnected_household_unrest
 DEBUG [PolarityResults] Attempting to Redefine Polarity t->h from to Time -> unconnected household unrest Undefined(Load) +
 DEBUG [SDObjectManager] ... initialize PolarityResults with Graphic objects
-DEBUG [SDObjectManager] numGo: 394 numArrow: 207
+DEBUG [SDObjectManager] numGo: 393 numArrow: 206
 DEBUG [AdjacencyMatrix] ##### Adjacency Matrix Build Start #####
 DEBUG [AdjacencyMatrix] ##### Adjacency Matrix Build End #####
 DEBUG [ReachabilityMatrix] ReachabilityMatrix Loop 1
@@ -2462,132 +2467,131 @@ DEBUG [ReachabilityMatrix] ReachabilityMatrix Loop 2
 DEBUG [ReachabilityMatrix] ReachabilityMatrix Loop 3
 DEBUG [ReachabilityMatrix] ReachabilityMatrix Loop 4
 DEBUG [LoopManager] VLT Start 1: Production possible for construction activities
-DEBUG [EquationManager] var: Production possible for construction activities id: 73
 DEBUG [EquationManager] var: Emigration from LSRV id: 25
+DEBUG [EquationManager] var: Production possible for construction activities id: 76
 DEBUG [EquationManager] var: Connected Kirkwood residents id: 13
-DEBUG [EquationManager] var: Planned infrastructure id: 66
-DEBUG [EquationManager] var: Target percentage infrastructure maintenance id: 94
+DEBUG [EquationManager] var: Planned infrastructure id: 69
+DEBUG [EquationManager] var: Target percentage infrastructure maintenance id: 96
 DEBUG [EquationManager] var: Effect of infrastructure pushing on aging time_RSSDlookup id: 19
-DEBUG [EquationManager] var: NAREPLACEMENT id: 56
+DEBUG [EquationManager] var: NAREPLACEMENT id: 59
 DEBUG [EquationManager] var: Connected households id: 12
 DEBUG [EquationManager] var: FINAL TIME id: 30
-DEBUG [EquationManager] var: Total production possible id: 104
-DEBUG [EquationManager] var: Total production required id: 105
-DEBUG [EquationManager] var: Staff Hired id: 84
-DEBUG [EquationManager] var: Total unrest id: 107
-DEBUG [EquationManager] var: Time since connected household delivery discrepancy id: 99
-DEBUG [EquationManager] var: Volume of water supplied to connected households id: 118
-DEBUG [EquationManager] var: year id: 122
-DEBUG [EquationManager] var: SAVEPER id: 82
-DEBUG [EquationManager] var: Unconnected Kirkwood residents id: 114
+DEBUG [EquationManager] var: Total production possible id: 103
+DEBUG [EquationManager] var: Total production required id: 104
+DEBUG [EquationManager] var: Staff Hired id: 87
+DEBUG [EquationManager] var: Total unrest id: 106
+DEBUG [EquationManager] var: year id: 121
+DEBUG [EquationManager] var: Volume of water supplied to connected households id: 117
+DEBUG [EquationManager] var: SAVEPER id: 85
 DEBUG [EquationManager] var: growth rate connected houses id: 32
-DEBUG [EquationManager] var: Staff production change rate_RSSDlookup id: 88
-DEBUG [EquationManager] var: Service network connecting rate id: 83
+DEBUG [EquationManager] var: Unconnected Kirkwood residents id: 113
+DEBUG [EquationManager] var: Staff production change rate_RSSDlookup id: 91
+DEBUG [EquationManager] var: Service network connecting rate id: 86
 DEBUG [EquationManager] var: Build infrastructure id: 10
-DEBUG [EquationManager] var: Plan new infrastructure id: 65
-DEBUG [EquationManager] var: Production possible for primary activities id: 75
-DEBUG [EquationManager] var: Target population unconnected Kirkwood id: 96
-DEBUG [EquationManager] var: Perc Households with crisis_RSSDlookup id: 59
-DEBUG [EquationManager] var: Maximum infrastructure capacity id: 52
+DEBUG [EquationManager] var: Plan new infrastructure id: 68
+DEBUG [EquationManager] var: Production possible for primary activities id: 78
+DEBUG [EquationManager] var: Target population unconnected Kirkwood id: 98
+DEBUG [EquationManager] var: Perc Households with crisis_RSSDlookup id: 62
+DEBUG [EquationManager] var: Maximum infrastructure capacity id: 55
 DEBUG [EquationManager] var: Effect of maintenance on leakage id: 22
 DEBUG [EquationManager] var: Emigration rate from LSRV id: 28
-DEBUG [EquationManager] var: Water demand unconnected household id: 121
+DEBUG [EquationManager] var: Water demand unconnected household id: 120
 DEBUG [EquationManager] var: Delivery rate other urban users id: 16
-DEBUG [EquationManager] var: Total Residents id: 106
-DEBUG [EquationManager] var: Time id: 98
-DEBUG [EquationManager] var: Total water demand id: 108
+DEBUG [EquationManager] var: Total Residents id: 105
+DEBUG [EquationManager] var: Time id: 100
+DEBUG [EquationManager] var: Total water demand id: 107
 DEBUG [EquationManager] var: Infrastructure building time id: 43
-DEBUG [EquationManager] var: Theoretical Infrastructure Capacity id: 97
+DEBUG [EquationManager] var: Theoretical Infrastructure Capacity id: 99
 DEBUG [EquationManager] var: Emigration rate from unconnected kirkwood id: 29
 DEBUG [EquationManager] var: Infrastructure aging id: 41
-DEBUG [EquationManager] var: Production rate required for primary staff activities id: 76
+DEBUG [EquationManager] var: Production rate required for primary staff activities id: 79
 DEBUG [EquationManager] var: Effect of maintenance on aging time_RSSDlookup id: 21
-DEBUG [EquationManager] var: Residents per household id: 81
+DEBUG [EquationManager] var: Residents per household id: 84
 DEBUG [EquationManager] var: Available funds for maintenance id: 6
 DEBUG [EquationManager] var: Infrastructure Surplus id: 46
 DEBUG [EquationManager] var: Attention rate for secondary activities id: 5
-DEBUG [EquationManager] var: Moving rate to unconnected households id: 54
+DEBUG [EquationManager] var: Moving rate to unconnected households id: 57
 DEBUG [EquationManager] var: Connecting households to the service network id: 14
-DEBUG [EquationManager] var: Staff service time id: 92
-DEBUG [EquationManager] var: Production rate required for secondary staff activities id: 77
-DEBUG [EquationManager] var: Total water demand connected households id: 109
+DEBUG [EquationManager] var: Staff service time id: 94
+DEBUG [EquationManager] var: Production rate required for secondary staff activities id: 80
 DEBUG [EquationManager] var: Effect of maintenance on aging time id: 20
-DEBUG [EquationManager] var: Production constructing activities id: 71
+DEBUG [EquationManager] var: Total water demand connected households id: 108
+DEBUG [EquationManager] var: Production constructing activities id: 74
 DEBUG [EquationManager] var: Delivery rate connected households id: 15
 DEBUG [EquationManager] var: Infrastructure Shortage id: 45
 DEBUG [EquationManager] var: Infrastructure Aging Time id: 42
-DEBUG [EquationManager] var: Minimum water supply level id: 53
-DEBUG [EquationManager] var: Required tankers id: 80
-DEBUG [EquationManager] var: Staff occupancy id: 86
-DEBUG [EquationManager] var: Municipality income id: 55
+DEBUG [EquationManager] var: Minimum water supply level id: 56
+DEBUG [EquationManager] var: Required tankers id: 83
+DEBUG [EquationManager] var: Staff occupancy id: 89
+DEBUG [EquationManager] var: Municipality income id: 58
 DEBUG [EquationManager] var: Infrastructure planning time id: 44
-DEBUG [EquationManager] var: Unconnected households id: 113
-DEBUG [EquationManager] var: Staff leaving id: 85
-DEBUG [EquationManager] var: Perc Households with crisis id: 58
+DEBUG [EquationManager] var: Unconnected households id: 112
+DEBUG [EquationManager] var: Staff leaving id: 88
+DEBUG [EquationManager] var: Perc Households with crisis id: 61
 DEBUG [EquationManager] var: Average annual maintenance cost per unit of capacity id: 9
-DEBUG [EquationManager] var: Total water demand unconnected households id: 111
+DEBUG [EquationManager] var: Total water demand unconnected households id: 110
 DEBUG [EquationManager] var: Attention rate for primary activities id: 4
-DEBUG [EquationManager] var: Target population connected Kirkwood id: 95
+DEBUG [EquationManager] var: Target population connected Kirkwood id: 97
 DEBUG [EquationManager] var: Hiring time id: 35
 DEBUG [EquationManager] var: INITIAL TIME id: 47
-DEBUG [EquationManager] var: Immigration rate id: 37
-DEBUG [EquationManager] var: Total water demand other urban users id: 110
 DEBUG [EquationManager] var: growth rate LSRV id: 33
-DEBUG [EquationManager] var: LSRV residents excluding Kirkwood id: 49
+DEBUG [EquationManager] var: Total water demand other urban users id: 109
+DEBUG [EquationManager] var: Immigration rate id: 37
+DEBUG [EquationManager] var: LSRV residents excluding Kirkwood id: 52
 DEBUG [EquationManager] var: Emigration from Kirkwood id: 24
+DEBUG [EquationManager] var: urban users unsrest id: 115
 DEBUG [EquationManager] var: Annual financial bail-out id: 1
-DEBUG [EquationManager] var: urban users unsrest id: 116
 DEBUG [EquationManager] var: Emigration rate connected Kirkwood id: 27
-DEBUG [EquationManager] var: Leakage id: 48
+DEBUG [EquationManager] var: Leakage id: 51
+DEBUG [EquationManager] var: last time of unconnected household delivery discrepancy id: 50
 DEBUG [EquationManager] var: Emigration from unconnected Kirkwood households id: 26
-DEBUG [EquationManager] var: Staff required for tankers id: 90
-DEBUG [EquationManager] var: Production planning activities id: 72
-DEBUG [EquationManager] var: Total Kirkwood Residents id: 103
+DEBUG [EquationManager] var: last time of connected household delivery discrepancy id: 48
+DEBUG [EquationManager] var: Staff required for tankers id: 93
+DEBUG [EquationManager] var: Production planning activities id: 75
 DEBUG [EquationManager] var: Delivery rate unconnected households id: 17
+DEBUG [EquationManager] var: Total Kirkwood Residents id: 102
+DEBUG [EquationManager] var: Tanker Capacity id: 95
 DEBUG [EquationManager] var: Available maintenance capacity by funds id: 7
-DEBUG [EquationManager] var: Tanker Capacity id: 93
 DEBUG [EquationManager] var: Hiring of staff id: 34
-DEBUG [EquationManager] var: Required infrastructure id: 79
-DEBUG [EquationManager] var: Volume of water supplied for urban water users id: 117
+DEBUG [EquationManager] var: Required infrastructure id: 82
+DEBUG [EquationManager] var: last time of since urban delivery discrepancy id: 49
+DEBUG [EquationManager] var: Volume of water supplied for urban water users id: 116
 DEBUG [EquationManager] var: Attention rate for planning new infrastructure id: 3
 DEBUG [EquationManager] var: Available technical staff id: 8
 DEBUG [EquationManager] var: connected household unrest id: 11
-DEBUG [EquationManager] var: Percentage of other urban user service delivery costs recovered id: 64
-DEBUG [EquationManager] var: perc Unconnected households with crisis id: 60
-DEBUG [EquationManager] var: Water demand connected household id: 120
+DEBUG [EquationManager] var: Percentage of other urban user service delivery costs recovered id: 67
+DEBUG [EquationManager] var: perc Unconnected households with crisis id: 63
+DEBUG [EquationManager] var: Water demand connected household id: 119
 DEBUG [EquationManager] var: households with crisis id: 36
-DEBUG [EquationManager] var: perc Unconnected households with crisis_RSSDlookup id: 61
+DEBUG [EquationManager] var: perc Unconnected households with crisis_RSSDlookup id: 64
+DEBUG [EquationManager] var: Maximum capacity exceeding id: 54
 DEBUG [EquationManager] var: Immigration towards connected houses id: 38
-DEBUG [EquationManager] var: Maximum capacity exceeding id: 51
 DEBUG [EquationManager] var: Effect of infrastructure pushing on aging time id: 18
 DEBUG [EquationManager] var: growth rate id: 31
 DEBUG [EquationManager] var: Attention rate for constructing infrastructure id: 2
-DEBUG [EquationManager] var: Percentage of household service delivery costs recovered id: 63
-DEBUG [EquationManager] var: Maintenance expenditures id: 50
-DEBUG [EquationManager] var: Time since urban delivery discrepancy id: 101
-DEBUG [EquationManager] var: Staff production change rate id: 87
-DEBUG [EquationManager] var: Staff required for tankers_RSSDlookup id: 91
+DEBUG [EquationManager] var: Percentage of household service delivery costs recovered id: 66
+DEBUG [EquationManager] var: Maintenance expenditures id: 53
+DEBUG [EquationManager] var: Staff production change rate id: 90
 DEBUG [EquationManager] var: Effect of maintenance on leakage_RSSDlookup id: 23
-DEBUG [EquationManager] var: Population growth LSRV residents id: 68
-DEBUG [EquationManager] var: Unit charge id: 115
-DEBUG [EquationManager] var: Volume of water supplied to unconnected households id: 119
-DEBUG [EquationManager] var: Population growth Kirkwood residents id: 67
-DEBUG [EquationManager] var: Real production rate per person per year id: 78
-DEBUG [EquationManager] var: Population growth unconnected Kirkwood residents id: 69
-DEBUG [EquationManager] var: Normal production rate per person per year id: 57
-DEBUG [EquationManager] var: Practical infrastructure capacity id: 70
+DEBUG [EquationManager] var: Population growth LSRV residents id: 71
+DEBUG [EquationManager] var: Unit charge id: 114
+DEBUG [EquationManager] var: Volume of water supplied to unconnected households id: 118
+DEBUG [EquationManager] var: Population growth Kirkwood residents id: 70
+DEBUG [EquationManager] var: Real production rate per person per year id: 81
+DEBUG [EquationManager] var: Population growth unconnected Kirkwood residents id: 72
+DEBUG [EquationManager] var: Normal production rate per person per year id: 60
+DEBUG [EquationManager] var: Practical infrastructure capacity id: 73
+DEBUG [EquationManager] var: Staff required for building infrastructure id: 92
 DEBUG [EquationManager] var: Immigration towards unconnected houses id: 39
-DEBUG [EquationManager] var: Staff required for building infrastructure id: 89
 DEBUG [EquationManager] var: Income flow id: 40
-DEBUG [EquationManager] var: TIME STEP id: 102
-DEBUG [EquationManager] var: percentage infrastructure maintained annually id: 62
-DEBUG [EquationManager] var: Time since unconnected household delivery discrepancy id: 100
-DEBUG [EquationManager] var: Production possible for planning activities id: 74
-DEBUG [EquationManager] var: unconnected household unrest id: 112
+DEBUG [EquationManager] var: TIME STEP id: 101
+DEBUG [EquationManager] var: percentage infrastructure maintained annually id: 65
+DEBUG [EquationManager] var: Production possible for planning activities id: 77
+DEBUG [EquationManager] var: unconnected household unrest id: 111
 DEBUG [LoopManager] VLT Start 2: Production possible for construction activities
 DEBUG [LoopManager] VLT Done: Production possible for construction activities
-DEBUG [LoopManager] ### Generated Loops: Production possible for construction activities Num Loops No IVV: 208 max length No IVV: 25
-DEBUG [LoopManager]                      Production possible for construction activities Num Loops W/ IVV: 208 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Production possible for construction activities Num Loops No IVV: 208 max length No IVV: 24
+DEBUG [LoopManager]                      Production possible for construction activities Num Loops W/ IVV: 208 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Emigration from LSRV
 DEBUG [LoopManager] VLT Start 2: Emigration from LSRV
 DEBUG [LoopManager] VLT Done: Emigration from LSRV
@@ -2606,8 +2610,8 @@ DEBUG [LoopManager]                      Target percentage infrastructure mainte
 DEBUG [LoopManager] VLT Start 1: Planned infrastructure
 DEBUG [LoopManager] VLT Start 2: Planned infrastructure
 DEBUG [LoopManager] VLT Done: Planned infrastructure
-DEBUG [LoopManager] ### Generated Loops: Planned infrastructure Num Loops No IVV: 265 max length No IVV: 25
-DEBUG [LoopManager]                      Planned infrastructure Num Loops W/ IVV: 265 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Planned infrastructure Num Loops No IVV: 265 max length No IVV: 24
+DEBUG [LoopManager]                      Planned infrastructure Num Loops W/ IVV: 265 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Connected households
 DEBUG [LoopManager] VLT Start 2: Connected households
 DEBUG [LoopManager] VLT Done: Connected households
@@ -2616,23 +2620,18 @@ DEBUG [LoopManager]                      Connected households Num Loops W/ IVV: 
 DEBUG [LoopManager] VLT Start 1: Total production possible
 DEBUG [LoopManager] VLT Start 2: Total production possible
 DEBUG [LoopManager] VLT Done: Total production possible
-DEBUG [LoopManager] ### Generated Loops: Total production possible Num Loops No IVV: 181 max length No IVV: 25
-DEBUG [LoopManager]                      Total production possible Num Loops W/ IVV: 181 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Total production possible Num Loops No IVV: 181 max length No IVV: 24
+DEBUG [LoopManager]                      Total production possible Num Loops W/ IVV: 181 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Total production required
 DEBUG [LoopManager] VLT Start 2: Total production required
 DEBUG [LoopManager] VLT Done: Total production required
-DEBUG [LoopManager] ### Generated Loops: Total production required Num Loops No IVV: 255 max length No IVV: 25
-DEBUG [LoopManager]                      Total production required Num Loops W/ IVV: 255 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Total production required Num Loops No IVV: 255 max length No IVV: 24
+DEBUG [LoopManager]                      Total production required Num Loops W/ IVV: 255 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Staff Hired
 DEBUG [LoopManager] VLT Start 2: Staff Hired
 DEBUG [LoopManager] VLT Done: Staff Hired
 DEBUG [LoopManager] ### Generated Loops: Staff Hired Num Loops No IVV: 0 max length No IVV: 0
 DEBUG [LoopManager]                      Staff Hired Num Loops W/ IVV: 0 max length W/ IVV: 0
-DEBUG [LoopManager] VLT Start 1: Time since connected household delivery discrepancy
-DEBUG [LoopManager] VLT Start 2: Time since connected household delivery discrepancy
-DEBUG [LoopManager] VLT Done: Time since connected household delivery discrepancy
-DEBUG [LoopManager] ### Generated Loops: Time since connected household delivery discrepancy Num Loops No IVV: 0 max length No IVV: 0
-DEBUG [LoopManager]                      Time since connected household delivery discrepancy Num Loops W/ IVV: 0 max length W/ IVV: 0
 DEBUG [LoopManager] VLT Start 1: year
 DEBUG [LoopManager] VLT Start 2: year
 DEBUG [LoopManager] VLT Done: year
@@ -2641,8 +2640,8 @@ DEBUG [LoopManager]                      year Num Loops W/ IVV: 0 max length W/ 
 DEBUG [LoopManager] VLT Start 1: Volume of water supplied to connected households
 DEBUG [LoopManager] VLT Start 2: Volume of water supplied to connected households
 DEBUG [LoopManager] VLT Done: Volume of water supplied to connected households
-DEBUG [LoopManager] ### Generated Loops: Volume of water supplied to connected households Num Loops No IVV: 47 max length No IVV: 25
-DEBUG [LoopManager]                      Volume of water supplied to connected households Num Loops W/ IVV: 47 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Volume of water supplied to connected households Num Loops No IVV: 47 max length No IVV: 24
+DEBUG [LoopManager]                      Volume of water supplied to connected households Num Loops W/ IVV: 47 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: growth rate connected houses
 DEBUG [LoopManager] VLT Start 2: growth rate connected houses
 DEBUG [LoopManager] VLT Done: growth rate connected houses
@@ -2661,18 +2660,18 @@ DEBUG [LoopManager]                      Service network connecting rate Num Loo
 DEBUG [LoopManager] VLT Start 1: Build infrastructure
 DEBUG [LoopManager] VLT Start 2: Build infrastructure
 DEBUG [LoopManager] VLT Done: Build infrastructure
-DEBUG [LoopManager] ### Generated Loops: Build infrastructure Num Loops No IVV: 341 max length No IVV: 25
-DEBUG [LoopManager]                      Build infrastructure Num Loops W/ IVV: 341 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Build infrastructure Num Loops No IVV: 341 max length No IVV: 24
+DEBUG [LoopManager]                      Build infrastructure Num Loops W/ IVV: 341 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Plan new infrastructure
 DEBUG [LoopManager] VLT Start 2: Plan new infrastructure
 DEBUG [LoopManager] VLT Done: Plan new infrastructure
-DEBUG [LoopManager] ### Generated Loops: Plan new infrastructure Num Loops No IVV: 257 max length No IVV: 25
-DEBUG [LoopManager]                      Plan new infrastructure Num Loops W/ IVV: 257 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Plan new infrastructure Num Loops No IVV: 257 max length No IVV: 24
+DEBUG [LoopManager]                      Plan new infrastructure Num Loops W/ IVV: 257 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Production possible for primary activities
 DEBUG [LoopManager] VLT Start 2: Production possible for primary activities
 DEBUG [LoopManager] VLT Done: Production possible for primary activities
-DEBUG [LoopManager] ### Generated Loops: Production possible for primary activities Num Loops No IVV: 173 max length No IVV: 25
-DEBUG [LoopManager]                      Production possible for primary activities Num Loops W/ IVV: 173 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Production possible for primary activities Num Loops No IVV: 173 max length No IVV: 24
+DEBUG [LoopManager]                      Production possible for primary activities Num Loops W/ IVV: 173 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Target population unconnected Kirkwood
 DEBUG [LoopManager] VLT Start 2: Target population unconnected Kirkwood
 DEBUG [LoopManager] VLT Done: Target population unconnected Kirkwood
@@ -2681,13 +2680,13 @@ DEBUG [LoopManager]                      Target population unconnected Kirkwood 
 DEBUG [LoopManager] VLT Start 1: Maximum infrastructure capacity
 DEBUG [LoopManager] VLT Start 2: Maximum infrastructure capacity
 DEBUG [LoopManager] VLT Done: Maximum infrastructure capacity
-DEBUG [LoopManager] ### Generated Loops: Maximum infrastructure capacity Num Loops No IVV: 106 max length No IVV: 25
-DEBUG [LoopManager]                      Maximum infrastructure capacity Num Loops W/ IVV: 106 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Maximum infrastructure capacity Num Loops No IVV: 106 max length No IVV: 24
+DEBUG [LoopManager]                      Maximum infrastructure capacity Num Loops W/ IVV: 106 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Effect of maintenance on leakage
 DEBUG [LoopManager] VLT Start 2: Effect of maintenance on leakage
 DEBUG [LoopManager] VLT Done: Effect of maintenance on leakage
-DEBUG [LoopManager] ### Generated Loops: Effect of maintenance on leakage Num Loops No IVV: 223 max length No IVV: 25
-DEBUG [LoopManager]                      Effect of maintenance on leakage Num Loops W/ IVV: 223 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Effect of maintenance on leakage Num Loops No IVV: 223 max length No IVV: 24
+DEBUG [LoopManager]                      Effect of maintenance on leakage Num Loops W/ IVV: 223 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Emigration rate from LSRV
 DEBUG [LoopManager] VLT Start 2: Emigration rate from LSRV
 DEBUG [LoopManager] VLT Done: Emigration rate from LSRV
@@ -2721,8 +2720,8 @@ DEBUG [LoopManager]                      Infrastructure building time Num Loops 
 DEBUG [LoopManager] VLT Start 1: Theoretical Infrastructure Capacity
 DEBUG [LoopManager] VLT Start 2: Theoretical Infrastructure Capacity
 DEBUG [LoopManager] VLT Done: Theoretical Infrastructure Capacity
-DEBUG [LoopManager] ### Generated Loops: Theoretical Infrastructure Capacity Num Loops No IVV: 368 max length No IVV: 25
-DEBUG [LoopManager]                      Theoretical Infrastructure Capacity Num Loops W/ IVV: 368 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Theoretical Infrastructure Capacity Num Loops No IVV: 368 max length No IVV: 24
+DEBUG [LoopManager]                      Theoretical Infrastructure Capacity Num Loops W/ IVV: 368 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Emigration rate from unconnected kirkwood
 DEBUG [LoopManager] VLT Start 2: Emigration rate from unconnected kirkwood
 DEBUG [LoopManager] VLT Done: Emigration rate from unconnected kirkwood
@@ -2731,8 +2730,8 @@ DEBUG [LoopManager]                      Emigration rate from unconnected kirkwo
 DEBUG [LoopManager] VLT Start 1: Production rate required for primary staff activities
 DEBUG [LoopManager] VLT Start 2: Production rate required for primary staff activities
 DEBUG [LoopManager] VLT Done: Production rate required for primary staff activities
-DEBUG [LoopManager] ### Generated Loops: Production rate required for primary staff activities Num Loops No IVV: 118 max length No IVV: 25
-DEBUG [LoopManager]                      Production rate required for primary staff activities Num Loops W/ IVV: 118 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Production rate required for primary staff activities Num Loops No IVV: 118 max length No IVV: 24
+DEBUG [LoopManager]                      Production rate required for primary staff activities Num Loops W/ IVV: 118 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Infrastructure aging
 DEBUG [LoopManager] VLT Start 2: Infrastructure aging
 DEBUG [LoopManager] VLT Done: Infrastructure aging
@@ -2746,8 +2745,8 @@ DEBUG [LoopManager]                      Residents per household Num Loops W/ IV
 DEBUG [LoopManager] VLT Start 1: Available funds for maintenance
 DEBUG [LoopManager] VLT Start 2: Available funds for maintenance
 DEBUG [LoopManager] VLT Done: Available funds for maintenance
-DEBUG [LoopManager] ### Generated Loops: Available funds for maintenance Num Loops No IVV: 98 max length No IVV: 25
-DEBUG [LoopManager]                      Available funds for maintenance Num Loops W/ IVV: 98 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Available funds for maintenance Num Loops No IVV: 98 max length No IVV: 24
+DEBUG [LoopManager]                      Available funds for maintenance Num Loops W/ IVV: 98 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Infrastructure Surplus
 DEBUG [LoopManager] VLT Start 2: Infrastructure Surplus
 DEBUG [LoopManager] VLT Done: Infrastructure Surplus
@@ -2756,8 +2755,8 @@ DEBUG [LoopManager]                      Infrastructure Surplus Num Loops W/ IVV
 DEBUG [LoopManager] VLT Start 1: Attention rate for secondary activities
 DEBUG [LoopManager] VLT Start 2: Attention rate for secondary activities
 DEBUG [LoopManager] VLT Done: Attention rate for secondary activities
-DEBUG [LoopManager] ### Generated Loops: Attention rate for secondary activities Num Loops No IVV: 205 max length No IVV: 25
-DEBUG [LoopManager]                      Attention rate for secondary activities Num Loops W/ IVV: 205 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Attention rate for secondary activities Num Loops No IVV: 205 max length No IVV: 24
+DEBUG [LoopManager]                      Attention rate for secondary activities Num Loops W/ IVV: 205 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Moving rate to unconnected households
 DEBUG [LoopManager] VLT Start 2: Moving rate to unconnected households
 DEBUG [LoopManager] VLT Done: Moving rate to unconnected households
@@ -2776,8 +2775,8 @@ DEBUG [LoopManager]                      Staff service time Num Loops W/ IVV: 0 
 DEBUG [LoopManager] VLT Start 1: Production rate required for secondary staff activities
 DEBUG [LoopManager] VLT Start 2: Production rate required for secondary staff activities
 DEBUG [LoopManager] VLT Done: Production rate required for secondary staff activities
-DEBUG [LoopManager] ### Generated Loops: Production rate required for secondary staff activities Num Loops No IVV: 316 max length No IVV: 25
-DEBUG [LoopManager]                      Production rate required for secondary staff activities Num Loops W/ IVV: 316 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Production rate required for secondary staff activities Num Loops No IVV: 316 max length No IVV: 24
+DEBUG [LoopManager]                      Production rate required for secondary staff activities Num Loops W/ IVV: 316 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Total water demand connected households
 DEBUG [LoopManager] VLT Start 2: Total water demand connected households
 DEBUG [LoopManager] VLT Done: Total water demand connected households
@@ -2786,18 +2785,18 @@ DEBUG [LoopManager]                      Total water demand connected households
 DEBUG [LoopManager] VLT Start 1: Effect of maintenance on aging time
 DEBUG [LoopManager] VLT Start 2: Effect of maintenance on aging time
 DEBUG [LoopManager] VLT Done: Effect of maintenance on aging time
-DEBUG [LoopManager] ### Generated Loops: Effect of maintenance on aging time Num Loops No IVV: 108 max length No IVV: 24
-DEBUG [LoopManager]                      Effect of maintenance on aging time Num Loops W/ IVV: 108 max length W/ IVV: 24
+DEBUG [LoopManager] ### Generated Loops: Effect of maintenance on aging time Num Loops No IVV: 108 max length No IVV: 23
+DEBUG [LoopManager]                      Effect of maintenance on aging time Num Loops W/ IVV: 108 max length W/ IVV: 23
 DEBUG [LoopManager] VLT Start 1: Delivery rate connected households
 DEBUG [LoopManager] VLT Start 2: Delivery rate connected households
 DEBUG [LoopManager] VLT Done: Delivery rate connected households
-DEBUG [LoopManager] ### Generated Loops: Delivery rate connected households Num Loops No IVV: 35 max length No IVV: 25
-DEBUG [LoopManager]                      Delivery rate connected households Num Loops W/ IVV: 35 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Delivery rate connected households Num Loops No IVV: 35 max length No IVV: 24
+DEBUG [LoopManager]                      Delivery rate connected households Num Loops W/ IVV: 35 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Production constructing activities
 DEBUG [LoopManager] VLT Start 2: Production constructing activities
 DEBUG [LoopManager] VLT Done: Production constructing activities
-DEBUG [LoopManager] ### Generated Loops: Production constructing activities Num Loops No IVV: 142 max length No IVV: 25
-DEBUG [LoopManager]                      Production constructing activities Num Loops W/ IVV: 142 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Production constructing activities Num Loops No IVV: 142 max length No IVV: 24
+DEBUG [LoopManager]                      Production constructing activities Num Loops W/ IVV: 142 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Infrastructure Shortage
 DEBUG [LoopManager] VLT Start 2: Infrastructure Shortage
 DEBUG [LoopManager] VLT Done: Infrastructure Shortage
@@ -2816,8 +2815,8 @@ DEBUG [LoopManager]                      Minimum water supply level Num Loops W/
 DEBUG [LoopManager] VLT Start 1: Required tankers
 DEBUG [LoopManager] VLT Start 2: Required tankers
 DEBUG [LoopManager] VLT Done: Required tankers
-DEBUG [LoopManager] ### Generated Loops: Required tankers Num Loops No IVV: 70 max length No IVV: 25
-DEBUG [LoopManager]                      Required tankers Num Loops W/ IVV: 70 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Required tankers Num Loops No IVV: 70 max length No IVV: 24
+DEBUG [LoopManager]                      Required tankers Num Loops W/ IVV: 70 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Staff occupancy
 DEBUG [LoopManager] VLT Start 2: Staff occupancy
 DEBUG [LoopManager] VLT Done: Staff occupancy
@@ -2846,8 +2845,8 @@ DEBUG [LoopManager]                      Staff leaving Num Loops W/ IVV: 1 max l
 DEBUG [LoopManager] VLT Start 1: Perc Households with crisis
 DEBUG [LoopManager] VLT Start 2: Perc Households with crisis
 DEBUG [LoopManager] VLT Done: Perc Households with crisis
-DEBUG [LoopManager] ### Generated Loops: Perc Households with crisis Num Loops No IVV: 35 max length No IVV: 25
-DEBUG [LoopManager]                      Perc Households with crisis Num Loops W/ IVV: 35 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Perc Households with crisis Num Loops No IVV: 35 max length No IVV: 24
+DEBUG [LoopManager]                      Perc Households with crisis Num Loops W/ IVV: 35 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Average annual maintenance cost per unit of capacity
 DEBUG [LoopManager] VLT Start 2: Average annual maintenance cost per unit of capacity
 DEBUG [LoopManager] VLT Done: Average annual maintenance cost per unit of capacity
@@ -2861,8 +2860,8 @@ DEBUG [LoopManager]                      Total water demand unconnected househol
 DEBUG [LoopManager] VLT Start 1: Attention rate for primary activities
 DEBUG [LoopManager] VLT Start 2: Attention rate for primary activities
 DEBUG [LoopManager] VLT Done: Attention rate for primary activities
-DEBUG [LoopManager] ### Generated Loops: Attention rate for primary activities Num Loops No IVV: 118 max length No IVV: 25
-DEBUG [LoopManager]                      Attention rate for primary activities Num Loops W/ IVV: 118 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Attention rate for primary activities Num Loops No IVV: 118 max length No IVV: 24
+DEBUG [LoopManager]                      Attention rate for primary activities Num Loops W/ IVV: 118 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Target population connected Kirkwood
 DEBUG [LoopManager] VLT Start 2: Target population connected Kirkwood
 DEBUG [LoopManager] VLT Done: Target population connected Kirkwood
@@ -2916,18 +2915,28 @@ DEBUG [LoopManager]                      Emigration rate connected Kirkwood Num 
 DEBUG [LoopManager] VLT Start 1: Leakage
 DEBUG [LoopManager] VLT Start 2: Leakage
 DEBUG [LoopManager] VLT Done: Leakage
-DEBUG [LoopManager] ### Generated Loops: Leakage Num Loops No IVV: 223 max length No IVV: 25
-DEBUG [LoopManager]                      Leakage Num Loops W/ IVV: 223 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Leakage Num Loops No IVV: 223 max length No IVV: 24
+DEBUG [LoopManager]                      Leakage Num Loops W/ IVV: 223 max length W/ IVV: 24
+DEBUG [LoopManager] VLT Start 1: last time of unconnected household delivery discrepancy
+DEBUG [LoopManager] VLT Start 2: last time of unconnected household delivery discrepancy
+DEBUG [LoopManager] VLT Done: last time of unconnected household delivery discrepancy
+DEBUG [LoopManager] ### Generated Loops: last time of unconnected household delivery discrepancy Num Loops No IVV: 0 max length No IVV: 0
+DEBUG [LoopManager]                      last time of unconnected household delivery discrepancy Num Loops W/ IVV: 0 max length W/ IVV: 0
 DEBUG [LoopManager] VLT Start 1: Emigration from unconnected Kirkwood households
 DEBUG [LoopManager] VLT Start 2: Emigration from unconnected Kirkwood households
 DEBUG [LoopManager] VLT Done: Emigration from unconnected Kirkwood households
 DEBUG [LoopManager] ### Generated Loops: Emigration from unconnected Kirkwood households Num Loops No IVV: 2 max length No IVV: 3
 DEBUG [LoopManager]                      Emigration from unconnected Kirkwood households Num Loops W/ IVV: 2 max length W/ IVV: 3
+DEBUG [LoopManager] VLT Start 1: last time of connected household delivery discrepancy
+DEBUG [LoopManager] VLT Start 2: last time of connected household delivery discrepancy
+DEBUG [LoopManager] VLT Done: last time of connected household delivery discrepancy
+DEBUG [LoopManager] ### Generated Loops: last time of connected household delivery discrepancy Num Loops No IVV: 0 max length No IVV: 0
+DEBUG [LoopManager]                      last time of connected household delivery discrepancy Num Loops W/ IVV: 0 max length W/ IVV: 0
 DEBUG [LoopManager] VLT Start 1: Staff required for tankers
 DEBUG [LoopManager] VLT Start 2: Staff required for tankers
 DEBUG [LoopManager] VLT Done: Staff required for tankers
-DEBUG [LoopManager] ### Generated Loops: Staff required for tankers Num Loops No IVV: 70 max length No IVV: 25
-DEBUG [LoopManager]                      Staff required for tankers Num Loops W/ IVV: 70 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Staff required for tankers Num Loops No IVV: 0 max length No IVV: 0
+DEBUG [LoopManager]                      Staff required for tankers Num Loops W/ IVV: 0 max length W/ IVV: 0
 DEBUG [LoopManager] VLT Start 1: Production planning activities
 DEBUG [LoopManager] VLT Start 2: Production planning activities
 DEBUG [LoopManager] VLT Done: Production planning activities
@@ -2936,8 +2945,8 @@ DEBUG [LoopManager]                      Production planning activities Num Loop
 DEBUG [LoopManager] VLT Start 1: Delivery rate unconnected households
 DEBUG [LoopManager] VLT Start 2: Delivery rate unconnected households
 DEBUG [LoopManager] VLT Done: Delivery rate unconnected households
-DEBUG [LoopManager] ### Generated Loops: Delivery rate unconnected households Num Loops No IVV: 35 max length No IVV: 25
-DEBUG [LoopManager]                      Delivery rate unconnected households Num Loops W/ IVV: 35 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Delivery rate unconnected households Num Loops No IVV: 35 max length No IVV: 24
+DEBUG [LoopManager]                      Delivery rate unconnected households Num Loops W/ IVV: 35 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Tanker Capacity
 DEBUG [LoopManager] VLT Start 2: Tanker Capacity
 DEBUG [LoopManager] VLT Done: Tanker Capacity
@@ -2946,8 +2955,8 @@ DEBUG [LoopManager]                      Tanker Capacity Num Loops W/ IVV: 0 max
 DEBUG [LoopManager] VLT Start 1: Available maintenance capacity by funds
 DEBUG [LoopManager] VLT Start 2: Available maintenance capacity by funds
 DEBUG [LoopManager] VLT Done: Available maintenance capacity by funds
-DEBUG [LoopManager] ### Generated Loops: Available maintenance capacity by funds Num Loops No IVV: 97 max length No IVV: 25
-DEBUG [LoopManager]                      Available maintenance capacity by funds Num Loops W/ IVV: 97 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Available maintenance capacity by funds Num Loops No IVV: 97 max length No IVV: 24
+DEBUG [LoopManager]                      Available maintenance capacity by funds Num Loops W/ IVV: 97 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Hiring of staff
 DEBUG [LoopManager] VLT Start 2: Hiring of staff
 DEBUG [LoopManager] VLT Done: Hiring of staff
@@ -2958,6 +2967,11 @@ DEBUG [LoopManager] VLT Start 2: Required infrastructure
 DEBUG [LoopManager] VLT Done: Required infrastructure
 DEBUG [LoopManager] ### Generated Loops: Required infrastructure Num Loops No IVV: 318 max length No IVV: 24
 DEBUG [LoopManager]                      Required infrastructure Num Loops W/ IVV: 318 max length W/ IVV: 24
+DEBUG [LoopManager] VLT Start 1: last time of since urban delivery discrepancy
+DEBUG [LoopManager] VLT Start 2: last time of since urban delivery discrepancy
+DEBUG [LoopManager] VLT Done: last time of since urban delivery discrepancy
+DEBUG [LoopManager] ### Generated Loops: last time of since urban delivery discrepancy Num Loops No IVV: 0 max length No IVV: 0
+DEBUG [LoopManager]                      last time of since urban delivery discrepancy Num Loops W/ IVV: 0 max length W/ IVV: 0
 DEBUG [LoopManager] VLT Start 1: Volume of water supplied for urban water users
 DEBUG [LoopManager] VLT Start 2: Volume of water supplied for urban water users
 DEBUG [LoopManager] VLT Done: Volume of water supplied for urban water users
@@ -2986,8 +3000,8 @@ DEBUG [LoopManager]                      Percentage of other urban user service 
 DEBUG [LoopManager] VLT Start 1: perc Unconnected households with crisis
 DEBUG [LoopManager] VLT Start 2: perc Unconnected households with crisis
 DEBUG [LoopManager] VLT Done: perc Unconnected households with crisis
-DEBUG [LoopManager] ### Generated Loops: perc Unconnected households with crisis Num Loops No IVV: 35 max length No IVV: 25
-DEBUG [LoopManager]                      perc Unconnected households with crisis Num Loops W/ IVV: 35 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: perc Unconnected households with crisis Num Loops No IVV: 35 max length No IVV: 24
+DEBUG [LoopManager]                      perc Unconnected households with crisis Num Loops W/ IVV: 35 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Water demand connected household
 DEBUG [LoopManager] VLT Start 2: Water demand connected household
 DEBUG [LoopManager] VLT Done: Water demand connected household
@@ -2996,8 +3010,8 @@ DEBUG [LoopManager]                      Water demand connected household Num Lo
 DEBUG [LoopManager] VLT Start 1: households with crisis
 DEBUG [LoopManager] VLT Start 2: households with crisis
 DEBUG [LoopManager] VLT Done: households with crisis
-DEBUG [LoopManager] ### Generated Loops: households with crisis Num Loops No IVV: 70 max length No IVV: 25
-DEBUG [LoopManager]                      households with crisis Num Loops W/ IVV: 70 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: households with crisis Num Loops No IVV: 70 max length No IVV: 24
+DEBUG [LoopManager]                      households with crisis Num Loops W/ IVV: 70 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Maximum capacity exceeding
 DEBUG [LoopManager] VLT Start 2: Maximum capacity exceeding
 DEBUG [LoopManager] VLT Done: Maximum capacity exceeding
@@ -3031,13 +3045,8 @@ DEBUG [LoopManager]                      Percentage of household service deliver
 DEBUG [LoopManager] VLT Start 1: Maintenance expenditures
 DEBUG [LoopManager] VLT Start 2: Maintenance expenditures
 DEBUG [LoopManager] VLT Done: Maintenance expenditures
-DEBUG [LoopManager] ### Generated Loops: Maintenance expenditures Num Loops No IVV: 62 max length No IVV: 25
-DEBUG [LoopManager]                      Maintenance expenditures Num Loops W/ IVV: 62 max length W/ IVV: 25
-DEBUG [LoopManager] VLT Start 1: Time since urban delivery discrepancy
-DEBUG [LoopManager] VLT Start 2: Time since urban delivery discrepancy
-DEBUG [LoopManager] VLT Done: Time since urban delivery discrepancy
-DEBUG [LoopManager] ### Generated Loops: Time since urban delivery discrepancy Num Loops No IVV: 0 max length No IVV: 0
-DEBUG [LoopManager]                      Time since urban delivery discrepancy Num Loops W/ IVV: 0 max length W/ IVV: 0
+DEBUG [LoopManager] ### Generated Loops: Maintenance expenditures Num Loops No IVV: 62 max length No IVV: 24
+DEBUG [LoopManager]                      Maintenance expenditures Num Loops W/ IVV: 62 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Staff production change rate
 DEBUG [LoopManager] VLT Start 2: Staff production change rate
 DEBUG [LoopManager] VLT Done: Staff production change rate
@@ -3056,8 +3065,8 @@ DEBUG [LoopManager]                      Unit charge Num Loops W/ IVV: 0 max len
 DEBUG [LoopManager] VLT Start 1: Volume of water supplied to unconnected households
 DEBUG [LoopManager] VLT Start 2: Volume of water supplied to unconnected households
 DEBUG [LoopManager] VLT Done: Volume of water supplied to unconnected households
-DEBUG [LoopManager] ### Generated Loops: Volume of water supplied to unconnected households Num Loops No IVV: 47 max length No IVV: 25
-DEBUG [LoopManager]                      Volume of water supplied to unconnected households Num Loops W/ IVV: 47 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Volume of water supplied to unconnected households Num Loops No IVV: 47 max length No IVV: 24
+DEBUG [LoopManager]                      Volume of water supplied to unconnected households Num Loops W/ IVV: 47 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Population growth Kirkwood residents
 DEBUG [LoopManager] VLT Start 2: Population growth Kirkwood residents
 DEBUG [LoopManager] VLT Done: Population growth Kirkwood residents
@@ -3081,8 +3090,8 @@ DEBUG [LoopManager]                      Normal production rate per person per y
 DEBUG [LoopManager] VLT Start 1: Practical infrastructure capacity
 DEBUG [LoopManager] VLT Start 2: Practical infrastructure capacity
 DEBUG [LoopManager] VLT Done: Practical infrastructure capacity
-DEBUG [LoopManager] ### Generated Loops: Practical infrastructure capacity Num Loops No IVV: 334 max length No IVV: 25
-DEBUG [LoopManager]                      Practical infrastructure capacity Num Loops W/ IVV: 334 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Practical infrastructure capacity Num Loops No IVV: 334 max length No IVV: 24
+DEBUG [LoopManager]                      Practical infrastructure capacity Num Loops W/ IVV: 334 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: Immigration towards unconnected houses
 DEBUG [LoopManager] VLT Start 2: Immigration towards unconnected houses
 DEBUG [LoopManager] VLT Done: Immigration towards unconnected houses
@@ -3101,23 +3110,18 @@ DEBUG [LoopManager]                      Income flow Num Loops W/ IVV: 36 max le
 DEBUG [LoopManager] VLT Start 1: percentage infrastructure maintained annually
 DEBUG [LoopManager] VLT Start 2: percentage infrastructure maintained annually
 DEBUG [LoopManager] VLT Done: percentage infrastructure maintained annually
-DEBUG [LoopManager] ### Generated Loops: percentage infrastructure maintained annually Num Loops No IVV: 331 max length No IVV: 25
-DEBUG [LoopManager]                      percentage infrastructure maintained annually Num Loops W/ IVV: 331 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: percentage infrastructure maintained annually Num Loops No IVV: 331 max length No IVV: 24
+DEBUG [LoopManager]                      percentage infrastructure maintained annually Num Loops W/ IVV: 331 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: TIME STEP
 DEBUG [LoopManager] VLT Start 2: TIME STEP
 DEBUG [LoopManager] VLT Done: TIME STEP
 DEBUG [LoopManager] ### Generated Loops: TIME STEP Num Loops No IVV: 0 max length No IVV: 0
 DEBUG [LoopManager]                      TIME STEP Num Loops W/ IVV: 0 max length W/ IVV: 0
-DEBUG [LoopManager] VLT Start 1: Time since unconnected household delivery discrepancy
-DEBUG [LoopManager] VLT Start 2: Time since unconnected household delivery discrepancy
-DEBUG [LoopManager] VLT Done: Time since unconnected household delivery discrepancy
-DEBUG [LoopManager] ### Generated Loops: Time since unconnected household delivery discrepancy Num Loops No IVV: 0 max length No IVV: 0
-DEBUG [LoopManager]                      Time since unconnected household delivery discrepancy Num Loops W/ IVV: 0 max length W/ IVV: 0
 DEBUG [LoopManager] VLT Start 1: Production possible for planning activities
 DEBUG [LoopManager] VLT Start 2: Production possible for planning activities
 DEBUG [LoopManager] VLT Done: Production possible for planning activities
-DEBUG [LoopManager] ### Generated Loops: Production possible for planning activities Num Loops No IVV: 123 max length No IVV: 25
-DEBUG [LoopManager]                      Production possible for planning activities Num Loops W/ IVV: 123 max length W/ IVV: 25
+DEBUG [LoopManager] ### Generated Loops: Production possible for planning activities Num Loops No IVV: 123 max length No IVV: 24
+DEBUG [LoopManager]                      Production possible for planning activities Num Loops W/ IVV: 123 max length W/ IVV: 24
 DEBUG [LoopManager] VLT Start 1: unconnected household unrest
 DEBUG [LoopManager] VLT Start 2: unconnected household unrest
 DEBUG [LoopManager] VLT Done: unconnected household unrest
@@ -3127,191 +3131,190 @@ DEBUG [LoopManager] Number of Loops No IVV: 417
 DEBUG [LoopManager] Number of Loops W/ IVV: 417
 DEBUG [LoopManager] 
 
-### Row Group Name |13|67
+### Row Group Name |10|103|104|18|22|4|41|42|45|5|51|53|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   67
+DEBUG [LoopManager]   18
 DEBUG [LoopManager] 
 
-### Row Group Name |10|104|105|118|119|15|17|20|22|36|4|41|42|48|5|50|52|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|79|80|90|97
-DEBUG [LoopManager] Num Members: 3
-DEBUG [LoopManager]   90
-DEBUG [LoopManager]   36
-DEBUG [LoopManager]   80
-DEBUG [LoopManager] 
-
-### Row Group Name |38|49
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   38
-DEBUG [LoopManager] 
-
-### Row Group Name |114|14
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   14
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|15|17|18|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   48
-DEBUG [LoopManager]   22
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|15|17|20|22|36|4|40|41|42|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   52
-DEBUG [LoopManager] 
-
-### Row Group Name |25|38|39|49|68
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   49
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|119|17|20|22|36|4|41|42|48|5|50|52|6|60|62|65|66|7|70|71|72|73|74|75|76|77|79|80|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   17
-DEBUG [LoopManager]   60
-DEBUG [LoopManager] 
-
-### Row Group Name |49|68
-DEBUG [LoopManager] Num Members: 1
+### Row Group Name |10|103|104|116|117|118|15|17|18|20|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 14
+DEBUG [LoopManager]   69
+DEBUG [LoopManager]   77
 DEBUG [LoopManager]   68
+DEBUG [LoopManager]   10
+DEBUG [LoopManager]   42
+DEBUG [LoopManager]   41
+DEBUG [LoopManager]   5
+DEBUG [LoopManager]   82
+DEBUG [LoopManager]   65
+DEBUG [LoopManager]   80
+DEBUG [LoopManager]   104
+DEBUG [LoopManager]   103
+DEBUG [LoopManager]   99
+DEBUG [LoopManager]   73
 DEBUG [LoopManager] 
 
-### Row Group Name |10|104|105|117|118|119|15|17|18|20|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|72|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   72
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|15|17|20|36|4|40|41|42|45|46|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   20
-DEBUG [LoopManager] 
-
-### Row Group Name |114|26|29
+### Row Group Name |113|26|29
 DEBUG [LoopManager] Num Members: 2
 DEBUG [LoopManager]   26
 DEBUG [LoopManager]   29
 DEBUG [LoopManager] 
 
-### Row Group Name |10|104|105|117|118|119|15|17|18|20|22|36|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|77|78|79|80|86|87|90|97
+### Row Group Name |39|52
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   39
+DEBUG [LoopManager] 
+
+### Row Group Name |25|52
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   25
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|15|17|18|20|22|36|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 2
 DEBUG [LoopManager]   7
 DEBUG [LoopManager]   6
 DEBUG [LoopManager] 
 
-### Row Group Name |25|49
+### Row Group Name |10|103|104|116|117|118|15|17|18|20|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|75|77|78|79|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   25
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|15|17|18|20|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   71
-DEBUG [LoopManager]   73
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|118|15|20|22|36|4|40|41|42|48|5|50|52|55|58|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   118
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|15|17|18|20|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 14
-DEBUG [LoopManager]   97
-DEBUG [LoopManager]   79
-DEBUG [LoopManager]   66
-DEBUG [LoopManager]   77
-DEBUG [LoopManager]   10
-DEBUG [LoopManager]   42
-DEBUG [LoopManager]   41
-DEBUG [LoopManager]   5
-DEBUG [LoopManager]   70
-DEBUG [LoopManager]   65
-DEBUG [LoopManager]   105
-DEBUG [LoopManager]   104
-DEBUG [LoopManager]   62
-DEBUG [LoopManager]   74
-DEBUG [LoopManager] 
-
-### Row Group Name |114|14|26|29|69
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   114
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|118|119|15|17|18|20|22|36|41|42|45|46|48|5|50|52|58|6|60|62|65|66|7|70|71|72|73|74|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   50
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|18|20|22|4|40|41|42|45|46|48|5|50|52|55|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
-DEBUG [LoopManager] Num Members: 3
-DEBUG [LoopManager]   78
-DEBUG [LoopManager]   86
-DEBUG [LoopManager]   87
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|118|119|15|17|18|20|22|36|4|41|42|45|46|48|5|52|58|60|62|65|66|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 3
-DEBUG [LoopManager]   4
 DEBUG [LoopManager]   75
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|117|118|15|17|18|20|22|36|41|42|45|46|5|51|53|55|6|61|63|65|68|69|7|73|74|75|76|77|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   53
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|15|17|18|20|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   74
 DEBUG [LoopManager]   76
 DEBUG [LoopManager] 
 
-### Row Group Name |8|85
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   8
-DEBUG [LoopManager]   85
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|119|17|20|22|36|4|40|41|42|48|5|50|52|55|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   119
-DEBUG [LoopManager] 
-
-### Row Group Name |39|49
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   39
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|118|15|20|22|36|4|41|42|48|5|50|52|58|6|62|65|66|7|70|71|72|73|74|75|76|77|79|80|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   58
-DEBUG [LoopManager]   15
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|118|119|20|22|40|41|42|48|5|52|55|6|62|65|66|7|70|71|72|73|74|77|78|79|86|87|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   55
-DEBUG [LoopManager]   40
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|20|22|4|41|42|46|48|5|50|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   46
-DEBUG [LoopManager] 
-
-### Row Group Name |10|104|105|117|20|22|40|41|42|48|5|52|55|6|62|65|66|7|70|71|72|73|74|77|78|79|86|87|97
+### Row Group Name |10|103|104|117|15|20|22|36|4|40|41|42|5|51|53|55|58|6|61|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 1
 DEBUG [LoopManager]   117
 DEBUG [LoopManager] 
 
-### Row Group Name |10|104|105|18|22|4|41|42|45|48|5|50|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
+### Row Group Name |10|103|104|118|17|20|22|36|4|40|41|42|5|51|53|55|58|6|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   18
+DEBUG [LoopManager]   118
 DEBUG [LoopManager] 
 
-### Row Group Name |114|69
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   69
+### Row Group Name |10|103|104|117|118|15|17|20|22|36|4|41|42|5|51|53|55|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|82|83|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   83
+DEBUG [LoopManager]   36
 DEBUG [LoopManager] 
 
-### Row Group Name |10|104|105|18|20|22|4|41|42|45|48|5|50|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
+### Row Group Name |113|14|26|29|72
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   113
+DEBUG [LoopManager] 
+
+### Row Group Name |52|71
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   71
+DEBUG [LoopManager] 
+
+### Row Group Name |13|24|27|70
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   13
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|18|20|22|4|40|41|42|45|46|5|51|53|55|58|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 3
+DEBUG [LoopManager]   90
+DEBUG [LoopManager]   81
+DEBUG [LoopManager]   89
+DEBUG [LoopManager] 
+
+### Row Group Name |8|88
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   8
+DEBUG [LoopManager]   88
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|20|22|40|41|42|5|51|55|58|6|65|68|69|7|73|74|75|76|77|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   58
+DEBUG [LoopManager]   40
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|20|22|4|41|42|46|5|51|53|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   46
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|15|17|20|22|36|4|40|41|42|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   55
+DEBUG [LoopManager] 
+
+### Row Group Name |38|52
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   38
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|117|118|15|17|18|20|22|36|4|41|42|45|46|5|51|55|61|63|65|68|69|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 3
+DEBUG [LoopManager]   79
+DEBUG [LoopManager]   78
+DEBUG [LoopManager]   4
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|118|17|20|22|36|4|41|42|5|51|53|55|6|63|65|68|69|7|73|74|75|76|77|78|79|80|82|83|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   17
+DEBUG [LoopManager]   63
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|18|20|22|4|41|42|45|5|51|53|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
 DEBUG [LoopManager] Num Members: 1
 DEBUG [LoopManager]   45
 DEBUG [LoopManager] 
 
-### Row Group Name |13|24|27|67
+### Row Group Name |13|70
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   13
+DEBUG [LoopManager]   70
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|20|22|40|41|42|5|51|55|58|6|65|68|69|7|73|74|75|76|77|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   116
+DEBUG [LoopManager] 
+
+### Row Group Name |113|72
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   72
+DEBUG [LoopManager] 
+
+### Row Group Name |113|14
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   14
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|117|15|20|22|36|4|41|42|5|51|53|55|6|61|65|68|69|7|73|74|75|76|77|78|79|80|82|83|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   15
+DEBUG [LoopManager]   61
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|15|17|18|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   51
+DEBUG [LoopManager]   22
+DEBUG [LoopManager] 
+
+### Row Group Name |10|103|104|116|117|118|15|17|20|36|4|40|41|42|45|46|5|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   20
+DEBUG [LoopManager] 
+
+### Row Group Name |25|38|39|52|71
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   52
 DEBUG [LoopManager] 
 
 ### Row Group Name |13|24|27
@@ -3320,191 +3323,190 @@ DEBUG [LoopManager]   24
 DEBUG [LoopManager]   27
 DEBUG [LoopManager] 
 
-### Column Group Name |13|67
+### Column Group Name |10|103|104|18|22|4|41|42|45|5|51|53|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   67
+DEBUG [LoopManager]   18
 DEBUG [LoopManager] 
 
-### Column Group Name |10|104|105|118|119|15|17|20|22|36|4|41|42|48|5|50|52|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|79|80|90|97
-DEBUG [LoopManager] Num Members: 3
-DEBUG [LoopManager]   90
-DEBUG [LoopManager]   36
-DEBUG [LoopManager]   80
-DEBUG [LoopManager] 
-
-### Column Group Name |38|49
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   38
-DEBUG [LoopManager] 
-
-### Column Group Name |114|14
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   14
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|15|17|18|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   48
-DEBUG [LoopManager]   22
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|15|17|20|22|36|4|40|41|42|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   52
-DEBUG [LoopManager] 
-
-### Column Group Name |25|38|39|49|68
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   49
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|119|17|20|22|36|4|41|42|48|5|50|52|6|60|62|65|66|7|70|71|72|73|74|75|76|77|79|80|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   17
-DEBUG [LoopManager]   60
-DEBUG [LoopManager] 
-
-### Column Group Name |49|68
-DEBUG [LoopManager] Num Members: 1
+### Column Group Name |10|103|104|116|117|118|15|17|18|20|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 14
+DEBUG [LoopManager]   69
+DEBUG [LoopManager]   77
 DEBUG [LoopManager]   68
+DEBUG [LoopManager]   10
+DEBUG [LoopManager]   42
+DEBUG [LoopManager]   41
+DEBUG [LoopManager]   5
+DEBUG [LoopManager]   82
+DEBUG [LoopManager]   65
+DEBUG [LoopManager]   80
+DEBUG [LoopManager]   104
+DEBUG [LoopManager]   103
+DEBUG [LoopManager]   99
+DEBUG [LoopManager]   73
 DEBUG [LoopManager] 
 
-### Column Group Name |10|104|105|117|118|119|15|17|18|20|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|72|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   72
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|15|17|20|36|4|40|41|42|45|46|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   20
-DEBUG [LoopManager] 
-
-### Column Group Name |114|26|29
+### Column Group Name |113|26|29
 DEBUG [LoopManager] Num Members: 2
 DEBUG [LoopManager]   26
 DEBUG [LoopManager]   29
 DEBUG [LoopManager] 
 
-### Column Group Name |10|104|105|117|118|119|15|17|18|20|22|36|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|77|78|79|80|86|87|90|97
+### Column Group Name |39|52
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   39
+DEBUG [LoopManager] 
+
+### Column Group Name |25|52
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   25
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|15|17|18|20|22|36|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 2
 DEBUG [LoopManager]   7
 DEBUG [LoopManager]   6
 DEBUG [LoopManager] 
 
-### Column Group Name |25|49
+### Column Group Name |10|103|104|116|117|118|15|17|18|20|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|75|77|78|79|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   25
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|15|17|18|20|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   71
-DEBUG [LoopManager]   73
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|118|15|20|22|36|4|40|41|42|48|5|50|52|55|58|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   118
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|15|17|18|20|22|36|4|40|41|42|45|46|48|5|50|52|55|58|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 14
-DEBUG [LoopManager]   97
-DEBUG [LoopManager]   79
-DEBUG [LoopManager]   66
-DEBUG [LoopManager]   77
-DEBUG [LoopManager]   10
-DEBUG [LoopManager]   42
-DEBUG [LoopManager]   41
-DEBUG [LoopManager]   5
-DEBUG [LoopManager]   70
-DEBUG [LoopManager]   65
-DEBUG [LoopManager]   105
-DEBUG [LoopManager]   104
-DEBUG [LoopManager]   62
-DEBUG [LoopManager]   74
-DEBUG [LoopManager] 
-
-### Column Group Name |114|14|26|29|69
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   114
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|118|119|15|17|18|20|22|36|41|42|45|46|48|5|50|52|58|6|60|62|65|66|7|70|71|72|73|74|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   50
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|18|20|22|4|40|41|42|45|46|48|5|50|52|55|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
-DEBUG [LoopManager] Num Members: 3
-DEBUG [LoopManager]   78
-DEBUG [LoopManager]   86
-DEBUG [LoopManager]   87
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|118|119|15|17|18|20|22|36|4|41|42|45|46|48|5|52|58|60|62|65|66|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 3
-DEBUG [LoopManager]   4
 DEBUG [LoopManager]   75
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|117|118|15|17|18|20|22|36|41|42|45|46|5|51|53|55|6|61|63|65|68|69|7|73|74|75|76|77|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   53
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|15|17|18|20|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   74
 DEBUG [LoopManager]   76
 DEBUG [LoopManager] 
 
-### Column Group Name |8|85
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   8
-DEBUG [LoopManager]   85
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|119|17|20|22|36|4|40|41|42|48|5|50|52|55|6|60|62|65|66|7|70|71|72|73|74|75|76|77|78|79|80|86|87|90|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   119
-DEBUG [LoopManager] 
-
-### Column Group Name |39|49
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   39
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|118|15|20|22|36|4|41|42|48|5|50|52|58|6|62|65|66|7|70|71|72|73|74|75|76|77|79|80|90|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   58
-DEBUG [LoopManager]   15
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|118|119|20|22|40|41|42|48|5|52|55|6|62|65|66|7|70|71|72|73|74|77|78|79|86|87|97
-DEBUG [LoopManager] Num Members: 2
-DEBUG [LoopManager]   55
-DEBUG [LoopManager]   40
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|20|22|4|41|42|46|48|5|50|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   46
-DEBUG [LoopManager] 
-
-### Column Group Name |10|104|105|117|20|22|40|41|42|48|5|52|55|6|62|65|66|7|70|71|72|73|74|77|78|79|86|87|97
+### Column Group Name |10|103|104|117|15|20|22|36|4|40|41|42|5|51|53|55|58|6|61|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 1
 DEBUG [LoopManager]   117
 DEBUG [LoopManager] 
 
-### Column Group Name |10|104|105|18|22|4|41|42|45|48|5|50|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
+### Column Group Name |10|103|104|118|17|20|22|36|4|40|41|42|5|51|53|55|58|6|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   18
+DEBUG [LoopManager]   118
 DEBUG [LoopManager] 
 
-### Column Group Name |114|69
-DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   69
+### Column Group Name |10|103|104|117|118|15|17|20|22|36|4|41|42|5|51|53|55|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|82|83|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   83
+DEBUG [LoopManager]   36
 DEBUG [LoopManager] 
 
-### Column Group Name |10|104|105|18|20|22|4|41|42|45|48|5|50|6|62|65|66|7|70|71|72|73|74|75|76|77|78|79|86|87|97
+### Column Group Name |113|14|26|29|72
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   113
+DEBUG [LoopManager] 
+
+### Column Group Name |52|71
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   71
+DEBUG [LoopManager] 
+
+### Column Group Name |13|24|27|70
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   13
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|18|20|22|4|40|41|42|45|46|5|51|53|55|58|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 3
+DEBUG [LoopManager]   90
+DEBUG [LoopManager]   81
+DEBUG [LoopManager]   89
+DEBUG [LoopManager] 
+
+### Column Group Name |8|88
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   8
+DEBUG [LoopManager]   88
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|20|22|40|41|42|5|51|55|58|6|65|68|69|7|73|74|75|76|77|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   58
+DEBUG [LoopManager]   40
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|20|22|4|41|42|46|5|51|53|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   46
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|15|17|20|22|36|4|40|41|42|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   55
+DEBUG [LoopManager] 
+
+### Column Group Name |38|52
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   38
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|117|118|15|17|18|20|22|36|4|41|42|45|46|5|51|55|61|63|65|68|69|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 3
+DEBUG [LoopManager]   79
+DEBUG [LoopManager]   78
+DEBUG [LoopManager]   4
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|118|17|20|22|36|4|41|42|5|51|53|55|6|63|65|68|69|7|73|74|75|76|77|78|79|80|82|83|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   17
+DEBUG [LoopManager]   63
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|18|20|22|4|41|42|45|5|51|53|6|65|68|69|7|73|74|75|76|77|78|79|80|81|82|89|90|99
 DEBUG [LoopManager] Num Members: 1
 DEBUG [LoopManager]   45
 DEBUG [LoopManager] 
 
-### Column Group Name |13|24|27|67
+### Column Group Name |13|70
 DEBUG [LoopManager] Num Members: 1
-DEBUG [LoopManager]   13
+DEBUG [LoopManager]   70
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|20|22|40|41|42|5|51|55|58|6|65|68|69|7|73|74|75|76|77|80|81|82|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   116
+DEBUG [LoopManager] 
+
+### Column Group Name |113|72
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   72
+DEBUG [LoopManager] 
+
+### Column Group Name |113|14
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   14
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|117|15|20|22|36|4|41|42|5|51|53|55|6|61|65|68|69|7|73|74|75|76|77|78|79|80|82|83|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   15
+DEBUG [LoopManager]   61
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|15|17|18|22|36|4|40|41|42|45|46|5|51|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 2
+DEBUG [LoopManager]   51
+DEBUG [LoopManager]   22
+DEBUG [LoopManager] 
+
+### Column Group Name |10|103|104|116|117|118|15|17|20|36|4|40|41|42|45|46|5|53|55|58|6|61|63|65|68|69|7|73|74|75|76|77|78|79|80|81|82|83|89|90|99
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   20
+DEBUG [LoopManager] 
+
+### Column Group Name |25|38|39|52|71
+DEBUG [LoopManager] Num Members: 1
+DEBUG [LoopManager]   52
 DEBUG [LoopManager] 
 
 ### Column Group Name |13|24|27
@@ -3517,17 +3519,17 @@ DEBUG [LoopManager]
 DEBUG [Documentor] 
 
 ################### Model Documentation ###################
-DEBUG [Zipper] E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_English.html is zipped to E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_English.zip
-DEBUG [Zipper] E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem.mdl is zipped to E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_English.zip
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsNoIVV_English.html
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsNoIVV_English.txt
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsWithIVV_English.html
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsWithIVV_English.txt
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_0.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_1.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_2.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_3.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_4.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_5.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_6.png
-DEBUG [Zipper] Zipping E:\Documents\SkyDrive\TU Delft\Jaar 5\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\sdmdoc.log
+DEBUG [Zipper] C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_English.html is zipped to C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_English.zip
+DEBUG [Zipper] C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem.mdl is zipped to C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_English.zip
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsNoIVV_English.html
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsNoIVV_English.txt
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsWithIVV_English.html
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\overviewSystem_LoopsWithIVV_English.txt
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_0.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_1.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_2.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_3.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_4.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_5.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\plot_6.png
+DEBUG [Zipper] Zipping C:\Users\Helene v. Heijningen\Documents\TU Delft, TB\Kirkwood-Water-Crisis\vensim\overviewSystem_DOC_GRAPH_\sdmdoc.log

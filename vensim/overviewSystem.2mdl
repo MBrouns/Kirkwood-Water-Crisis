@@ -1,6 +1,6 @@
 {UTF-8}
 connected household unrest=
-	MAX(0, MIN(1, (Time - Time since connected household delivery discrepancy)*(0.95-Delivery rate connected households\
+	MAX(0, MIN(1, (Time - last time of connected household delivery discrepancy)*(0.95-Delivery rate connected households\
 		)))
 	~	year
 	~		|
@@ -12,25 +12,25 @@ Effect of maintenance on leakage= WITH LOOKUP (
 	~		|
 
 unconnected household unrest=
-	MAX(0, MIN( 1, (Time - Time since unconnected household delivery discrepancy)*(0.95-\
-		Delivery rate unconnected households)))
+	MAX(0, MIN( 1, (Time - last time of unconnected household delivery discrepancy)*(0.95\
+		-Delivery rate unconnected households)))
 	~	year
 	~		|
 
-Time since connected household delivery discrepancy=
-	IF THEN ELSE(Delivery rate connected households=1, Time, DELAY1I(Time since connected household delivery discrepancy\
+last time of connected household delivery discrepancy=
+	IF THEN ELSE(Delivery rate connected households=1, Time, DELAY1I(last time of connected household delivery discrepancy\
 		, 1, 1))
 	~	year
 	~		|
 
-Time since unconnected household delivery discrepancy=
-	IF THEN ELSE(Delivery rate unconnected households=1, Time, DELAY1I(Time since unconnected household delivery discrepancy\
+last time of unconnected household delivery discrepancy=
+	IF THEN ELSE(Delivery rate unconnected households=1, Time, DELAY1I(last time of unconnected household delivery discrepancy\
 		, 1, 1))
 	~	year
 	~		|
 
-Time since urban delivery discrepancy=
-	IF THEN ELSE(Delivery rate other urban users=1, Time, DELAY1I(Time since urban delivery discrepancy\
+last time of since urban delivery discrepancy=
+	IF THEN ELSE(Delivery rate other urban users=1, Time, DELAY1I(last time of since urban delivery discrepancy\
 		, 1, 1))
 	~	year
 	~		|
@@ -42,7 +42,7 @@ Total unrest=
 	|
 
 urban users unsrest=
-	MAX(0, MIN(1, (Time - Time since urban delivery discrepancy)*(0.95-Delivery rate other urban users\
+	MAX(0, MIN(1, (Time - last time of since urban delivery discrepancy)*(0.95-Delivery rate other urban users\
 		)))
 	~	year
 	~		|
@@ -1039,12 +1039,12 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,7
 10,34,Residents per household,1755,188,48,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
 1,35,34,20,1,0,0,0,0,64,0,-1--1--1,,1|(1786,284)|
 1,36,33,20,1,0,0,0,0,64,0,-1--1--1,,1|(1682,356)|
-10,37,Time since connected household delivery discrepancy,1202,491,82,36,8,131,0,0,0,0,0,0
+10,37,last time of connected household delivery discrepancy,1202,491,82,36,8,131,0,0,0,0,0,0
 1,38,6,37,1,0,0,0,0,64,0,-1--1--1,,1|(895,340)|
 10,39,Time,1049,501,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
 1,40,39,37,0,0,0,0,0,64,0,-1--1--1,,1|(1090,498)|
-10,41,Time since unconnected household delivery discrepancy,1200,675,76,28,8,3,0,0,0,0,0,0
-10,42,Time since urban delivery discrepancy,1205,802,78,28,8,3,0,0,0,0,0,0
+10,41,last time of unconnected household delivery discrepancy,1200,675,76,28,8,3,0,0,0,0,0,0
+10,42,last time of since urban delivery discrepancy,1205,802,78,28,8,3,0,0,0,0,0,0
 1,43,9,41,1,0,0,0,0,64,0,-1--1--1,,1|(1008,586)|
 1,44,10,42,1,0,0,0,0,64,0,-1--1--1,,1|(948,748)|
 10,45,Time,1071,681,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128
@@ -1083,11 +1083,11 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,7
 22:Year,Years
 22:Day,Days
 15:0,0,0,0,0,0
-19:70,2
+19:70,4
 27:2,
 34:0,
 4:Time
-5:Effect of maintenance on leakage
+5:"Annual financial bail-out"
 35:Date
 36:YYYY-MM-DD
 37:2001

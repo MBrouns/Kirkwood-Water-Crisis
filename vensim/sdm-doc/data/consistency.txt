@@ -9,42 +9,6 @@ Number Inconsistent:        5
 Inconsistent Unit Equations
 
 Equation:
-	Staff required for tankers = Staff required for tankers_RSSDlookup(Required tankers)
-
-LHS Units:
-	(staff)
-
-RHS Units:
-	ERROR >>> (tanker/Day)  <<< ERROR 
-
-Complete RHS Units:
-	LOOKUP ( Dmnl , tanker/day ) 
-=====================================
-Equation:
-	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
-
-LHS Units:
-	(Ml/Year)
-
-RHS Units:
-	(Year*Ml)
-
-Complete RHS Units:
-	( kZAR / kZAR/(Ml/year) ) 
-=====================================
-Equation:
-	Effect of maintenance on aging time = Effect of maintenance on aging time_RSSDlookup(percentage infrastructure maintained annually)
-
-LHS Units:
-	(Year)
-
-RHS Units:
-	(Dmnl)
-
-Complete RHS Units:
-	LOOKUP ( Dmnl , Dmnl ) 
-=====================================
-Equation:
 	Maintenance expenditures=MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity, Available funds for maintenance)/year
 
 LHS Units:
@@ -67,4 +31,40 @@ RHS Units:
 
 Complete RHS Units:
 	LOOKUP ( Dmnl , ( Ml/year / Ml/year ) ) 
+=====================================
+Equation:
+	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
+
+LHS Units:
+	(Ml/Year)
+
+RHS Units:
+	(Year*Ml)
+
+Complete RHS Units:
+	( kZAR / kZAR/(Ml/year) ) 
+=====================================
+Equation:
+	Total production possible=MAX(0, (Available technical staff-(Staff required for tankers*Required tankers))*Real production rate per person per year)
+
+LHS Units:
+	(Ml/Year)
+
+RHS Units:
+	MAX ( (constant) , ( ( ERROR >>> (staff) - (staff/Day*Day)  <<< ERROR ) * (Ml/Year*staff) ) ) 
+
+Complete RHS Units:
+	MAX ( constant , ( ( staff - ( staff/tanker*day * tanker/day ) ) * Ml/(staff*year) ) ) 
+=====================================
+Equation:
+	Effect of maintenance on aging time = Effect of maintenance on aging time_RSSDlookup(percentage infrastructure maintained annually)
+
+LHS Units:
+	(Year)
+
+RHS Units:
+	(Dmnl)
+
+Complete RHS Units:
+	LOOKUP ( Dmnl , Dmnl ) 
 =====================================
