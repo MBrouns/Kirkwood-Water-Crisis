@@ -1,8 +1,8 @@
 Units Consistency Summary Report
 
-Number of EquationsChecked: 115
-Number Consistent:          110
-Number Inconsistent:        5
+Number of EquationsChecked: 114
+Number Consistent:          111
+Number Inconsistent:        3
 
 
 =====================================
@@ -21,30 +21,6 @@ Complete RHS Units:
 	( MIN ( ( Ml/year * kZAR/(Ml/year) ) , kZAR ) / Year ) 
 =====================================
 Equation:
-	Effect of infrastructure pushing on aging time = Effect of infrastructure pushing on aging time_RSSDlookup(Infrastructure Shortage/Practical infrastructure capacity)
-
-LHS Units:
-	(Year)
-
-RHS Units:
-	(Dmnl)
-
-Complete RHS Units:
-	LOOKUP ( Dmnl , ( Ml/year / Ml/year ) ) 
-=====================================
-Equation:
-	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
-
-LHS Units:
-	(Ml/Year)
-
-RHS Units:
-	(Year*Ml)
-
-Complete RHS Units:
-	( kZAR / kZAR/(Ml/year) ) 
-=====================================
-Equation:
 	Total production possible=MAX(0, (Available technical staff-(Staff required for tankers*Required tankers))*Real production rate per person per year)
 
 LHS Units:
@@ -57,14 +33,14 @@ Complete RHS Units:
 	MAX ( constant , ( ( staff - ( staff/tanker*day * tanker/day ) ) * Ml/(staff*year) ) ) 
 =====================================
 Equation:
-	Effect of maintenance on aging time = Effect of maintenance on aging time_RSSDlookup(percentage infrastructure maintained annually)
+	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
 
 LHS Units:
-	(Year)
+	(Ml/Year)
 
 RHS Units:
-	(Dmnl)
+	(Year*Ml)
 
 Complete RHS Units:
-	LOOKUP ( Dmnl , Dmnl ) 
+	( kZAR / kZAR/(Ml/year) ) 
 =====================================
