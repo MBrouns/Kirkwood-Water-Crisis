@@ -1,24 +1,24 @@
 Units Consistency Summary Report
 
-Number of EquationsChecked: 114
-Number Consistent:          111
-Number Inconsistent:        3
+Number of EquationsChecked: 116
+Number Consistent:          109
+Number Inconsistent:        7
 
 
 =====================================
 Inconsistent Unit Equations
 
 Equation:
-	Maintenance expenditures=MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity, Available funds for maintenance)/year
+	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
 
 LHS Units:
-	(kZAR/Year)
+	(Ml/Year)
 
 RHS Units:
-	ERROR >>> Mismatched units in function call  <<< ERROR / (Year) ) 
+	(Year*Ml)
 
 Complete RHS Units:
-	( MIN ( ( Ml/year * kZAR/(Ml/year) ) , kZAR ) / Year ) 
+	( kZAR / kZAR/(Ml/year) ) 
 =====================================
 Equation:
 	Total production possible=MAX(0, (Available technical staff-(Staff required for tankers*Required tankers))*Real production rate per person per year)
@@ -33,14 +33,62 @@ Complete RHS Units:
 	MAX ( constant , ( ( staff - ( staff/tanker*day * tanker/day ) ) * Ml/(staff*year) ) ) 
 =====================================
 Equation:
-	Available maintenance capacity by funds=Available funds for maintenance/Average annual maintenance cost per unit of capacity
+	unconnected household unrest=MAX(0, MIN( 1, (Time - last time of unconnected household delivery discrepancy)*(0.95-Delivery rate unconnected households)))*unrest increase per year
+
+LHS Units:
+	(unrest)
+
+RHS Units:
+	(unrest/Year)
+
+Complete RHS Units:
+	( MAX ( constant , MIN ( constant , ( ( Year - Year ) * ( constant - Dmnl ) ) ) ) * unrest/year ) 
+=====================================
+Equation:
+	Maintenance expenditures=MIN(Theoretical Infrastructure Capacity*Average annual maintenance cost per unit of capacity, Available funds for maintenance)/year
+
+LHS Units:
+	(kZAR/Year)
+
+RHS Units:
+	ERROR >>> Mismatched units in function call  <<< ERROR / (Year) ) 
+
+Complete RHS Units:
+	( MIN ( ( Ml/year * kZAR/(Ml/year) ) , kZAR ) / Year ) 
+=====================================
+Equation:
+	Production rate required for secondary staff activities=DELAY1I(MAX(0, DELAY1(Required infrastructure,Infrastructure planning time) +Planned infrastructure/Infrastructure building time*year), TIME STEP, year)
 
 LHS Units:
 	(Ml/Year)
 
 RHS Units:
-	(Year*Ml)
+	ERROR >>> Mismatched units in function call  <<< ERROR 
 
 Complete RHS Units:
-	( kZAR / kZAR/(Ml/year) ) 
+	DELAY1I ( MAX ( constant , ( DELAY1 ( Ml/year , Year ) + ( ( Ml/year / Year ) * Year ) ) ) , Year , Year ) 
+=====================================
+Equation:
+	connected household unrest=MAX(0, MIN(1, (Time - last time of connected household delivery discrepancy)*(0.95-Delivery rate connected households)))*unrest increase per year
+
+LHS Units:
+	(unrest)
+
+RHS Units:
+	(unrest/Year)
+
+Complete RHS Units:
+	( MAX ( constant , MIN ( constant , ( ( Year - Year ) * ( constant - Dmnl ) ) ) ) * unrest/year ) 
+=====================================
+Equation:
+	urban users unsrest=MAX(0, MIN(1, (Time - last time of since urban delivery discrepancy)*(0.95-Delivery rate other urban users)))*unrest increase per year
+
+LHS Units:
+	(unrest)
+
+RHS Units:
+	(unrest/Year)
+
+Complete RHS Units:
+	( MAX ( constant , MIN ( constant , ( ( Year - Year ) * ( constant - Dmnl ) ) ) ) * unrest/year ) 
 =====================================
