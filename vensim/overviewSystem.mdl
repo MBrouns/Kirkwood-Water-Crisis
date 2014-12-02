@@ -1,6 +1,6 @@
 {UTF-8}
 Peak 2 height=
-	0
+	1
 	~	
 	~		|
 
@@ -16,7 +16,7 @@ Peak 2 position=
 	~		|
 
 Peak 1 height=
-	0
+	1
 	~	
 	~		|
 
@@ -739,7 +739,7 @@ INITIAL TIME  = 0
 	|
 
 SAVEPER  = 
-        TIME STEP 
+        TIME STEP
 	~	year [0,?]
 	~	The frequency with which output is stored.
 	|
@@ -1234,7 +1234,7 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,6
 27:2,
 34:0,
 4:Time
-5:Total production possible
+5:Peak 2 height
 35:Date
 36:YYYY-MM-DD
 37:2001
