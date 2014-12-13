@@ -1,0 +1,11 @@
+10000,L,5678,,0
+Staff service time=RANDOM_UNIFORM(5,25)
+switch policy staff attention=VECTOR(0,2,1)
+Staff required for tankers=VECTOR(0,1,1)
+Percentage of income used for maintenance=RANDOM_UNIFORM(0.2,0.6)
+Attention rate for planning new infrastructure=RANDOM_UNIFORM(0,1)
+Maximum capacity exceeding=RANDOM_UNIFORM(0,0.5)
+Target percentage infrastructure maintenance=RANDOM_UNIFORM(0.05,0.25)
+"Annual financial bail-out"=RANDOM_UNIFORM(0,250)
+Default infrastructure aging time=RANDOM_UNIFORM(20,40)
+Staff Hired=RANDOM_UNIFORM(0,25)
